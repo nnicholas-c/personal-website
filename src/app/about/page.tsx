@@ -289,14 +289,13 @@ function Page() {
             <p className="mb-10 text-roboto">
               Hey there! I&apos;m Nicholas, an EECS student at UC Berkeley
               passionate about quantitative engineering, machine learning, and
-              building full-stack applications. From deep reinforcement learning
+              building startups. From deep reinforcement learning
               to production data pipelines, I thrive on turning complex problems
               into elegant solutions.
             </p>
             <p className="mb-10">
-              When I&apos;m not coding, you can find me exploring new research
-              papers, competing in hackathons, or sipping coffee while
-              brainstorming my next project.
+              When I&apos;m not coding, you can find me gambling on stocks, investigating new technologies, or sipping coffee while
+              brainstorming my next (non) prompt engineered startup.
             </p>
             <h1 className="text-3xl mb-10 lg:md-20">Stuff I use</h1>
             <div className="mb-5">
