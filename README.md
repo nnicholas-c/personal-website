@@ -32,7 +32,7 @@ My personal portfolio website built with Next.js, featuring interactive 3D anima
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/nicholaschen/personal-website.git
+   git clone https://github.com/nnicholas-c/personal-website.git
    ```
 
 2. Navigate to the project directory:
