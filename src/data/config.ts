@@ -1,42 +1,41 @@
 const config = {
-  title: "Nicholas Chen | Full-Stack Developer",
+  title: "Nicholas Chen | EECS @ UC Berkeley",
   description: {
-    long: "Explore the portfolio of Nicholas Chen, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and innovative projects. Let's build something amazing together!",
+    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley specializing in quantitative engineering, machine learning, and full-stack development. From data pipelines to deep reinforcement learning — let's build something impactful.",
     short:
-      "Discover the portfolio of Nicholas Chen, a full-stack developer creating interactive web experiences and innovative projects.",
+      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. Quantitative engineering, ML, and full-stack development.",
   },
   keywords: [
     "Nicholas Chen",
     "portfolio",
+    "UC Berkeley",
+    "EECS",
+    "machine learning",
+    "quantitative",
     "full-stack developer",
-    "creative technologist",
-    "web development",
-    "3D animations",
-    "interactive websites",
-    "web design",
-    "GSAP",
+    "Python",
+    "data engineering",
+    "deep learning",
     "React",
     "Next.js",
-    "Spline",
-    "Framer Motion",
   ],
   author: "Nicholas Chen",
-  email: "your-email@example.com",
+  email: "nchen06@berkeley.edu",
   site: "https://nicholaschen.dev",
 
   // for github stars button
-  githubUsername: "nicholaschen",
+  githubUsername: "nnicholas-c",
   githubRepo: "personal-website",
 
   get ogImg() {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    twitter: "https://x.com/your-twitter",
-    linkedin: "https://www.linkedin.com/in/your-linkedin/",
-    instagram: "https://www.instagram.com/your-instagram",
-    facebook: "https://www.facebook.com/your-facebook/",
-    github: "https://github.com/nicholaschen",
+    twitter: "https://x.com/NChen43323",
+    linkedin: "https://www.linkedin.com/in/nchen06/",
+    instagram: "https://www.instagram.com/nnicholas_c/",
+    facebook: "https://www.facebook.com/",
+    github: "https://github.com/nnicholas-c",
   },
 };
 export { config };

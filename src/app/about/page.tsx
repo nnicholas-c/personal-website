@@ -43,26 +43,26 @@ import { TbTerminal2 } from "react-icons/tb";
 const CONTACT_LINKS = [
   {
     name: "Email",
-    content: "your-email@example.com",
-    href: "mailto:your-email@example.com",
+    content: "nchen06@berkeley.edu",
+    href: "mailto:nchen06@berkeley.edu",
     icon: <FaEnvelope height={"50px"} />,
   },
   {
     name: "Phone",
-    content: "1234567890",
-    href: "tel:1234567890",
+    content: "+1 510 529-6747",
+    href: "tel:+15105296747",
     icon: <FaPhone height={"50px"} />,
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/nicholaschen/",
-    content: "/nicholaschen",
+    href: "https://www.linkedin.com/in/nchen06/",
+    content: "/nchen06",
     icon: <FaLinkedin height={"50px"} />,
   },
   {
     name: "GitHub",
-    href: "https://github.com/nicholaschen",
-    content: "/nicholaschen",
+    href: "https://github.com/nnicholas-c",
+    content: "/nnicholas-c",
     icon: <FaGithub height={"50px"} />,
   },
 ];
@@ -287,16 +287,16 @@ function Page() {
           >
             <h1 className="text-3xl mb-10 lg:md-20">About me</h1>
             <p className="mb-10 text-roboto">
-              Hey there! I&apos;m Nicholas, a Fullstack developer passionate about
-              creating meaningful digital experiences. With great expertise in Web
-              development, I thrive on turning ideas into reality through coding
-              and design. My journey began with a fascination for technology and
-              a drive to make a positive impact.
+              Hey there! I&apos;m Nicholas, an EECS student at UC Berkeley
+              passionate about quantitative engineering, machine learning, and
+              building full-stack applications. From deep reinforcement learning
+              to production data pipelines, I thrive on turning complex problems
+              into elegant solutions.
             </p>
             <p className="mb-10">
-              When I&apos;m not coding, you can find me [Your
-              Interests/Hobbies], exploring new technologies, or sipping coffee
-              while brainstorming my next project.
+              When I&apos;m not coding, you can find me exploring new research
+              papers, competing in hackathons, or sipping coffee while
+              brainstorming my next project.
             </p>
             <h1 className="text-3xl mb-10 lg:md-20">Stuff I use</h1>
             <div className="mb-5">
