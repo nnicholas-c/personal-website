@@ -1,9 +1,9 @@
 const config = {
   title: "Nicholas Chen | EECS @ UC Berkeley",
   description: {
-    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley specializing in quantitative engineering, machine learning, and full-stack development. From data pipelines to deep reinforcement learning — let's build something impactful.",
+    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley specializing in quantitative engineering, machine learning, and startups. From data pipelines to deep reinforcement learning — let's build something impactful.",
     short:
-      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. Quantitative engineering, ML, and full-stack development.",
+      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. Quantitative engineering, ML, and development.",
   },
   keywords: [
     "Nicholas Chen",
@@ -12,7 +12,7 @@ const config = {
     "EECS",
     "machine learning",
     "quantitative",
-    "full-stack developer",
+    "startups",
     "Python",
     "data engineering",
     "deep learning",
