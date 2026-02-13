@@ -242,6 +242,40 @@ export const EXPERIENCE: Experience[] = [
   },
   {
     id: 2,
+    startDate: "Aug 2024",
+    endDate: "Present",
+    title: "B.S. Electrical Engineering & Computer Science",
+    company: "University of California, Berkeley",
+    description: [
+      "GPA: 3.94/4.0 — Junior standing.",
+      "Coursework in data structures, algorithms, machine learning, signals & systems, and probability.",
+    ],
+    skills: [
+      SkillNames.PYTHON,
+      SkillNames.JAVA,
+      SkillNames.CPP,
+      SkillNames.SQL,
+    ],
+  },
+  {
+    id: 3,
+    startDate: "Oct 2025",
+    endDate: "Oct 2025",
+    title: "Full-Stack Engineer — CivicGrid",
+    company: "CalHacks 2025 · Featured at YC Afterparty",
+    description: [
+      "Engineered a full-stack ingestion pipeline combining TypeScript/React (Vite), Python/Flask, and Deepgram STT to convert call audio into structured, queryable incident records for civic triage.",
+      "Built an LLM-driven classification/normalization layer (Claude/Anthropic) that transforms transcripts into typed issue schemas; productionized with scripted orchestration and secure env-key handling.",
+    ],
+    skills: [
+      SkillNames.TS,
+      SkillNames.REACT,
+      SkillNames.PYTHON,
+      SkillNames.FLASK,
+    ],
+  },
+  {
+    id: 4,
     startDate: "Jun 2025",
     endDate: "Aug 2025",
     title: "Computational Biology Research Assistant",
@@ -259,7 +293,25 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
-    id: 3,
+    id: 5,
+    startDate: "May 2025",
+    endDate: "May 2025",
+    title: "Developer — Stock Market Prediction Web App",
+    company: "Personal Project",
+    description: [
+      "Implemented a modular data, feature engineering, model training, and inference pipeline in Python/Flask + scikit-learn.",
+      "Served predictions via a REST API to a React frontend with live Alpha Vantage data; achieved MAE 0.16 and R² 0.98.",
+    ],
+    skills: [
+      SkillNames.PYTHON,
+      SkillNames.FLASK,
+      SkillNames.SKLEARN,
+      SkillNames.REACT,
+      SkillNames.JS,
+    ],
+  },
+  {
+    id: 6,
     startDate: "Jan 2025",
     endDate: "Feb 2025",
     title: "Data Engineering Intern",
