@@ -175,7 +175,7 @@ const projects: Project[] = [
     id: "civicgrid",
     category: "Full-Stack Pipeline",
     title: "CivicGrid",
-    src: "/assets/projects-screenshots/portfolio/landing.png",
+    src: "/assets/projects-screenshots/civicgrid/landing.png",
     screenshots: ["landing.png"],
     skills: {
       frontend: [
@@ -187,7 +187,7 @@ const projects: Project[] = [
         PROJECT_SKILLS.flask,
       ],
     },
-    live: "https://github.com/nnicholas-c/CivicGrid",
+    live: "https://nnicholas-c.github.io/CivicGrid/#/",
     github: "https://github.com/nnicholas-c/CivicGrid",
     get content() {
       return (
