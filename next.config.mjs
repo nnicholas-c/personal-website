@@ -26,11 +26,11 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cloud.umami.is",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cloud.umami.is https://unpkg.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https: http:",
               "font-src 'self' data:",
-              "connect-src 'self' https://prod.spline.design https://cloud.umami.is https://*.amazonaws.com",
+              "connect-src 'self' https://prod.spline.design https://cloud.umami.is https://*.amazonaws.com https://unpkg.com",
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",
