@@ -228,9 +228,9 @@ export const EXPERIENCE: Experience[] = [
     title: "AI/Game Development Engineer",
     company: "UC Berkeley Operations & Behavioral Analytics Lab",
     description: [
-      "Modeled sequential decision-making under uncertainty using Deep Q-Networks (DQN) with reward shaping, experience replay, and target networks.",
-      "Built an experiment-grade simulation platform in SvelteKit with Firebase for collecting event-level trajectories and behavioral analysis.",
-      "Quantified behavioral effects in human–agent interaction data using controlled comparisons and uncertainty estimates; presented at Stanford and CMU.",
+      "Modeled sequential decision-making under uncertainty in delayed-reward environments using Deep Q-Networks (DQN); improved policy learning via reward shaping, experience replay, target networks, and hyperparameter sweeps.",
+      "Built an experiment-grade simulation platform in SvelteKit with Firebase (auth, realtime streaming) to collect event-level trajectories and state/action/reward logs for policy evaluation and behavioral analysis.",
+      "Quantified behavioral effects in human–agent interaction data using controlled comparisons and uncertainty estimates (confidence intervals / bootstrap) over key outcome metrics; presented with Prof. Park Sinchaisri at Stanford and CMU.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -242,31 +242,14 @@ export const EXPERIENCE: Experience[] = [
   },
   {
     id: 2,
-    startDate: "Oct 2025",
-    endDate: "Oct 2025",
-    title: "Full-Stack Engineer — CivicGrid",
-    company: "CalHacks 2025 · Featured at YC Afterparty",
-    description: [
-      "Engineered a full-stack ingestion pipeline combining TypeScript/React (Vite), Python/Flask, and Deepgram STT to convert call audio into structured, queryable incident records for civic triage.",
-      "Built an LLM-driven classification/normalization layer (Claude/Anthropic) that transforms transcripts into typed issue schemas; productionized with scripted orchestration and secure env-key handling.",
-    ],
-    skills: [
-      SkillNames.TS,
-      SkillNames.REACT,
-      SkillNames.PYTHON,
-      SkillNames.FLASK,
-    ],
-  },
-  {
-    id: 3,
     startDate: "Jan 2025",
     endDate: "Feb 2025",
     title: "Data Engineering Intern",
     company: "Shenwan Hongyuan",
     description: [
-      "Owned market-data QA + reconciliation for trading pipelines; optimized Pandas/NumPy/Spark transforms for 20% faster runtime.",
-      "Automated and hardened ETL for time-series market feeds (Python/SQL/Airflow): idempotent jobs, backfill-safe runs; improved throughput by 10%.",
-      "Tuned PostgreSQL performance for production queries, cutting query latency by 30%; added Redis caching and containerized services with Docker.",
+      "Owned market-data QA + reconciliation for trading pipelines; implemented schema/null/outlier and symbol/timestamp alignment checks with researchers; optimized Pandas/NumPy/Spark transforms for 20% faster runtime.",
+      "Automated and hardened ETL for time-series market feeds (Python/SQL/Airflow): idempotent jobs, backfill-safe runs, and dependency-managed DAGs; improved end-to-end ingestion/processing throughput by 10%.",
+      "Tuned PostgreSQL performance for production queries (partition-aware access patterns, query-plan optimization), cutting query latency by 30%; added Redis caching for hot datasets and containerized services with Docker for deployment.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -278,7 +261,7 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
-    id: 4,
+    id: 3,
     startDate: "Dec 2023",
     endDate: "Jan 2024",
     title: "Academic Researcher",
@@ -286,7 +269,7 @@ export const EXPERIENCE: Experience[] = [
     description: [
       "Ranked 1/45 in a research team modeling biochemical systems through stochastic processes and algorithmic complexity.",
       "Implemented Monte Carlo simulation and time-series / nonlinear dynamical systems models in Python, C++, and MATLAB, including parameter sweeps and stability/sensitivity analysis of molecular interaction dynamics.",
-      "Built high-dimensional statistical learning pipelines in NumPy/Pandas/scikit-learn, applying PCA, k-means clustering, and Random Forest for candidate scoring and uncertainty/risk-style assessment.",
+      "Built high-dimensional statistical learning pipelines in NumPy/Pandas/scikit-learn, applying PCA (numerical linear algebra), k-means (unsupervised clustering), and Random Forest for candidate scoring and uncertainty/risk-style assessment.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -297,15 +280,15 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
-    id: 5,
+    id: 4,
     startDate: "Feb 2023",
     endDate: "Apr 2024",
     title: "Research Intern",
     company: "MIT Pentelute Lab",
     description: [
-      "Developed a stochastic generative modeling + optimization stack for peptide candidates using diffusion models and deep reinforcement learning in PyTorch with vectorized preprocessing in NumPy/Pandas.",
-      "Designed the RL reward as a multi-objective utility: maximize predicted affinity and developability scores while penalizing constraint violations, turning peptide design into a constrained optimization loop.",
-      "Improved reproducibility by tracking configs, data lineage, training metrics, RL dynamics, and generation KPIs across sensitivity analyses.",
+      "Developed a stochastic generative modeling + optimization stack for peptide candidates using diffusion models (sampling) and deep reinforcement learning (policy/value optimization) in PyTorch with vectorized preprocessing in NumPy/Pandas.",
+      "Designed the RL reward as a multi-objective utility: maximize predicted affinity and developability scores while penalizing constraint violations (aggregation/toxicity heuristics), turning peptide design into a constrained optimization loop.",
+      "Improved reproducibility by tracking configs, data lineage, training (loss/grad norms), RL dynamics (reward curves/Q estimates), and generation KPIs (top-k scores, diversity/uniqueness, sequence-level stats) across sensitivity analyses.",
       "Published a research paper with Dr. Vladimir Akhmetov on AI-assisted Alzheimer's drug design (DOI: 10.36838/v7i4.5).",
     ],
     skills: [
@@ -313,44 +296,6 @@ export const EXPERIENCE: Experience[] = [
       SkillNames.PYTORCH,
       SkillNames.NUMPY,
       SkillNames.PANDAS,
-    ],
-  },
-  {
-    id: 6,
-    startDate: "May 2025",
-    endDate: "May 2025",
-    title: "Developer — Stock Market Prediction Web App",
-    company: "Personal Project",
-    description: [
-      "Implemented a modular data, feature engineering, model training, and inference pipeline in Python/Flask + scikit-learn.",
-      "Served predictions via a REST API to a React frontend with live Alpha Vantage data; achieved MAE 0.16 and R² 0.98.",
-    ],
-    skills: [
-      SkillNames.PYTHON,
-      SkillNames.FLASK,
-      SkillNames.SKLEARN,
-      SkillNames.REACT,
-      SkillNames.JS,
-    ],
-  },
-  {
-    id: 6,
-    startDate: "Jan 2025",
-    endDate: "Feb 2025",
-    title: "Data Engineering Intern",
-    company: "Shenwan Hongyuan",
-    description: [
-      "Owned market-data QA + reconciliation for trading pipelines; optimized Pandas/NumPy/Spark transforms for 20% faster runtime.",
-      "Automated and hardened ETL for time-series market feeds (Python/SQL/Airflow): idempotent jobs, backfill-safe runs; improved throughput by 10%.",
-      "Tuned PostgreSQL performance for production queries, cutting query latency by 30%; added Redis caching and containerized services with Docker.",
-    ],
-    skills: [
-      SkillNames.PYTHON,
-      SkillNames.SQL,
-      SkillNames.PANDAS,
-      SkillNames.NUMPY,
-      SkillNames.POSTGRES,
-      SkillNames.DOCKER,
     ],
   },
 ];
