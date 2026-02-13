@@ -262,25 +262,6 @@ export const EXPERIENCE: Experience[] = [
   },
   {
     id: 3,
-    startDate: "Dec 2023",
-    endDate: "Jan 2024",
-    title: "Academic Researcher",
-    company: "Oxford University",
-    description: [
-      "Ranked 1/45 in a research team modeling biochemical systems through stochastic processes and algorithmic complexity.",
-      "Implemented Monte Carlo simulation and time-series / nonlinear dynamical systems models in Python, C++, and MATLAB, including parameter sweeps and stability/sensitivity analysis of molecular interaction dynamics.",
-      "Built high-dimensional statistical learning pipelines in NumPy/Pandas/scikit-learn, applying PCA (numerical linear algebra), k-means (unsupervised clustering), and Random Forest for candidate scoring and uncertainty/risk-style assessment.",
-    ],
-    skills: [
-      SkillNames.PYTHON,
-      SkillNames.CPP,
-      SkillNames.NUMPY,
-      SkillNames.PANDAS,
-      SkillNames.SKLEARN,
-    ],
-  },
-  {
-    id: 4,
     startDate: "Feb 2023",
     endDate: "Apr 2024",
     title: "Research Intern",
@@ -298,6 +279,41 @@ export const EXPERIENCE: Experience[] = [
       SkillNames.PANDAS,
     ],
   },
+  {
+    id: 4,
+    startDate: "Dec 2023",
+    endDate: "Jan 2024",
+    title: "Academic Researcher",
+    company: "Oxford University",
+    description: [
+      "Ranked 1/45 in a research team modeling biochemical systems through stochastic processes and algorithmic complexity.",
+      "Implemented Monte Carlo simulation and time-series / nonlinear dynamical systems models in Python, C++, and MATLAB, including parameter sweeps and stability/sensitivity analysis of molecular interaction dynamics.",
+      "Built high-dimensional statistical learning pipelines in NumPy/Pandas/scikit-learn, applying PCA (numerical linear algebra), k-means (unsupervised clustering), and Random Forest for candidate scoring and uncertainty/risk-style assessment.",
+    ],
+    skills: [
+      SkillNames.PYTHON,
+      SkillNames.CPP,
+      SkillNames.NUMPY,
+      SkillNames.PANDAS,
+      SkillNames.SKLEARN,
+    ],
+  },
+];
+
+export type Award = {
+  year: string;
+  title: string;
+};
+
+export const AWARDS: Award[] = [
+  { year: "2022–2024", title: "New Zealand Chemistry Olympiad – 2× Gold Medal, 1× Silver Medal; National Exam Full Score Achiever" },
+  { year: "2024", title: "International Chemistry Olympiad Qualifier; New Zealand Chemistry Olympiad National Team Member" },
+  { year: "2024", title: "New Zealand Mathematical Olympiad Camp Member; New Zealand Senior Maths Competition 1st Place" },
+  { year: "2024", title: "British Biology Olympiad Gold Medal; British Physics Olympiad Gold Medal; UK Chemistry Olympiad Gold Medal" },
+  { year: "2024", title: "New Zealand Young Physicists' Tournament 2nd Place" },
+  { year: "2023", title: "New Zealand Young Physicists' Tournament 3rd Place" },
+  { year: "2023", title: "New Zealand Physics and Maths Competition 7th Place; International Young Physicists' Tournament Qualifier" },
+  { year: "2021–2024", title: "Australian Mathematical Competition – 1× Medal (1/5000) & Top in Auckland City, 3× High Distinction" },
 ];
 
 export const themeDisclaimers = {

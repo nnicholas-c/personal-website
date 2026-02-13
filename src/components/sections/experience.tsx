@@ -1,4 +1,4 @@
-import { EXPERIENCE, SkillNames, SKILLS } from "@/data/constants";
+import { EXPERIENCE, AWARDS, SkillNames, SKILLS } from "@/data/constants";
 import { SectionHeader } from "./section-header";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
@@ -28,6 +28,37 @@ const ExperienceSection = () => {
               <ExperienceCard experience={exp} index={index} />
             </div>
           ))}
+        </div>
+
+        {/* Awards Section */}
+        <div className="mt-16 md:mt-24">
+          <SectionHeader
+            id="awards"
+            title="Awards"
+            desc="Competitions and achievements."
+            className="mb-12 md:mb-20 mt-0"
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            <Card className="bg-card text-card-foreground border-border shadow-sm">
+              <CardContent className="pt-6">
+                <ul className="space-y-3">
+                  {AWARDS.map((award, i) => (
+                    <li key={i} className="flex gap-3 text-base text-muted-foreground leading-relaxed">
+                      <Badge variant="secondary" className="font-mono text-xs font-normal whitespace-nowrap h-fit mt-0.5">
+                        {award.year}
+                      </Badge>
+                      <span>{award.title}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </div>
     </SectionWrapper>
