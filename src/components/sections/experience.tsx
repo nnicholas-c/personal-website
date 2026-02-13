@@ -8,30 +8,36 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const ExperienceSection = () => {
   return (
-    <SectionWrapper
-      className="flex flex-col items-center justify-center min-h-[120vh] py-20 z-10"
-    >
-      <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
-        <SectionHeader
-          id="experience"
-          title="Experience"
-          desc="My professional journey."
-          className="mb-12 md:mb-20 mt-0"
-        />
+    <>
+      <SectionWrapper
+        className="flex flex-col items-center justify-center min-h-[120vh] py-20 z-10"
+      >
+        <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
+          <SectionHeader
+            id="experience"
+            title="Experience"
+            desc="My professional journey."
+            className="mb-12 md:mb-20 mt-0"
+          />
 
-        <div className="flex flex-col gap-8 md:gap-12 relative">
-          {/* Connector Line - simplified to a subtle border */}
-          <div className="absolute left-8 md:left-1/2 top-4 bottom-4 w-px bg-border hidden md:block -translate-x-1/2" />
+          <div className="flex flex-col gap-8 md:gap-12 relative">
+            {/* Connector Line - simplified to a subtle border */}
+            <div className="absolute left-8 md:left-1/2 top-4 bottom-4 w-px bg-border hidden md:block -translate-x-1/2" />
 
-          {EXPERIENCE.map((exp, index) => (
-            <div key={exp.id} className="relative">
-              <ExperienceCard experience={exp} index={index} />
-            </div>
-          ))}
+            {EXPERIENCE.map((exp, index) => (
+              <div key={exp.id} className="relative">
+                <ExperienceCard experience={exp} index={index} />
+              </div>
+            ))}
+          </div>
         </div>
+      </SectionWrapper>
 
-        {/* Awards Section */}
-        <div className="mt-16 md:mt-24">
+      {/* Awards Section — separate wrapper so it fades independently */}
+      <SectionWrapper
+        className="flex flex-col items-center justify-center py-20 z-10"
+      >
+        <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
           <SectionHeader
             id="awards"
             title="Awards"
@@ -46,22 +52,31 @@ const ExperienceSection = () => {
           >
             <Card className="bg-card text-card-foreground border-border shadow-sm">
               <CardContent className="pt-6">
-                <ul className="space-y-3">
+                <div className="space-y-4">
                   {AWARDS.map((award, i) => (
-                    <li key={i} className="flex gap-3 text-base text-muted-foreground leading-relaxed">
-                      <Badge variant="secondary" className="font-mono text-xs font-normal whitespace-nowrap h-fit mt-0.5">
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                      viewport={{ once: true }}
+                      className="flex items-start gap-4"
+                    >
+                      <Badge variant="secondary" className="font-mono text-xs font-normal whitespace-nowrap shrink-0 mt-1">
                         {award.year}
                       </Badge>
-                      <span>{award.title}</span>
-                    </li>
+                      <span className="text-base text-muted-foreground leading-relaxed">
+                        {award.title}
+                      </span>
+                    </motion.div>
                   ))}
-                </ul>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
         </div>
-      </div>
-    </SectionWrapper>
+      </SectionWrapper>
+    </>
   );
 };
 
