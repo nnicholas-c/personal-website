@@ -12,7 +12,6 @@ import {
   FaLinkedin,
   FaLinux,
   FaNodeJs,
-  FaPhone,
   FaReact,
   FaVuejs,
   FaYarn,
@@ -46,12 +45,6 @@ const CONTACT_LINKS = [
     content: "nchen06@berkeley.edu",
     href: "mailto:nchen06@berkeley.edu",
     icon: <FaEnvelope height={"50px"} />,
-  },
-  {
-    name: "Phone",
-    content: "+1 510 529-6747",
-    href: "tel:+15105296747",
-    icon: <FaPhone height={"50px"} />,
   },
   {
     name: "LinkedIn",
