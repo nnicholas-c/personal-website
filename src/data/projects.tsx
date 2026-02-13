@@ -228,8 +228,8 @@ const projects: Project[] = [
     id: "stock-predictor",
     category: "Machine Learning",
     title: "Stock Market Predictor",
-    src: "/assets/projects-screenshots/portfolio/landing.png",
-    screenshots: ["landing.png"],
+    src: "",
+    screenshots: [],
     skills: {
       frontend: [
         PROJECT_SKILLS.react,
