@@ -208,6 +208,11 @@ const projects: Project[] = [
             (Vite), Python/Flask, and Deepgram STT to convert call audio into
             structured, queryable incident records.
           </p>
+          <p className="font-mono text-sm text-muted-foreground mb-2">
+            ⚠️ Note: The live demo has rate-limited Deepgram API calls to manage
+            costs. Transcription functionality may be unavailable if the limit
+            has been reached.
+          </p>
           <TypographyH3 className="my-4 mt-8">LLM Classification Layer</TypographyH3>
           <p className="font-mono mb-2">
             Built an LLM-driven classification/normalization layer using

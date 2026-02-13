@@ -22,6 +22,10 @@ My personal portfolio website built with Next.js, featuring interactive 3D anima
 
 ## 🚀 Getting Started
 
+### ⚠️ Rate-Limited APIs
+
+The **CivicGrid** project demo uses Deepgram's Speech-to-Text API, which is rate-limited to manage costs. Since it is included purely as a portfolio display, transcription functionality may be unavailable if the daily limit has been reached.
+
 ### Prerequisites
 
 - Node.js (v18+)
