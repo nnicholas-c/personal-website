@@ -1,11 +1,12 @@
-const footer: { title: string; href: string }[] = [
+const footer: { title: string; href: string; target?: string }[] = [
   {
-    title: "Blog",
-    href: "/blogs",
+    title: "Résumé",
+    href: "/resume.pdf",
+    target: "_blank",
   },
   {
-    title: "Newsletter",
-    href: "/news",
+    title: "Contact",
+    href: "/#contact",
   },
 ];
 

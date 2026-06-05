@@ -1,73 +1,57 @@
-import React from "react";
+import Link from "next/link";
+import { Github, Linkedin, Mail } from "lucide-react";
 
-function Page() {
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { config } from "@/data/config";
+import { cn } from "@/lib/utils";
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log(event)
-  }
+export const metadata = {
+  title: "Contact | Nicholas Chen",
+  description: "Contact Nicholas Chen.",
+};
+
+export default function ContactPage() {
   return (
-    <section>
-      <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-zinc-200">
-          Contact Me
-        </h2>
-        <form action="#" className="space-y-8">
-          <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Your email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-              placeholder="name@flowbite.com"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="subject"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Subject
-            </label>
-            <input
-              type="text"
-              id="subject"
-              className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-              placeholder="Let me know how I can help you"
-              required
-            />
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-            >
-              Your message
-            </label>
-            <textarea
-              id="message"
-              rows={6}
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Leave a comment..."
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            // onClick={handleSubmit}
+    <main className="mx-auto flex min-h-screen max-w-3xl items-center px-4 py-24">
+      <Card className="w-full border-border bg-card/90 shadow-sm">
+        <CardHeader>
+          <CardTitle className="text-3xl tracking-tight">Contact Nicholas Chen</CardTitle>
+          <CardDescription className="text-base leading-7">
+            For research, ML, or engineering opportunities, reach me directly.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-3">
+          <Link
+            href={`mailto:${config.email}`}
+            aria-label={`Email ${config.author}`}
+            className={cn(buttonVariants(), "gap-2")}
           >
-            Send message
-          </button>
-        </form>
-      </div>
-    </section>
+            <Mail size={18} />
+            Email
+          </Link>
+          <Link
+            href={config.social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
+            className={cn(buttonVariants({ variant: "outline" }), "gap-2")}
+          >
+            <Github size={18} />
+            GitHub
+          </Link>
+          <Link
+            href={config.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profile"
+            className={cn(buttonVariants({ variant: "outline" }), "gap-2")}
+          >
+            <Linkedin size={18} />
+            LinkedIn
+          </Link>
+        </CardContent>
+      </Card>
+    </main>
   );
 }
-
-export default Page;

@@ -225,12 +225,12 @@ export const EXPERIENCE: Experience[] = [
     id: 1,
     startDate: "Sep 2025",
     endDate: "Present",
-    title: "AI/Game Development Engineer",
+    title: "Quantitative Research Engineer",
     company: "UC Berkeley Operations & Behavioral Analytics Lab",
     description: [
-      "Modeled sequential decision-making under uncertainty in delayed-reward environments using Deep Q-Networks (DQN); improved policy learning via reward shaping, experience replay, target networks, and hyperparameter sweeps.",
-      "Built an experiment-grade simulation platform in SvelteKit with Firebase (auth, realtime streaming) to collect event-level trajectories and state/action/reward logs for policy evaluation and behavioral analysis.",
-      "Quantified behavioral effects in human–agent interaction data using controlled comparisons and uncertainty estimates (confidence intervals / bootstrap) over key outcome metrics; presented with Prof. Park Sinchaisri at Stanford and CMU.",
+      "Designed and built the reinforcement-learning system (DQN — reward shaping, experience replay, target networks).",
+      "Built the full experiment and data pipeline (SvelteKit/Firebase) and trained the ML models — behavioral clustering, offline policy evaluation.",
+      "Led all data analysis and modeling (conditional-logit bias estimation, fixed-effects causal models, bootstrap CIs) for a first-author paper in preparation, targeting ACM CHI 2027.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -270,7 +270,7 @@ export const EXPERIENCE: Experience[] = [
       "Developed a stochastic generative modeling + optimization stack for peptide candidates using diffusion models (sampling) and deep reinforcement learning (policy/value optimization) in PyTorch with vectorized preprocessing in NumPy/Pandas.",
       "Designed the RL reward as a multi-objective utility: maximize predicted affinity and developability scores while penalizing constraint violations (aggregation/toxicity heuristics), turning peptide design into a constrained optimization loop.",
       "Improved reproducibility by tracking configs, data lineage, training (loss/grad norms), RL dynamics (reward curves/Q estimates), and generation KPIs (top-k scores, diversity/uniqueness, sequence-level stats) across sensitivity analyses.",
-      "Published a research paper with Dr. Vladimir Akhmetov on AI-assisted Alzheimer's drug design (DOI: 10.36838/v7i4.5).",
+      "Research paper co-authored with Dr. Vladimir Akhmetov on AI-assisted Alzheimer's drug design (DOI: 10.36838/v7i4.5).",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -306,14 +306,16 @@ export type Award = {
 };
 
 export const AWARDS: Award[] = [
-  { year: "2024", title: "New Zealand Chemistry Olympiad – 2× Gold Medal, 1× Silver Medal; National Exam Full Score Achiever" },
-  { year: "2024", title: "International Chemistry Olympiad Qualifier; New Zealand Chemistry Olympiad National Team Member" },
+  { year: "2024", title: "USACO Platinum" },
+  { year: "2024", title: "International Olympiad in Informatics (IOI) 2024 — National Camp Member & Gold Medalist" },
+  { year: "2021", title: "Australian Mathematical Competition – 1× Medal (1/5000) & Top in Auckland City, 3× High Distinction" },
   { year: "2024", title: "New Zealand Mathematical Olympiad Camp Member; New Zealand Senior Maths Competition 1st Place" },
-  { year: "2024", title: "British Biology Olympiad Gold Medal; British Physics Olympiad Gold Medal; UK Chemistry Olympiad Gold Medal" },
   { year: "2024", title: "New Zealand Young Physicists' Tournament 2nd Place" },
   { year: "2023", title: "New Zealand Young Physicists' Tournament 3rd Place" },
   { year: "2023", title: "New Zealand Physics and Maths Competition 7th Place; International Young Physicists' Tournament Qualifier" },
-  { year: "2021", title: "Australian Mathematical Competition – 1× Medal (1/5000) & Top in Auckland City, 3× High Distinction" },
+  { year: "2024", title: "New Zealand Chemistry Olympiad – 2× Gold Medal, 1× Silver Medal; National Exam Full Score Achiever" },
+  { year: "2024", title: "International Chemistry Olympiad Qualifier; New Zealand Chemistry Olympiad National Team Member" },
+  { year: "2024", title: "British Biology Olympiad Gold Medal; British Physics Olympiad Gold Medal; UK Chemistry Olympiad Gold Medal" },
 ];
 
 export const themeDisclaimers = {
@@ -332,4 +334,3 @@ export const themeDisclaimers = {
     "Dark mode on!",
   ],
 };
-

@@ -47,7 +47,7 @@ export default function Footer() {
           animate="enter"
           exit="exit"
         >
-          Blog
+          Résumé
         </motion.li>
         <motion.li
           custom={[0.3, 0]}
@@ -56,7 +56,7 @@ export default function Footer() {
           animate="enter"
           exit="exit"
         >
-          Newsletter
+          Contact
         </motion.li>
       </ul>
     </div>

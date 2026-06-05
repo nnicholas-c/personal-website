@@ -10,6 +10,7 @@ const ExperienceSection = () => {
   return (
     <>
       <SectionWrapper
+        id="experience"
         className="flex flex-col items-center justify-center min-h-[120vh] py-20 z-10"
       >
         <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
@@ -35,6 +36,7 @@ const ExperienceSection = () => {
 
       {/* Awards Section — separate wrapper so it fades independently */}
       <SectionWrapper
+        id="awards"
         className="flex flex-col items-center justify-center py-20 z-10"
       >
         <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
@@ -50,7 +52,7 @@ const ExperienceSection = () => {
             transition={{ duration: 0.4, ease: "easeOut" }}
             viewport={{ once: true, margin: "-50px" }}
           >
-            <Card className="bg-card text-card-foreground border-border shadow-sm">
+            <Card className="pointer-events-auto bg-card text-card-foreground border-border shadow-sm">
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   {AWARDS.map((award, i) => (
@@ -101,6 +103,7 @@ const ExperienceCard = ({
       <Card
         className={cn(
           "bg-card text-card-foreground border-border",
+          "pointer-events-auto",
           "hover:border-primary/20 transition-colors duration-300",
           "shadow-sm hover:shadow-md"
         )}

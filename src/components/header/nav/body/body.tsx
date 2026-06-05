@@ -65,7 +65,8 @@ export default function Body({
             key={`l_${index}`}
             href={href}
             target={target}
-            className="cursor-can-hover rounded-lg"
+            rel={target === "_blank" ? "noopener noreferrer" : undefined}
+            className="cursor-can-hover rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <motion.p
               className={cn(

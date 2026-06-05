@@ -3,7 +3,15 @@ import { config } from "@/data/config";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY || "re_placeholder");
+let resendClient: Resend | null = null;
+
+function getResend() {
+  if (!resendClient) {
+    resendClient = new Resend(process.env.RESEND_API_KEY!);
+  }
+
+  return resendClient;
+}
 
 // Simple in-memory rate limiting (per IP, 3 emails per 15 minutes)
 const rateLimit = new Map<string, { count: number; resetTime: number }>();
@@ -56,8 +64,8 @@ export async function POST(req: Request) {
     if (!zodSuccess)
       return Response.json({ error: zodError?.message }, { status: 400 });
 
-    const { data: resendData, error: resendError } = await resend.emails.send({
-      from: "Porfolio <onboarding@resend.dev>",
+    const { data: resendData, error: resendError } = await getResend().emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
       to: [config.email],
       subject: "Contact me from portfolio",
       react: EmailTemplate({

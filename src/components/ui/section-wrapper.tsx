@@ -10,6 +10,7 @@ interface SectionWrapperProps extends React.HTMLAttributes<HTMLElement> {
 
 const SectionWrapper = ({ id, className, children, ...props }: SectionWrapperProps) => {
   const containerRef = useRef<HTMLElement>(null);
+  const isHero = id === "hero";
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -26,7 +27,7 @@ const SectionWrapper = ({ id, className, children, ...props }: SectionWrapperPro
       {...props}
     >
       <motion.div
-        style={{ opacity, scale }}
+        style={isHero ? undefined : { opacity, scale }}
         className="w-full h-full"
       >
         {children}
