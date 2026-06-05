@@ -7,7 +7,7 @@ export type Project = {
   tags: string[];
   github?: string;
   live?: string;
-  status?: "Live" | "Coming soon";
+  status?: "Live" | "Research";
 };
 
 const projects: Project[] = [
@@ -49,13 +49,14 @@ const projects: Project[] = [
   },
   {
     id: "equity-signal",
-    category: "Coming soon",
+    category: "Quant Research",
     title: "Cross-Sectional Equity Signal Research",
     src: "/assets/projects-screenshots/equity-signal/landing.svg",
     description:
-      "Placeholder for Python research on cross-sectional return signals and evaluation.",
-    tags: ["Python", "pandas", "scikit-learn"],
-    status: "Coming soon",
+      "402-name long-short study: IC ≈ 0.015 (NW t ≈ 1.9), deflated Sharpe ≈ 0.22; honest negative result where LinUCB did not beat a mean-variance baseline.",
+    tags: ["Python", "pandas", "scikit-learn", "LinUCB", "Mean-Variance"],
+    github: "https://github.com/nnicholas-c/Return-prediction-signal",
+    status: "Research",
   },
   {
     id: "portfolio",

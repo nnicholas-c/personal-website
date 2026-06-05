@@ -230,7 +230,7 @@ export const EXPERIENCE: Experience[] = [
     description: [
       "Designed and built the reinforcement-learning system (DQN — reward shaping, experience replay, target networks).",
       "Built the full experiment and data pipeline (SvelteKit/Firebase) and trained the ML models — behavioral clustering, offline policy evaluation.",
-      "Led all data analysis and modeling (conditional-logit bias estimation, fixed-effects causal models, bootstrap CIs) for a first-author paper in preparation, targeting ACM CHI 2027.",
+      "Led all data analysis and modeling (conditional-logit bias estimation, fixed-effects causal models, bootstrap CIs); first-author paper in preparation, targeting ACM CHI 2027.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -270,7 +270,7 @@ export const EXPERIENCE: Experience[] = [
       "Developed a stochastic generative modeling + optimization stack for peptide candidates using diffusion models (sampling) and deep reinforcement learning (policy/value optimization) in PyTorch with vectorized preprocessing in NumPy/Pandas.",
       "Designed the RL reward as a multi-objective utility: maximize predicted affinity and developability scores while penalizing constraint violations (aggregation/toxicity heuristics), turning peptide design into a constrained optimization loop.",
       "Improved reproducibility by tracking configs, data lineage, training (loss/grad norms), RL dynamics (reward curves/Q estimates), and generation KPIs (top-k scores, diversity/uniqueness, sequence-level stats) across sensitivity analyses.",
-      "Research paper co-authored with Dr. Vladimir Akhmetov on AI-assisted Alzheimer's drug design (DOI: 10.36838/v7i4.5).",
+      "Research paper first-authored with Dr. Vladimir Akhmetov on AI-assisted Alzheimer's drug design (DOI: 10.36838/v7i4.5).",
     ],
     skills: [
       SkillNames.PYTHON,

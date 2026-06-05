@@ -26,7 +26,7 @@ const ProjectsSection = () => {
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  const isComingSoon = project.status === "Coming soon";
+  const isResearch = project.status === "Research";
 
   return (
     <Card className="group pointer-events-auto flex h-full min-h-[520px] flex-col overflow-hidden border-border bg-card/90 shadow-sm transition-colors duration-300 hover:border-primary/40 hover:shadow-md focus-within:border-primary/60">
@@ -51,7 +51,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             </h3>
           </div>
           {project.status && (
-            <Badge variant={isComingSoon ? "secondary" : "outline"} className="shrink-0">
+            <Badge variant={isResearch ? "secondary" : "outline"} className="shrink-0">
               {project.status}
             </Badge>
           )}
