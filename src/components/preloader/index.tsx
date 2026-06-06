@@ -38,8 +38,8 @@ export const usePreloader = () => {
 };
 const LOADING_TIME = 2.5;
 function Preloader({ children, disabled = false }: PreloaderProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingPercent, setLoadingPercent] = useState(0);
+  const [isLoading, setIsLoading] = useState(!disabled);
+  const [loadingPercent, setLoadingPercent] = useState(disabled ? 100 : 0);
   const loadingTween = useRef<gsap.core.Tween>();
 
   const bypassLoading = () => {
@@ -50,6 +50,12 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
   };
   const loadingPercentRef = useRef<{ value: number }>({ value: 0 });
   useEffect(() => {
+    if (disabled) {
+      setLoadingPercent(100);
+      setIsLoading(false);
+      return;
+    }
+
     loadingTween.current = gsap.to(loadingPercentRef.current, {
       value: 100,
       duration: LOADING_TIME,
@@ -63,7 +69,7 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
         // window.scrollTo(0, 0);
       },
     });
-  }, []);
+  }, [disabled]);
 
   return (
     <preloaderContext.Provider

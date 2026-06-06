@@ -15,12 +15,14 @@ function Footer() {
       <SocialMediaButtons />
       <nav className="flex gap-4 sm:gap-6 z-10">
         {footer.map((link, index) => {
-          const { title, href } = link;
+          const { title, href, target } = link;
 
           return (
             <Link
               className="text-xs underline-offset-4 hover:underline"
               href={href}
+              target={target}
+              rel={target === "_blank" ? "noopener noreferrer" : undefined}
               key={`l_${index}`}
             >
               <Button variant={"link"}>{title}</Button>

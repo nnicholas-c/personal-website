@@ -1,11 +1,14 @@
-const footer: { title: string; href: string }[] = [
+import { config } from "@/data/config";
+
+const footer: { title: string; href: string; target?: string }[] = [
   {
-    title: "Blog",
-    href: "/blogs",
+    title: "Résumé",
+    href: "/resume.pdf",
+    target: "_blank",
   },
   {
-    title: "Newsletter",
-    href: "/news",
+    title: "Contact",
+    href: `mailto:${config.email}`,
   },
 ];
 

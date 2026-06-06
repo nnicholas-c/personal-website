@@ -10,7 +10,6 @@ import FunnyThemeToggle from "../theme/funny-theme-toggle";
 import { Button } from "../ui/button";
 import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
-import { GitHubStarsButton } from "../ui/shadcn-io/github-stars-button";
 
 interface HeaderProps {
   loader?: boolean;
@@ -56,16 +55,11 @@ const Header = ({ loader }: HeaderProps) => {
 
         <FunnyThemeToggle className="w-6 h-6 mr-4 hidden md:flex" />
         {process.env.NEXT_PUBLIC_WS_URL && <OnlineUsers />}
-        {config.githubUsername && config.githubRepo && (
-          <GitHubStarsButton
-            username={config.githubUsername}
-            repo={config.githubRepo}
-            className="mr-4"
-          />
-        )}
         <Button
           variant={"ghost"}
           onClick={() => setIsActive(!isActive)}
+          aria-label={isActive ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={isActive}
           className={cn(
             styles.el,
             "m-0 p-0 h-6 bg-transparent flex items-center justify-center"

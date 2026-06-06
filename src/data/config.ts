@@ -28,7 +28,7 @@ const config = {
   githubRepo: "personal-website",
 
   get ogImg() {
-    return this.site + "/assets/seo/og-image.png";
+    return this.site + "/assets/seo/websiten.png";
   },
   social: {
     twitter: "https://x.com/NChen43323",

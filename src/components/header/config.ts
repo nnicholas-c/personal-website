@@ -1,4 +1,5 @@
 import { Link } from "@/types";
+import { config } from "@/data/config";
 
 const links: Link[] = [
   {
@@ -7,13 +8,8 @@ const links: Link[] = [
     thumbnail: '/assets/nav-link-previews/landing.png'
   },
   {
-    title: 'About',
-    href: '/#about',
-    thumbnail: '/assets/nav-link-previews/about.png'
-  },
-  {
-    title: 'Skills',
-    href: '/#skills',
+    title: 'Experience',
+    href: '/#experience',
     thumbnail: '/assets/nav-link-previews/skills.png'
   },
   {
@@ -21,25 +17,21 @@ const links: Link[] = [
     href: '/#projects',
     thumbnail: '/assets/nav-link-previews/projects.png'
   },
-  // {
-  //   title: 'Skills',
-  //   href: '/skills',
-  //   thumbnail: '/assets/nav-link-previews/skills.png'
-  // },
-  // {
-  //   title: 'Testimonials',
-  //   href: '/testimonials',
-  //   thumbnail: '/assets/nav-link-previews/testimonials.png'
-  // },
   {
-    title: 'Blogs',
-    href: '/blogs',
-    thumbnail: '/assets/nav-link-previews/blog.png',
+    title: 'Awards',
+    href: '/#awards',
+    thumbnail: '/assets/nav-link-previews/landing.png',
   },
   {
     title: 'Contact',
-    href: '/#contact',
+    href: `mailto:${config.email}`,
     thumbnail: '/assets/nav-link-previews/contact.png'
+  },
+  {
+    title: 'Résumé',
+    href: '/resume.pdf',
+    thumbnail: '/assets/nav-link-previews/contact.png',
+    target: '_blank',
   }
 ];
 
