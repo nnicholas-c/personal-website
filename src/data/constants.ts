@@ -292,7 +292,7 @@ export const EXPERIENCE: Experience[] = [
     company: "MIT — Pentelute Lab",
     description: [
       "Built a deep generative + reinforcement-learning stack in PyTorch with diffusion sampling and policy/value methods over a multi-objective reward.",
-      "First-authored a peer-reviewed paper on AI-driven molecular design (DOI: 10.36838/v7i4.29; https://doi.org/10.36838/v7i4.29).",
+      "First-authored a peer-reviewed paper on AI-driven molecular design (DOI: 10.36838/v7i4.29).",
     ],
     skills: [
       SkillNames.PYTHON,

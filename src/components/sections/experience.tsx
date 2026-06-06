@@ -137,7 +137,9 @@ const ExperienceCard = ({
   experience: (typeof EXPERIENCE)[0];
   index: number;
 }) => {
-  const doiUrl = "https://doi.org/10.36838/v7i4.29";
+  const doiText = "DOI: 10.36838/v7i4.29";
+  const paperUrl =
+    "https://terra-docs.s3.us-east-2.amazonaws.com/IJHSR/Articles/volume7-issue4/IJHSR_2025_74_29.pdf";
 
   return (
     <motion.div
@@ -177,18 +179,18 @@ const ExperienceCard = ({
           <ul className="list-disc list-outside ml-4 space-y-2 text-base text-muted-foreground leading-relaxed">
             {experience.description.map((point, i) => (
               <li key={i}>
-                {point.includes(doiUrl) ? (
+                {point.includes(doiText) ? (
                   <>
-                    {point.split(doiUrl)[0]}
+                    {point.split(doiText)[0]}
                     <a
-                      href={doiUrl}
+                      href={paperUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-foreground underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      {doiUrl}
+                      {doiText}
                     </a>
-                    {point.split(doiUrl)[1]}
+                    {point.split(doiText)[1]}
                   </>
                 ) : (
                   point
