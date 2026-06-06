@@ -6,10 +6,11 @@ import { usePathname } from "next/navigation";
 import { config } from "@/data/config";
 
 const LINKS = [
+  { name: "Education", href: "/#education" },
   { name: "Experience", href: "/#experience" },
   { name: "Projects", href: "/#projects" },
   { name: "Contact", href: `mailto:${config.email}` },
-  { name: "Résumé", href: "/resume.pdf" },
+  { name: "Résumé", href: config.resumePath },
 ];
 
 const Header = () => {

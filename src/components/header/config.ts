@@ -13,6 +13,11 @@ const links: Link[] = [
     thumbnail: '/assets/nav-link-previews/skills.png'
   },
   {
+    title: 'Education',
+    href: '/#education',
+    thumbnail: '/assets/nav-link-previews/landing.png',
+  },
+  {
     title: 'Projects',
     href: '/#projects',
     thumbnail: '/assets/nav-link-previews/projects.png'
@@ -29,7 +34,7 @@ const links: Link[] = [
   },
   {
     title: 'Résumé',
-    href: '/resume.pdf',
+    href: config.resumePath,
     thumbnail: '/assets/nav-link-previews/contact.png',
     target: '_blank',
   }

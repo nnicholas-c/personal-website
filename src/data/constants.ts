@@ -220,17 +220,41 @@ export type Experience = {
   skills: SkillNames[];
 };
 
+export type Education = {
+  school: string;
+  degree: string;
+  gpa: string;
+  expected: string;
+  coursework: string[];
+};
+
+export const EDUCATION: Education[] = [
+  {
+    school: "University of California, Berkeley",
+    degree: "B.S. in Electrical Engineering & Computer Science",
+    gpa: "3.8/4.0",
+    expected: "Expected May 2028",
+    coursework: [
+      "Optimization Models (EECS 127)",
+      "Probability & Discrete Math (CS 70)",
+      "Deep Learning (CS 182)",
+      "In progress: Probability & Random Processes (EE 126), Linear Algebra (Math 110), Algorithms (CS 170), Machine Learning (CS 189)",
+    ],
+  },
+];
+
 export const EXPERIENCE: Experience[] = [
   {
     id: 1,
     startDate: "Sep 2025",
     endDate: "Present",
-    title: "Quantitative Research Engineer",
-    company: "UC Berkeley Operations & Behavioral Analytics Lab",
+    title: "AI/ML & Quantitative Research Engineer",
+    company: "UC Berkeley — Operations & Behavioral Analytics Lab",
     description: [
-      "Designed and built the reinforcement-learning system (DQN — reward shaping, experience replay, target networks).",
-      "Built the full experiment and data pipeline (SvelteKit/Firebase) and trained the ML models — behavioral clustering, offline policy evaluation.",
-      "Led all data analysis and modeling (conditional-logit bias estimation, fixed-effects causal models, bootstrap CIs); first-author paper in preparation, targeting ACM CHI 2027.",
+      "Built a reinforcement-learning system (DQN: reward shaping, experience replay, target networks) and the full experiment + data pipeline (SvelteKit/Firebase) over 85 participants and 1,000+ rounds.",
+      "Clustered behavior into 5 statistically separable decision policies (8× outcome spread, F=276) and ran offline policy evaluation.",
+      "Fixed-effects causal inference showed payout salience raised suboptimal choices by 71 percentage points with no measurable learning across 15 rounds.",
+      "First author, in preparation (targeting ACM CHI 2027); presented with Prof. Sinchaisri at Stanford and CMU.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -245,11 +269,11 @@ export const EXPERIENCE: Experience[] = [
     startDate: "Jan 2025",
     endDate: "Feb 2025",
     title: "Data Engineering Intern",
-    company: "Shenwan Hongyuan",
+    company: "Shenwan Hongyuan Securities",
     description: [
-      "Owned market-data QA + reconciliation for trading pipelines; implemented schema/null/outlier and symbol/timestamp alignment checks with researchers; optimized Pandas/NumPy/Spark transforms for 20% faster runtime.",
-      "Automated and hardened ETL for time-series market feeds (Python/SQL/Airflow): idempotent jobs, backfill-safe runs, and dependency-managed DAGs; improved end-to-end ingestion/processing throughput by 10%.",
-      "Tuned PostgreSQL performance for production queries (partition-aware access patterns, query-plan optimization), cutting query latency by 30%; added Redis caching for hot datasets and containerized services with Docker for deployment.",
+      "Built and hardened large-scale equities market-data pipelines across multi-terabyte tick and daily-bar feeds with billions of rows.",
+      "Optimized Spark/Pandas processing over partitioned Parquet for 20% faster runtime and automated ETL with Airflow.",
+      "Tuned PostgreSQL performance and supported Redis caching and Dockerized services for production data workflows.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -264,13 +288,11 @@ export const EXPERIENCE: Experience[] = [
     id: 3,
     startDate: "Feb 2023",
     endDate: "Apr 2024",
-    title: "Research Intern",
-    company: "MIT Pentelute Lab",
+    title: "Machine Learning Researcher",
+    company: "MIT — Pentelute Lab",
     description: [
-      "Developed a stochastic generative modeling + optimization stack for peptide candidates using diffusion models (sampling) and deep reinforcement learning (policy/value optimization) in PyTorch with vectorized preprocessing in NumPy/Pandas.",
-      "Designed the RL reward as a multi-objective utility: maximize predicted affinity and developability scores while penalizing constraint violations (aggregation/toxicity heuristics), turning peptide design into a constrained optimization loop.",
-      "Improved reproducibility by tracking configs, data lineage, training (loss/grad norms), RL dynamics (reward curves/Q estimates), and generation KPIs (top-k scores, diversity/uniqueness, sequence-level stats) across sensitivity analyses.",
-      "Research paper first-authored with Dr. Vladimir Akhmetov on AI-assisted Alzheimer's drug design (DOI: 10.36838/v7i4.5).",
+      "Built a deep generative + reinforcement-learning stack in PyTorch with diffusion sampling and policy/value methods over a multi-objective reward.",
+      "First-authored a peer-reviewed paper on AI-driven molecular design (DOI: 10.36838/v7i4.29; https://doi.org/10.36838/v7i4.29).",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -283,12 +305,11 @@ export const EXPERIENCE: Experience[] = [
     id: 4,
     startDate: "Dec 2023",
     endDate: "Jan 2024",
-    title: "Academic Researcher",
-    company: "Oxford University",
+    title: "Computational Research — Ranked 1st of 45",
+    company: "University of Oxford",
     description: [
-      "Ranked 1/45 in a research team modeling biochemical systems through stochastic processes and algorithmic complexity.",
-      "Implemented Monte Carlo simulation and time-series / nonlinear dynamical systems models in Python, C++, and MATLAB, including parameter sweeps and stability/sensitivity analysis of molecular interaction dynamics.",
-      "Built high-dimensional statistical learning pipelines in NumPy/Pandas/scikit-learn, applying PCA (numerical linear algebra), k-means (unsupervised clustering), and Random Forest for candidate scoring and uncertainty/risk-style assessment.",
+      "Built Monte Carlo, stochastic-process, and time-series models of nonlinear biochemical systems.",
+      "Implemented PCA, k-means, and random-forest pipelines for computational research workflows.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -306,16 +327,10 @@ export type Award = {
 };
 
 export const AWARDS: Award[] = [
-  { year: "2024", title: "USACO Platinum" },
-  { year: "2024", title: "International Olympiad in Informatics (IOI) 2024 — National Camp Member & Gold Medalist" },
-  { year: "2021", title: "Australian Mathematical Competition – 1× Medal (1/5000) & Top in Auckland City, 3× High Distinction" },
-  { year: "2024", title: "New Zealand Mathematical Olympiad Camp Member; New Zealand Senior Maths Competition 1st Place" },
-  { year: "2024", title: "New Zealand Young Physicists' Tournament 2nd Place" },
-  { year: "2023", title: "New Zealand Young Physicists' Tournament 3rd Place" },
-  { year: "2023", title: "New Zealand Physics and Maths Competition 7th Place; International Young Physicists' Tournament Qualifier" },
-  { year: "2024", title: "New Zealand Chemistry Olympiad – 2× Gold Medal, 1× Silver Medal; National Exam Full Score Achiever" },
-  { year: "2024", title: "International Chemistry Olympiad Qualifier; New Zealand Chemistry Olympiad National Team Member" },
-  { year: "2024", title: "British Biology Olympiad Gold Medal; British Physics Olympiad Gold Medal; UK Chemistry Olympiad Gold Medal" },
+  { year: "2024", title: "USACO Gold; International Olympiad in Informatics (IOI) 2024 National Camp Member" },
+  { year: "2021", title: "Australian Mathematics Competition — Medal (top 1/5,000) & Top in Auckland; 3× High Distinction" },
+  { year: "2024", title: "NZ Mathematical Olympiad Camp Member; NZ Senior Mathematics Competition — 1st Place" },
+  { year: "2024", title: "Science olympiad golds: NZ Chemistry (2× Gold, 1× Silver, National Exam full score), UK Chemistry, British Physics, British Biology; IChO 2024 Qualifier" },
 ];
 
 export const themeDisclaimers = {

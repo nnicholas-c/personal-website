@@ -51,12 +51,12 @@ const HeroSection = () => {
                     "cursor-default sm:text-lg md:text-xl leading-relaxed bg-clip-text"
                   )}
                 >
-                  EECS @ UC Berkeley — quantitative research, ML, and RL
+                  EECS @ UC Berkeley — {config.tagline}
                 </p>
               </div>
               <div className="mt-8 flex w-full max-w-sm flex-col gap-3 sm:max-w-none">
                 <Link
-                  href="/resume.pdf"
+                  href={config.resumePath}
                   target="_blank"
                   download
                   className="w-full sm:w-fit rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"

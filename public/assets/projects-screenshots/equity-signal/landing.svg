@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
   <title id="title">Cross-sectional equity signal research thumbnail</title>
-  <desc id="desc">Stylized research notebook with factor ranks, residual plots, and model evaluation charts.</desc>
+  <desc id="desc">Stylized research notebook showing point-in-time universe checks, factor artifact removal, and null-result evaluation.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#111827"/>
@@ -39,7 +39,7 @@
     <rect x="930" y="190" width="32" height="150" rx="9" fill="#38bdf8" opacity="0.85"/>
   </g>
   <g fill="#fbbf24" font-family="Inter, Arial, sans-serif">
-    <rect x="785" y="552" width="210" height="44" rx="22" opacity="0.18"/>
-    <text x="820" y="581" font-size="22" font-weight="700">IC 0.015 · DSR 0.22</text>
+    <rect x="710" y="552" width="285" height="44" rx="22" opacity="0.18"/>
+    <text x="742" y="581" font-size="22" font-weight="700">PIT artifact removed</text>
   </g>
 </svg>

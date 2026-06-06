@@ -3,7 +3,7 @@ import { config } from "@/data/config";
 const footer: { title: string; href: string; target?: string }[] = [
   {
     title: "Résumé",
-    href: "/resume.pdf",
+    href: config.resumePath,
     target: "_blank",
   },
   {

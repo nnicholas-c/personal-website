@@ -12,6 +12,7 @@ import {
   FaLinkedin,
   FaLinux,
   FaNodeJs,
+  FaPhone,
   FaReact,
   FaVuejs,
   FaYarn,
@@ -33,6 +34,7 @@ import {
   SiVscodium,
 } from "react-icons/si";
 import { VscCode } from "react-icons/vsc";
+import { config } from "@/data/config";
 
 // @ts-ignore
 import { Splide, SplideSlide } from "@splidejs/react-splide";
@@ -42,19 +44,25 @@ import { TbTerminal2 } from "react-icons/tb";
 const CONTACT_LINKS = [
   {
     name: "Email",
-    content: "nchen06@berkeley.edu",
-    href: "mailto:nchen06@berkeley.edu",
+    content: config.email,
+    href: `mailto:${config.email}`,
     icon: <FaEnvelope height={"50px"} />,
   },
   {
+    name: "Phone",
+    content: config.phone,
+    href: `tel:${config.phone.replace(/[^\d+]/g, "")}`,
+    icon: <FaPhone height={"50px"} />,
+  },
+  {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/nchen06/",
+    href: config.social.linkedin,
     content: "/nchen06",
     icon: <FaLinkedin height={"50px"} />,
   },
   {
     name: "GitHub",
-    href: "https://github.com/nnicholas-c",
+    href: config.social.github,
     content: "/nnicholas-c",
     icon: <FaGithub height={"50px"} />,
   },
@@ -246,7 +254,7 @@ function Page() {
               <div className="flex flex-col gap-3 lg:items-center ml-10 md:ml-20 lg:ml-0">
                 <p className="text-center text-xl">Nicholas Chen</p>
                 <div className="text-xs bg-zinc-700 w-fit px-3 py-1 rounded-full">
-                  Web Developer
+                  {config.tagline}
                 </div>
               </div>
             </div>
@@ -280,15 +288,18 @@ function Page() {
           >
             <h1 className="text-3xl mb-10 lg:md-20">About me</h1>
             <p className="mb-10 text-roboto">
-              Hey there! I&apos;m Nicholas, an EECS student at UC Berkeley
-              passionate about quantitative engineering, machine learning, and
-              building startups. From deep reinforcement learning
-              to production data pipelines, I thrive on turning complex problems
-              into elegant solutions.
+              I&apos;m Nicholas, an EECS student at UC Berkeley focused on AI/ML
+              and quantitative research. I work across reinforcement learning,
+              statistical modeling, market-data pipelines, and research systems
+              that turn messy data into defensible evidence.
             </p>
             <p className="mb-10">
-              When I&apos;m not coding, you can find me gambling on stocks, investigating new technologies, or sipping coffee while
-              brainstorming my next (non) prompt engineered startup.
+              University of California, Berkeley — B.S. in Electrical
+              Engineering & Computer Science — GPA 3.8/4.0 — Expected May 2028.
+              Coursework: Optimization Models (EECS 127), Probability & Discrete
+              Math (CS 70), Deep Learning (CS 182); in progress: Probability &
+              Random Processes (EE 126), Linear Algebra (Math 110), Algorithms
+              (CS 170), Machine Learning (CS 189).
             </p>
             <h1 className="text-3xl mb-10 lg:md-20">Stuff I use</h1>
             <div className="mb-5">
