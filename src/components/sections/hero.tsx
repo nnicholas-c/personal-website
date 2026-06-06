@@ -92,7 +92,7 @@ const HeroSection = () => {
                     </Button>
                   </Link>
                   <Link
-                    href={"#contact"}
+                    href={`mailto:${config.email}`}
                     className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     <Button variant={"outline"} className="gap-2">

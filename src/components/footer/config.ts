@@ -1,3 +1,5 @@
+import { config } from "@/data/config";
+
 const footer: { title: string; href: string; target?: string }[] = [
   {
     title: "Résumé",
@@ -6,7 +8,7 @@ const footer: { title: string; href: string; target?: string }[] = [
   },
   {
     title: "Contact",
-    href: "/#contact",
+    href: `mailto:${config.email}`,
   },
 ];
 

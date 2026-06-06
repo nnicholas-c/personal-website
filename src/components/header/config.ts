@@ -1,4 +1,5 @@
 import { Link } from "@/types";
+import { config } from "@/data/config";
 
 const links: Link[] = [
   {
@@ -23,7 +24,7 @@ const links: Link[] = [
   },
   {
     title: 'Contact',
-    href: '/#contact',
+    href: `mailto:${config.email}`,
     thumbnail: '/assets/nav-link-previews/contact.png'
   },
   {

@@ -3,11 +3,12 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import { config } from "@/data/config";
 
 const LINKS = [
   { name: "Experience", href: "/#experience" },
   { name: "Projects", href: "/#projects" },
-  { name: "Contact", href: "/#contact" },
+  { name: "Contact", href: `mailto:${config.email}` },
   { name: "Résumé", href: "/resume.pdf" },
 ];
 
