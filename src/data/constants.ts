@@ -328,15 +328,15 @@ export type Award = {
 
 export const AWARDS: Award[] = [
   { year: "2024", title: "USACO Gold" },
-  { year: "2024", title: "International Olympiad in Informatics (IOI) 2024 National Camp Member" },
-  { year: "2021", title: "Australian Mathematics Competition — Medal (top 1/5,000) & Top in Auckland; 3× High Distinction" },
-  { year: "2024", title: "NZ Mathematical Olympiad Camp Member" },
-  { year: "2024", title: "NZ Senior Mathematics Competition — 1st Place" },
-  { year: "2024", title: "NZ Chemistry Olympiad — 2× Gold, 1× Silver; National Exam full score" },
-  { year: "2024", title: "Science olympiad gold: UK Chemistry" },
-  { year: "2024", title: "Science olympiad gold: British Physics" },
-  { year: "2024", title: "Science olympiad gold: British Biology" },
-  { year: "2024", title: "IChO 2024 Qualifier" },
+  { year: "2024", title: "International Olympiad in Informatics (IOI) 2024 — National Camp Member" },
+  { year: "2021", title: "Australian Mathematical Competition – 1× Medal (1/5000) & Top in Auckland City, 3× High Distinction" },
+  { year: "2024", title: "New Zealand Mathematical Olympiad Camp Member; New Zealand Senior Maths Competition 1st Place" },
+  { year: "2024", title: "New Zealand Young Physicists' Tournament 2nd Place" },
+  { year: "2023", title: "New Zealand Young Physicists' Tournament 3rd Place" },
+  { year: "2023", title: "New Zealand Physics and Maths Competition 7th Place; International Young Physicists' Tournament Qualifier" },
+  { year: "2024", title: "New Zealand Chemistry Olympiad – 2× Gold Medal, 1× Silver Medal; National Exam Full Score Achiever" },
+  { year: "2024", title: "International Chemistry Olympiad Qualifier; New Zealand Chemistry Olympiad National Team Member" },
+  { year: "2024", title: "British Biology Olympiad Gold Medal; British Physics Olympiad Gold Medal; UK Chemistry Olympiad Gold Medal" },
 ];
 
 export const themeDisclaimers = {
