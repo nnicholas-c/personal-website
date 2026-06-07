@@ -1,9 +1,9 @@
 const config = {
   title: "Nicholas Chen | EECS @ UC Berkeley",
   description: {
-    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley specializing in quantitative engineering, machine learning, and startups. From data pipelines to deep reinforcement learning — let's build something impactful.",
+    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley focused on AI/ML and quantitative research.",
     short:
-      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. Quantitative engineering, ML, and development.",
+      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. AI/ML and quantitative research.",
   },
   keywords: [
     "Nicholas Chen",
@@ -20,15 +20,19 @@ const config = {
     "Next.js",
   ],
   author: "Nicholas Chen",
+  tagline: "AI/ML & Quantitative Research",
   email: "nchen06@berkeley.edu",
-  site: "https://nicholaschen.dev",
+  phone: "+1 510-529-6747",
+  site: "https://www.nicholaschen.dev/",
+  // TODO: Add public/Nicholas_Chen_Resume.pdf when the final résumé is ready.
+  resumePath: "/Nicholas_Chen_Resume.pdf",
 
   // for github stars button
   githubUsername: "nnicholas-c",
   githubRepo: "personal-website",
 
   get ogImg() {
-    return this.site + "/assets/seo/websiten.png";
+    return this.site.replace(/\/$/, "") + "/assets/seo/websiten.png";
   },
   social: {
     twitter: "https://x.com/NChen43323",
@@ -38,4 +42,5 @@ const config = {
     github: "https://github.com/nnicholas-c",
   },
 };
+
 export { config };

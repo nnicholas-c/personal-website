@@ -1,4 +1,4 @@
-import { EXPERIENCE, AWARDS, SkillNames, SKILLS } from "@/data/constants";
+import { AWARDS, EDUCATION, EXPERIENCE, SkillNames, SKILLS } from "@/data/constants";
 import { SectionHeader } from "./section-header";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,54 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const ExperienceSection = () => {
   return (
     <>
+      <SectionWrapper
+        id="education"
+        className="flex flex-col items-center justify-center py-20 z-10"
+      >
+        <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
+          <SectionHeader
+            id="education"
+            title="Education"
+            desc="Academic background."
+            className="mb-12 md:mb-20 mt-0"
+          />
+          <div className="flex flex-col gap-8">
+            {EDUCATION.map((education) => (
+              <Card
+                key={education.school}
+                className="pointer-events-auto bg-card text-card-foreground border-border shadow-sm"
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <CardTitle className="text-xl font-bold tracking-tight">
+                        {education.school}
+                      </CardTitle>
+                      <div className="text-base font-medium text-muted-foreground">
+                        {education.degree}
+                      </div>
+                    </div>
+                    <Badge variant="secondary" className="w-fit font-mono text-xs font-normal">
+                      {education.expected}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-base text-muted-foreground">
+                    GPA {education.gpa}
+                  </p>
+                  <ul className="list-disc list-outside ml-4 space-y-2 text-base text-muted-foreground leading-relaxed">
+                    {education.coursework.map((course) => (
+                      <li key={course}>{course}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </SectionWrapper>
+
       <SectionWrapper
         id="experience"
         className="flex flex-col items-center justify-center min-h-[120vh] py-20 z-10"
@@ -89,6 +137,10 @@ const ExperienceCard = ({
   experience: (typeof EXPERIENCE)[0];
   index: number;
 }) => {
+  const doiText = "DOI: 10.36838/v7i4.29";
+  const paperUrl =
+    "https://terra-docs.s3.us-east-2.amazonaws.com/IJHSR/Articles/volume7-issue4/IJHSR_2025_74_29.pdf";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -126,7 +178,24 @@ const ExperienceCard = ({
         <CardContent className="space-y-6">
           <ul className="list-disc list-outside ml-4 space-y-2 text-base text-muted-foreground leading-relaxed">
             {experience.description.map((point, i) => (
-              <li key={i}>{point}</li>
+              <li key={i}>
+                {point.includes(doiText) ? (
+                  <>
+                    {point.split(doiText)[0]}
+                    <a
+                      href={paperUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      {doiText}
+                    </a>
+                    {point.split(doiText)[1]}
+                  </>
+                ) : (
+                  point
+                )}
+              </li>
             ))}
           </ul>
 
