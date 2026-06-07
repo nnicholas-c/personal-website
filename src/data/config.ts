@@ -24,8 +24,7 @@ const config = {
   email: "nchen06@berkeley.edu",
   phone: "+1 510-529-6747",
   site: "https://www.nicholaschen.dev/",
-  // TODO: Add public/Nicholas_Chen_Resume.pdf when the final résumé is ready.
-  resumePath: "/Nicholas_Chen_Resume.pdf",
+  resumePath: "/assets/Nicholas_Chen_Quant_Resume.pdf",
 
   // for github stars button
   githubUsername: "nnicholas-c",
