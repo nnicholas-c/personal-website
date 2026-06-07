@@ -327,10 +327,16 @@ export type Award = {
 };
 
 export const AWARDS: Award[] = [
-  { year: "2024", title: "USACO Gold; International Olympiad in Informatics (IOI) 2024 National Camp Member" },
+  { year: "2024", title: "USACO Gold" },
+  { year: "2024", title: "International Olympiad in Informatics (IOI) 2024 National Camp Member" },
   { year: "2021", title: "Australian Mathematics Competition — Medal (top 1/5,000) & Top in Auckland; 3× High Distinction" },
-  { year: "2024", title: "NZ Mathematical Olympiad Camp Member; NZ Senior Mathematics Competition — 1st Place" },
-  { year: "2024", title: "Science olympiad golds: NZ Chemistry (2× Gold, 1× Silver, National Exam full score), UK Chemistry, British Physics, British Biology; IChO 2024 Qualifier" },
+  { year: "2024", title: "NZ Mathematical Olympiad Camp Member" },
+  { year: "2024", title: "NZ Senior Mathematics Competition — 1st Place" },
+  { year: "2024", title: "NZ Chemistry Olympiad — 2× Gold, 1× Silver; National Exam full score" },
+  { year: "2024", title: "Science olympiad gold: UK Chemistry" },
+  { year: "2024", title: "Science olympiad gold: British Physics" },
+  { year: "2024", title: "Science olympiad gold: British Biology" },
+  { year: "2024", title: "IChO 2024 Qualifier" },
 ];
 
 export const themeDisclaimers = {
