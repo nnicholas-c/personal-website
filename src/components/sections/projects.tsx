@@ -91,7 +91,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             className={cn(buttonVariants({ size: "sm" }), "gap-2")}
           >
             <ExternalLink size={16} />
-            Live
+            Live Site
           </Link>
         )}
         {!project.github && !project.live && (

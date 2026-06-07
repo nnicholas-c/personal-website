@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">BundleGame research platform thumbnail</title>
+  <desc id="desc">Stylized experiment dashboard for delivery-order bundling research with scenario cards, map paths, and analytics exports.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.55" stop-color="#14213d"/>
+      <stop offset="1" stop-color="#244038"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#facc15"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <rect x="98" y="92" width="1004" height="616" rx="28" fill="#0b1220" stroke="#334155" stroke-width="2"/>
+    <rect x="140" y="150" width="430" height="466" rx="22" fill="#111827" stroke="#2b384b"/>
+    <rect x="620" y="150" width="440" height="210" rx="22" fill="#111827" stroke="#2b384b"/>
+    <rect x="620" y="396" width="440" height="220" rx="22" fill="#111827" stroke="#2b384b"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="170" y="230" fill="#f8fafc" font-size="52" font-weight="700">BundleGame</text>
+    <text x="170" y="278" fill="#cbd5e1" font-size="24">Delivery bundling research app</text>
+    <rect x="170" y="338" width="348" height="66" rx="18" fill="#1f2937"/>
+    <text x="194" y="379" fill="#e5e7eb" font-size="23" font-weight="700">Round 24 / 50</text>
+    <rect x="170" y="430" width="348" height="66" rx="18" fill="#1f2937"/>
+    <text x="194" y="471" fill="#e5e7eb" font-size="23" font-weight="700">Recommendation exposed</text>
+    <rect x="170" y="522" width="348" height="66" rx="18" fill="#1f2937"/>
+    <text x="194" y="563" fill="#e5e7eb" font-size="23" font-weight="700">Model-ready export</text>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M690 297 C725 225 789 312 840 247 S925 180 1000 238" stroke="url(#accent)" stroke-width="10"/>
+    <path d="M695 515 L750 466 L815 520 L882 455 L948 505 L1010 438" stroke="#38bdf8" stroke-width="7"/>
+  </g>
+  <g>
+    <circle cx="690" cy="297" r="15" fill="#facc15"/>
+    <circle cx="840" cy="247" r="15" fill="#22c55e"/>
+    <circle cx="1000" cy="238" r="15" fill="#38bdf8"/>
+    <rect x="660" y="207" width="132" height="42" rx="21" fill="#facc15" opacity="0.18"/>
+    <rect x="842" y="207" width="166" height="42" rx="21" fill="#22c55e" opacity="0.18"/>
+    <text x="681" y="235" fill="#fde68a" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Scenario</text>
+    <text x="869" y="235" fill="#bbf7d0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Decision log</text>
+  </g>
+</svg>
