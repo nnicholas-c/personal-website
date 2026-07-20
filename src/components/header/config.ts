@@ -4,28 +4,38 @@ import { config } from "@/data/config";
 const links: Link[] = [
   {
     title: 'Home',
-    href: '/',
+    href: '/playful',
     thumbnail: '/assets/nav-link-previews/landing.png'
   },
   {
     title: 'Experience',
-    href: '/#experience',
+    href: '/playful#experience',
     thumbnail: '/assets/nav-link-previews/skills.png'
   },
   {
     title: 'Education',
-    href: '/#education',
+    href: '/playful#education',
     thumbnail: '/assets/nav-link-previews/landing.png',
   },
   {
     title: 'Projects',
-    href: '/#projects',
+    href: '/playful#projects',
     thumbnail: '/assets/nav-link-previews/projects.png'
   },
   {
     title: 'Awards',
-    href: '/#awards',
+    href: '/playful#awards',
     thumbnail: '/assets/nav-link-previews/landing.png',
+  },
+  {
+    title: 'Research',
+    href: '/research',
+    thumbnail: '/assets/nav-link-previews/research.png',
+  },
+  {
+    title: 'Writing',
+    href: '/blogs',
+    thumbnail: '/assets/nav-link-previews/writing.png',
   },
   {
     title: 'Contact',

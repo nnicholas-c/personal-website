@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Archivo_Black } from "next/font/google";
+import {
+  Inter,
+  Archivo_Black,
+  Cormorant_Garamond,
+  IBM_Plex_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { config } from "@/data/config";
 
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
 import Script from "next/script";
-import AppOverlays from "@/components/app-overlays";
 import { Providers } from "@/components/providers";
+import SmoothScroll from "@/components/smooth-scroll";
 
 export const metadata: Metadata = {
   title: config.title,
@@ -51,13 +54,29 @@ const archivoBlack = Archivo_Black({
   variable: "--font-display",
 });
 
+// Editorial pair, used by the Writing / reading pages.
+const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={[inter.variable, archivoBlack.variable, "font-display"].join(" ")} suppressHydrationWarning>
+    <html lang="en" className={[inter.variable, archivoBlack.variable, serif.variable, mono.variable, "font-display"].join(" ")} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         {process.env.UMAMI_DOMAIN && process.env.UMAMI_SITE_ID && (
@@ -71,10 +90,7 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <Header />
-          {children}
-          <Footer />
-          <AppOverlays />
+          <SmoothScroll>{children}</SmoothScroll>
         </Providers>
       </body>
     </html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1b202c"/>
+      <stop offset="1" stop-color="#2c1a12"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="url(#bg)"/>
+  <g stroke="#EC6E49" stroke-linecap="round" stroke-linejoin="round">
+    <!-- draping cable: anchored at deck ends, attaches below the tower tops -->
+    <path d="M7 41 C 14 37, 18 16, 22 15 C 26 16, 31 25, 32 25 C 33 25, 38 16, 42 15 C 46 16, 50 37, 57 41" fill="none" stroke-width="1.9"/>
+    <!-- towers rising above the cable line -->
+    <path d="M22 42 V 9" stroke-width="3.1"/>
+    <path d="M42 42 V 9" stroke-width="3.1"/>
+    <!-- roadway deck (dominant horizontal) -->
+    <path d="M4 41.5 H 60" stroke-width="3.4"/>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+---
+title: "When a nudge backfires"
+publishedAt: "2026-05-02"
+summary: "A thousand rounds of human decisions, and the incentive that made people choose worse."
+author: "Nicholas Chen"
+tags: ["research", "reinforcement-learning", "behavioral"]
+---
+
+At Berkeley's Operations & Behavioral Analytics Lab, I've spent the last stretch on a question that sounds simple and isn't: when you make the reward more obvious, do people make better choices?
+
+The setup is a repeated decision task — a bundling problem people play round after round, 85 participants over more than a thousand rounds total. Half the time we made the payoff of each option more salient: bigger, clearer, harder to ignore. The intuition almost everyone shares is that this should help. Show people the stakes and they'll act on them.
+
+It did the opposite. Under a fixed-effects model, making the payout salient raised the rate of *suboptimal* choices by 71 percentage points. And people didn't grow out of it — across fifteen rounds there was no measurable learning. The nudge didn't teach; it distracted.
+
+What I find interesting is that "people" is doing a lot of work in that sentence. When we clustered the behavior, it didn't collapse into one average human — it separated into five distinct decision policies, with an eight-fold spread in outcomes between them. Aggregate effects hide the fact that a salient reward helps some strategies and wrecks others.
+
+I came into this wanting to build the reinforcement-learning side — the DQN, the reward shaping, the offline evaluation. I'm leaving it more convinced that the modeling is the easy half. The hard half is being honest about *whose* behavior your model is actually describing, and resisting the tidy story where one intervention moves everyone the same way.
+
+The reward function you design for an agent and the incentive you design for a person turn out to have the same failure mode: optimize the number in front of you, and you can miss the thing you actually wanted.

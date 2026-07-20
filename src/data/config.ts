@@ -37,8 +37,8 @@ const config = {
     twitter: "https://x.com/NChen43323",
     linkedin: "https://www.linkedin.com/in/nchen06/",
     instagram: "https://www.instagram.com/nnicholas_c/",
-    facebook: "https://www.facebook.com/",
     github: "https://github.com/nnicholas-c",
+    scholar: "https://scholar.google.com/citations?user=T-HYHZYAAAAJ&hl=en",
   },
 };
 

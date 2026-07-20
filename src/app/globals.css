@@ -65,12 +65,99 @@ body {
 }
 
 @layer base {
+  :root {
+    /* Editorial palette, used by the Writing / reading pages. */
+    --ink: 10 10 12;
+    --cream: 232 224 212;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Editorial reading styles — scoped to the writing pages via these classes. */
+@layer components {
+  .label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgb(var(--cream) / 0.55);
+  }
+
+  .hairline {
+    border-color: rgb(var(--cream) / 0.14);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(
+      rgb(var(--cream) / 0.7),
+      rgb(var(--cream) / 0.7)
+    );
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Full-bleed cinematic photo frame (editorial experience). */
+  .cine-frame {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    box-shadow:
+      inset 0 0 0 1px rgb(var(--cream) / 0.06),
+      0 40px 120px -60px rgb(0 0 0 / 0.9);
+  }
+
+  .scrim-bottom {
+    background: linear-gradient(
+      to top,
+      rgb(var(--ink) / 0.92) 0%,
+      rgb(var(--ink) / 0.55) 32%,
+      rgb(var(--ink) / 0.15) 62%,
+      rgb(var(--ink) / 0.35) 100%
+    );
+  }
+
+  .scrim-left {
+    background: linear-gradient(
+      to right,
+      rgb(var(--ink) / 0.85) 0%,
+      rgb(var(--ink) / 0.4) 45%,
+      transparent 75%
+    );
+  }
+}
+
+@layer utilities {
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Fine film grain overlay for the editorial experience. */
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 

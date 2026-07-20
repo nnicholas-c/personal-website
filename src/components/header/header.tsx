@@ -6,7 +6,6 @@ import styles from "./style.module.scss";
 import { opacity, background } from "./anim";
 import Nav from "./nav";
 import { cn } from "@/lib/utils";
-import FunnyThemeToggle from "../theme/funny-theme-toggle";
 import { Button } from "../ui/button";
 import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
@@ -53,7 +52,6 @@ const Header = ({ loader }: HeaderProps) => {
           </Button>
         </Link>
 
-        <FunnyThemeToggle className="w-6 h-6 mr-4 hidden md:flex" />
         {process.env.NEXT_PUBLIC_WS_URL && <OnlineUsers />}
         <Button
           variant={"ghost"}

@@ -1,0 +1,19 @@
+---
+title: "The alpha that wasn't"
+publishedAt: "2026-03-15"
+summary: "How a clean +8%/yr signal fell apart the moment I stopped letting it peek at the future."
+author: "Nicholas Chen"
+tags: ["quant", "research", "backtesting"]
+---
+
+I had a factor that worked. On a decade of S&P 500 data it returned about eight percent a year over the benchmark, with a t-statistic near 3.6. By the usual standards, that is a result you write down and defend.
+
+So I tried to break it instead.
+
+The first thing to check was the universe. My backtest used today's index membership — the 500 companies that are in the S&P 500 *now*. That is a quiet but fatal assumption: it silently excludes every firm that was dropped, acquired, or went to zero along the way. The survivors are, almost by definition, the ones that did well. A strategy tested only on survivors inherits their luck.
+
+When I rebuilt the study on point-in-time membership — the index as it actually stood on each date — the alpha collapsed. What was left, after deflating the Sharpe ratio for the number of configurations I had tried, sat around 0.35. Not a signal. A story I had been telling myself.
+
+The honest version of the project is less exciting and much more useful: an independent re-derivation, walk-forward validation, Newey–West standard errors, and fifty tests that exist mostly to catch me leaking the future into the past. The headline is a null result. I think that is the point.
+
+Most of quantitative research is not finding the edge. It is being ruthless about the edges that aren't there — because the market is very good at charging you for the difference.

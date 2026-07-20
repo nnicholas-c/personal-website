@@ -418,8 +418,8 @@ const AnimatedBackground = () => {
 
   // Reveal keyboard on load/route change
   useEffect(() => {
-    const hash = activeSection === "hero" ? "#" : `#${activeSection}`;
-    router.push("/" + hash, { scroll: false });
+    const hash = activeSection === "hero" ? "" : `#${activeSection}`;
+    router.push("/playful" + hash, { scroll: false });
 
     if (!splineApp || isLoading || keyboardRevealed) return;
     updateKeyboardTransform();

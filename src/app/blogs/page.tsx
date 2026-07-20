@@ -1,71 +1,88 @@
-import React from "react";
 import Link from "next/link";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { getBlogPosts } from "@/lib/mdx";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CalendarDays, User } from "lucide-react";
-import RevealAnimation from "@/components/reveal-animations";
 
 export const metadata = {
-  title: "Blog | Portfolio",
-  description: "Thoughts, tutorials, and updates from the space.",
+  title: "Writing | Nicholas Chen",
+  description:
+    "Notes and essays by Nicholas Chen on machine learning, markets, research, and ideas worth turning over.",
 };
 
-export default function BlogPage() {
-  const posts = getBlogPosts().sort((a, b) => {
-    if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
-      return -1;
-    }
-    return 1;
-  });
+function formatDate(input: string) {
+  const d = new Date(input);
+  if (Number.isNaN(d.getTime())) return input;
+  return d
+    .toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    .toUpperCase();
+}
+
+export default function WritingIndex() {
+  const posts = getBlogPosts().sort(
+    (a, b) =>
+      new Date(b.metadata.publishedAt).getTime() -
+      new Date(a.metadata.publishedAt).getTime()
+  );
 
   return (
-    <div className="container mx-auto px-4 py-24 min-h-screen font-sans">
-      <RevealAnimation>
-        <h1 className="text-4xl md:text-6xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-          Space Log
-        </h1>
-        <p className="text-zinc-400 text-center mb-12 max-w-2xl mx-auto">
-          Documenting my journey through the cosmos of code.
-        </p>
-      </RevealAnimation>
+    <main className="relative z-10 mx-auto min-h-screen max-w-3xl px-6 pb-28 pt-32 font-serif sm:px-8">
+      {/* Keeps the reading surface dark if the site is toggled to light mode. */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 -z-[1] bg-[#0a0a0c] dark:hidden"
+      />
+      <Link
+        href="/"
+        className="label inline-flex items-center gap-2 text-cream/55 transition-colors hover:text-cream"
+      >
+        <ArrowLeft size={13} /> Back home
+      </Link>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post, index) => (
-          <RevealAnimation key={post.slug} delay={index * 0.1}>
-            <Link href={`/blogs/${post.slug}`}>
-              <Card className="h-full bg-black/40 border-zinc-800 backdrop-blur-sm hover:border-purple-500/50 transition-colors group overflow-hidden">
-                <CardHeader>
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge variant="outline" className="border-purple-500/30 text-purple-400">
-                      {post.metadata.tags?.[0] || "Blog"}
-                    </Badge>
-                    <span className="text-xs text-zinc-500 flex items-center gap-1">
-                      <CalendarDays className="w-3 h-3" />
-                      {post.metadata.publishedAt}
-                    </span>
-                  </div>
-                  <CardTitle className="text-xl group-hover:text-purple-400 transition-colors">
-                    {post.metadata.title}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {post.metadata.summary}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* Optional: Add image here if available */}
-                </CardContent>
-                <CardFooter className="mt-auto">
-                  <div className="flex items-center gap-2 text-sm text-zinc-500">
-                    <User className="w-4 h-4" />
-                    {post.metadata.author}
-                  </div>
-                </CardFooter>
-              </Card>
-            </Link>
-          </RevealAnimation>
+      <p className="label mt-12">Writing</p>
+      <h1 className="mt-5 font-serif text-5xl font-light leading-[1.05] text-cream sm:text-6xl">
+        Thinking <span className="italic text-cream/50">out loud.</span>
+      </h1>
+      <p className="mt-6 max-w-xl font-serif text-xl leading-relaxed text-cream/70 text-pretty">
+        A place for notes, essays, and half-formed views — on machine learning,
+        markets, research, and whatever else I&apos;m turning over. Some are
+        conclusions; most are me thinking through a problem in public.
+      </p>
+
+      <div className="mt-16 flex flex-col">
+        {posts.length === 0 && (
+          <p className="hairline border-t pt-10 font-serif text-lg italic text-cream/55">
+            First posts coming soon.
+          </p>
+        )}
+        {posts.map((post) => (
+          <Link
+            key={post.slug}
+            href={`/blogs/${post.slug}`}
+            className="group hairline grid gap-3 border-t py-8 md:grid-cols-[130px_minmax(0,1fr)] md:gap-10"
+          >
+            <div className="label pt-1.5 text-cream/45">
+              {formatDate(post.metadata.publishedAt)}
+            </div>
+            <div>
+              <h2 className="flex items-start gap-2 font-serif text-2xl font-normal leading-snug text-cream sm:text-3xl">
+                <span className="link-underline">{post.metadata.title}</span>
+                <ArrowUpRight
+                  size={18}
+                  className="mt-2 shrink-0 text-cream/40 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cream/80"
+                />
+              </h2>
+              <p className="mt-2 font-serif text-lg italic leading-relaxed text-cream/65 text-pretty">
+                {post.metadata.summary}
+              </p>
+              {post.metadata.tags && post.metadata.tags.length > 0 && (
+                <p className="mt-3 font-mono text-[0.66rem] uppercase tracking-wider text-cream/40">
+                  {post.metadata.tags.join(" · ")}
+                </p>
+              )}
+            </div>
+          </Link>
         ))}
+        <div className="hairline border-t" />
       </div>
-    </div>
+    </main>
   );
 }
