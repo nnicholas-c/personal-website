@@ -33,6 +33,11 @@ const links: Link[] = [
     thumbnail: '/assets/nav-link-previews/research.png',
   },
   {
+    title: 'The Researcher',
+    href: '/editorial',
+    thumbnail: '/assets/nav-link-previews/research.png',
+  },
+  {
     title: 'Writing',
     href: '/blogs',
     thumbnail: '/assets/nav-link-previews/writing.png',

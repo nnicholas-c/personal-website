@@ -55,18 +55,25 @@ export const MEDIA = {
     focus: "center center",
   },
   city: {
-    src: "/assets/img/entrepreneurship-city.jpg",
-    alt: "Aerial view of a city skyline lit up at dusk",
-    credit: "Klaus Birner",
-    creditUrl: "https://unsplash.com/photos/3mdHgIGJdrM",
-    focus: "center center",
+    // The user's own Golden Gate photo (repo default-image.776c7c1c.png),
+    // unmirrored — the fog-wrapped tower sits left of center, inside the
+    // builder door's rest-visible zone.
+    src: "/assets/img/entrepreneurship-golden-gate.jpg",
+    alt: "The Golden Gate Bridge rising through a river of fog at blue hour, San Francisco glowing behind",
+    credit: "User-provided",
+    creditUrl: "#",
+    focus: "center 55%",
   },
   bridge: {
-    src: "/assets/img/research-golden-gate.jpg",
-    alt: "Aerial view of the Golden Gate Bridge and the bay",
-    credit: "Unsplash",
-    creditUrl: "https://unsplash.com/photos/9M54sNTIa-4",
-    focus: "center 45%",
+    // Peninsula fog pouring over the San Bruno ridge at night — mirrored so
+    // the gold valley sprawl sits right of center, where the researcher door
+    // is visible at rest. (Alternates staged: research-golden-gate-blue.jpg,
+    // research-golden-gate-fog.jpg, research-golden-gate-fog-tower.jpg.)
+    src: "/assets/img/research-valley-fog.jpg",
+    alt: "Fog rolling over the Peninsula hills at night, the valley's lights glowing beneath",
+    credit: "Aaron Lee",
+    creditUrl: "https://unsplash.com/photos/1CsReRMMviw",
+    focus: "center 55%",
   },
   research: {
     src: "/assets/img/research-fog-forest.jpg",

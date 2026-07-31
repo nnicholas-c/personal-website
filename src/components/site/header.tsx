@@ -68,6 +68,13 @@ export default function SiteHeader() {
           >
             Research
           </Link>
+          {/* the other world, one click away — dressed in its own voice */}
+          <Link
+            href="/playful"
+            className="font-display text-[0.6rem] uppercase tracking-[0.16em] text-[hsl(20_100%_70%_/_0.75)] transition-colors hover:text-[hsl(20_100%_70%)]"
+          >
+            The builder →
+          </Link>
           <Link
             href={config.resumePath}
             target="_blank"
@@ -108,6 +115,13 @@ export default function SiteHeader() {
               className="label border-b border-cream/5 py-3 text-left text-cream/70"
             >
               Research
+            </Link>
+            <Link
+              href="/playful"
+              onClick={() => setMenuOpen(false)}
+              className="border-b border-cream/5 py-3 text-left font-display text-[0.6rem] uppercase tracking-[0.16em] text-[hsl(20_100%_70%_/_0.8)]"
+            >
+              The builder →
             </Link>
             <Link
               href={config.resumePath}

@@ -53,6 +53,13 @@ const Header = ({ loader }: HeaderProps) => {
         </Link>
 
         {process.env.NEXT_PUBLIC_WS_URL && <OnlineUsers />}
+        {/* the other world, one click away — dressed in its own voice */}
+        <Link
+          href="/editorial"
+          className="hidden font-serif text-base italic tracking-tight opacity-60 transition-opacity hover:opacity-100 md:block"
+        >
+          The researcher →
+        </Link>
         <Button
           variant={"ghost"}
           onClick={() => setIsActive(!isActive)}
