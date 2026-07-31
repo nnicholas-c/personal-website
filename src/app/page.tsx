@@ -120,7 +120,9 @@ function Door({
   const chosen = committing === id;
   const dismissed = committing !== null && committing !== id;
 
-  const imgScale = reduce ? 1 : chosen ? 1.04 : active ? 1.06 : 1.03;
+  // Idle sits at exactly 1:1 for sharpness — the wrapper has -inset overscan
+  // for the parallax drift, so no scale is needed to cover it.
+  const imgScale = reduce ? 1 : chosen ? 1.04 : active ? 1.06 : 1;
   // Depth is sold by dimming, never blur.
   const dim = reduce ? 0 : dismissed ? 0.75 : receding ? 0.55 : 0;
   // The sliver can't hold the text column — fade it fully, fast out, eased back.
@@ -159,7 +161,7 @@ function Door({
           className="pointer-events-none absolute inset-6 z-40 hidden border-2 border-cream/80 group-focus-visible:block"
         />
         <motion.div
-          className="absolute inset-0"
+          className="absolute -inset-3"
           style={{ x: imgX }}
           animate={{ scale: imgScale, opacity: active || chosen ? 1 : 0.9 }}
           transition={visualTransition}
@@ -169,6 +171,7 @@ function Door({
             alt=""
             fill
             priority
+            quality={92}
             sizes="100vw"
             className="object-cover"
             style={{ objectPosition: imageFocus }}
@@ -448,13 +451,13 @@ export default function Chooser() {
     // flood exits clean with no crest poking back into the frame.
     const edgeCalm = Math.max(0, Math.min(1, Math.min(pos, 1 - pos) * 12));
     // The idle sea itself breathes on a slow cycle — calm spells, then swells.
-    const tide = 5 * Math.sin(tt * 0.09 + 2.1);
+    const tide = 8 * Math.sin(tt * 0.09 + 2.1);
     const ampTarget =
       (reduce
         ? 0
         : horizontal
-          ? Math.min(15 + tide + vel * W * 0.055, 40)
-          : Math.min(9 + tide * 0.5 + vel * H * 0.055, 24)) * edgeCalm;
+          ? Math.min(18 + tide + vel * W * 0.055, 48)
+          : Math.min(10 + tide * 0.5 + vel * H * 0.055, 28)) * edgeCalm;
     // The water yields around the cursor — pushed gently away from it, fading
     // with the cursor's distance to the shoreline. A finger resting on water.
     let dipTarget = 0;
@@ -484,12 +487,12 @@ export default function Chooser() {
     // nearly straight one minute, billowing the next. The swell leans harder
     // while being dragged.
     const drag = Math.min(vel * 1.8, 2);
-    const m1 = 0.52 + 0.2 * Math.sin(tt * 0.11 + 1.3);
-    const m2 = 0.26 + 0.12 * Math.sin(tt * 0.073 + 4.1);
-    const m3 = 0.13 + 0.07 * Math.sin(tt * 0.157 + 2.2);
-    const meander = (0.5 + 0.5 * Math.sin(tt * 0.045 + 0.7)) * 0.42;
-    const wl1 = 230 + 55 * Math.sin(tt * 0.05);
-    const wl2 = 96 + 24 * Math.sin(tt * 0.083 + 2.9);
+    const m1 = 0.52 + 0.26 * Math.sin(tt * 0.13 + 1.3);
+    const m2 = 0.26 + 0.15 * Math.sin(tt * 0.089 + 4.1);
+    const m3 = 0.13 + 0.09 * Math.sin(tt * 0.17 + 2.2);
+    const meander = (0.5 + 0.5 * Math.sin(tt * 0.06 + 0.7)) * 0.62;
+    const wl1 = 230 + 75 * Math.sin(tt * 0.067);
+    const wl2 = 96 + 32 * Math.sin(tt * 0.096 + 2.9);
     const surface = (u: number, span: number) => {
       const env = 0.68 + 0.32 * Math.sin((u / span) * Math.PI * 1.2 + tt * 0.3);
       let w =
@@ -615,10 +618,11 @@ export default function Chooser() {
           transitionTimingFunction: "cubic-bezier(0.87,0,0.13,1)",
         }}
       >
-        {/* Scene — gentle settle on load, tightened so the frame is still by ~1.9s */}
+        {/* Scene — gentle settle on load, landing at exactly 1:1 so nothing
+            renders through a permanent fractional upscale (sharpness) */}
         <motion.div
           initial={{ opacity: 0, scale: reduce ? 1 : 1.08 }}
-          animate={{ opacity: 1, scale: reduce ? 1 : 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.4, delay: 0.05, ease: GENTLE }}
           style={{
             rotateX: reduce ? 0 : rotX,
@@ -680,13 +684,15 @@ export default function Chooser() {
               style={{
                 opacity: committing ? 0 : 1,
                 transition: "opacity 0.4s ease-out",
+                // melt the stacked strokes into one smooth veil — no banding
+                filter: "blur(16px)",
               }}
             >
               {[
-                { w: 100, o: 0.035 },
-                { w: 62, o: 0.055 },
-                { w: 30, o: 0.1 },
-                { w: 10, o: 0.16 },
+                { w: 160, o: 0.05 },
+                { w: 100, o: 0.07 },
+                { w: 48, o: 0.12 },
+                { w: 12, o: 0.22 },
               ].map((m, i) => (
                 <path
                   key={m.w}

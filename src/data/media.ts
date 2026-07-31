@@ -55,10 +55,10 @@ export const MEDIA = {
     focus: "center center",
   },
   city: {
-    // The user's own Golden Gate photo (repo default-image.776c7c1c.png),
-    // unmirrored — the fog-wrapped tower sits left of center, inside the
-    // builder door's rest-visible zone.
-    src: "/assets/img/entrepreneurship-golden-gate.jpg",
+    // The user's own Golden Gate photo, served from the lossless PNG source
+    // (next/image handles delivery) — the fog-wrapped tower sits left of
+    // center, inside the builder door's rest-visible zone.
+    src: "/assets/img/default-image.776c7c1c.png",
     alt: "The Golden Gate Bridge rising through a river of fog at blue hour, San Francisco glowing behind",
     credit: "User-provided",
     creditUrl: "#",
