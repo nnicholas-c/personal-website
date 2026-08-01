@@ -82,7 +82,7 @@ void main() {
   // (bounded, so the field never winds up), differential with radius
   vec2 cen = vec2(1.3 * aspect, 1.3);
   vec2 cp = p - cen;
-  float ca = 0.10 * sin(tt * 0.03 + length(cp) * 0.9);
+  float ca = 0.06 * sin(tt * 0.03 + length(cp) * 0.9);
   p = vec2(cp.x * cos(ca) - cp.y * sin(ca), cp.x * sin(ca) + cp.y * cos(ca)) + cen;
 
   // the cursor stirs the liquid: decaying analytic vortices displace the field
@@ -92,14 +92,14 @@ void main() {
     if (imp.w == 0.0) continue;
     vec2 d = vec2((uv.x - imp.x) * aspect, uv.y - imp.y);
     float r2 = dot(d, d);
-    float fall = exp(-r2 * 16.0) * exp(-imp.z * 0.75);
+    float fall = exp(-r2 * 16.0) * exp(-imp.z * 0.9);
     stir += vec2(-d.y, d.x) * imp.w * fall;
   }
-  p += stir * 3.2;
+  p += stir * 2.4;
 
   // ink in water: two rounds of domain warping, drifting forever; turbulence
   // breathes on a slow cycle and starts high (the chaos the identity forms from)
-  float turb = 1.0 + 1.8 * u_intro + 0.22 * sin(tt * 0.11 + 3.0);
+  float turb = 1.0 + 0.7 * u_intro + 0.12 * sin(tt * 0.11 + 3.0);
   vec2 q = vec2(fbm(p + t * vec2(0.9, 0.35)),
                 fbm(p + vec2(5.2, 1.3) - t * vec2(0.45, 0.75)));
   vec2 r = vec2(fbm(p + 2.4 * turb * q + vec2(1.7, 9.2) + t * 0.35),
@@ -110,8 +110,8 @@ void main() {
   // field so it forms tendrils, islands and eddies rather than a line
   float axis = mix(uv.y, uv.x, u_horizontal);
   float lead = mix(-0.22, 1.22, u_bias);
-  float reach = 2.6 + 1.4 * u_intro;
-  float m = smoothstep(-0.5, 0.5, (axis - lead) * 3.4 + (field - 0.5) * reach);
+  float reach = 2.2 + 0.6 * u_intro;
+  float m = smoothstep(-0.5, 0.5, ((axis - lead) * 3.4 + (field - 0.5) * reach) * 2.2);
 
   vec3 colA = texture2D(u_texA, coverUV(uv, u_sizeA, u_focusA)).rgb;
   vec3 colB = texture2D(u_texB, coverUV(uv, u_sizeB, u_focusB)).rgb;
@@ -121,14 +121,14 @@ void main() {
   // pigment-dark rim where the inks press against each other
   float meet = m * (1.0 - m) * 4.0;
   vec3 mist = mix(vec3(0.72, 0.78, 0.88), vec3(0.86, 0.82, 0.78), r.x);
-  col += mist * meet * 0.10;
-  col += mist * pow(meet, 3.0) * 0.22;
-  col *= 1.0 - 0.16 * pow(meet, 2.0) * (0.4 + 0.6 * q.y);
+  col += mist * meet * 0.08;
+  col += mist * pow(meet, 3.0) * 0.12;
+  col *= 1.0 - 0.10 * pow(meet, 2.0) * (0.4 + 0.6 * q.y);
 
   // cinematic grade: teal shadows, warm highlights, gentle vignette
   float lum = dot(col, vec3(0.299, 0.587, 0.114));
-  col += vec3(-0.012, 0.004, 0.022) * (1.0 - lum) + vec3(0.020, 0.008, -0.012) * lum * 0.8;
-  col *= 1.0 - 0.24 * smoothstep(0.35, 0.9, length(uv - 0.5) * 1.25);
+  col += vec3(-0.008, 0.003, 0.014) * (1.0 - lum) + vec3(0.012, 0.005, -0.007) * lum * 0.8;
+  col *= 1.0 - 0.18 * smoothstep(0.35, 0.9, length(uv - 0.5) * 1.25);
 
   gl_FragColor = vec4(col, 1.0);
 }`;
@@ -262,7 +262,7 @@ export default function FluidCanvas({
         imps[i] = x;
         imps[i + 1] = y;
         imps[i + 2] = 0; // age, advanced per frame
-        imps[i + 3] = Math.max(-1.8, Math.min(1.8, (vx + vy) * 30));
+        imps[i + 3] = Math.max(-1.3, Math.min(1.3, (vx + vy) * 24));
         impHead = (impHead + 1) % 8;
       }
       lastP = { x, y, t: now };
@@ -278,7 +278,7 @@ export default function FluidCanvas({
       imps[i] = (d.x - rect.left) / rect.width;
       imps[i + 1] = 1 - (d.y - rect.top) / rect.height;
       imps[i + 2] = 0;
-      imps[i + 3] = d.s ?? 1.8;
+      imps[i + 3] = d.s ?? 1.3;
       impHead = (impHead + 1) % 8;
     };
     window.addEventListener("chooser:stir", onStir);
@@ -321,7 +321,7 @@ export default function FluidCanvas({
       // the identity coalesces out of chaos over the first ~4s
       const intro = reduce
         ? 0
-        : Math.pow(Math.max(0, 1 - (now - start) / 4200), 2);
+        : Math.pow(Math.max(0, 1 - (now - start) / 2800), 2);
       gl.uniform1f(uIntro, intro);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };

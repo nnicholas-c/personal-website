@@ -116,6 +116,7 @@ function Door({
     >
       <Link
         href={href}
+        data-side={align}
         onPointerEnter={(e) => {
           if (e.pointerType === "mouse") onFocusSide();
         }}
@@ -172,6 +173,25 @@ function Door({
               delay: committing || receding ? 0 : 0.15,
             }}
           >
+            {/* the name dissolves from the center and RE-FORMS here, in this
+                side's own voice, when its ink gathers */}
+            <motion.p
+              aria-hidden="true"
+              initial={false}
+              animate={
+                active && !committing
+                  ? { opacity: 1, filter: "blur(0px)", letterSpacing: "0.01em" }
+                  : { opacity: 0, filter: reduce ? "blur(0px)" : "blur(10px)", letterSpacing: "0.22em" }
+              }
+              transition={{ duration: 0.8, ease: GENTLE }}
+              className={`mb-4 hidden text-cream/90 md:block ${
+                builder
+                  ? "font-display text-xl tracking-tight lg:text-2xl"
+                  : "font-serif text-2xl italic lg:text-3xl"
+              }`}
+            >
+              {config.author}.
+            </motion.p>
             <p
               className={`label flex items-center gap-3 ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70"} ${right ? "md:justify-end" : ""}`}
             >
@@ -389,7 +409,7 @@ export default function Chooser() {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
     if (at && !reduce) {
       window.dispatchEvent(
-        new CustomEvent("chooser:stir", { detail: { ...at, s: 1.8 } })
+        new CustomEvent("chooser:stir", { detail: { ...at, s: 1.3 } })
       );
     }
     if (reduce) {
@@ -416,9 +436,19 @@ export default function Chooser() {
           : "text-cream/60"
         : "text-cream/25";
 
+  const onOver = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    const zone = (e.target as HTMLElement).closest?.("[data-side]") as HTMLElement | null;
+    const z = zone?.dataset.side as SideId | undefined;
+    // React's synthetic pointerenter can drop events on fast sweeps; pointerover
+    // bubbles natively and self-heals the state (idempotent when already set).
+    if (z && z !== side) focusSide(z);
+  };
+
   return (
     <motion.main
       onMouseMove={onMove}
+      onPointerOver={onOver}
       animate={{ opacity: fadeAll ? 0 : 1 }}
       transition={{ duration: 0.3 }}
       className="relative h-[100svh] w-full overflow-hidden bg-ink font-serif text-cream"
@@ -443,7 +473,9 @@ export default function Chooser() {
           style={{
             rotateX: reduce ? 0 : rotX,
             rotateY: reduce ? 0 : rotY,
-            transformStyle: "preserve-3d",
+            // NB: no preserve-3d — with it, the coplanar canvas/door siblings
+            // hit-test by 3D depth sort and Chrome breaks the tie randomly,
+            // making the door links intermittently unhittable.
           }}
           className="absolute inset-0"
         >
@@ -540,11 +572,18 @@ export default function Chooser() {
           </p>
         </motion.div>
 
-        {/* Centered identity — recedes while an ink is gathered. Kept
-            half-visible when a WORD holds keyboard focus. */}
+        {/* Centered identity — DISSOLVES while an ink is gathered (the name
+            re-forms inside the gathered side). Kept half-visible when a WORD
+            holds keyboard focus. */}
         <motion.div
           animate={{
             opacity: committing ? 0 : side ? (wordFocused ? 0.55 : 0) : 1,
+            filter:
+              reduce || wordFocused
+                ? "blur(0px)"
+                : side || committing
+                  ? "blur(12px)"
+                  : "blur(0px)",
           }}
           transition={{
             duration: side || committing ? 0.5 : 0.9,
