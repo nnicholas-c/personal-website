@@ -94,7 +94,7 @@ function Door({
   reduce: boolean;
   onFocusSide: () => void;
   onBlurSide: () => void;
-  onCommit: () => void;
+  onCommit: (e: React.MouseEvent) => void;
 }) {
   const right = align === "right";
   const builder = flavor === "builder";
@@ -126,7 +126,7 @@ function Door({
         onBlur={onBlurSide}
         onClick={(e) => {
           e.preventDefault();
-          onCommit();
+          onCommit(e);
         }}
         aria-label={`Enter the ${domain} side`}
         className="group absolute inset-0 flex items-end focus:outline-none active:opacity-95"
@@ -382,11 +382,16 @@ export default function Chooser() {
 
   // Hover gathers the ink reversibly; the click completes it: the chosen ink
   // floods the frame, the letterbox dissolves, and the route changes mid-move.
-  const commit = (s: SideId, href: string) => {
+  const commit = (s: SideId, href: string, at?: { x: number; y: number }) => {
     if (committing) return;
     hasHovered.current = true;
     setShowHint(false);
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    if (at && !reduce) {
+      window.dispatchEvent(
+        new CustomEvent("chooser:stir", { detail: { ...at, s: 1.8 } })
+      );
+    }
     if (reduce) {
       setCommitting(s);
       setFadeAll(true);
@@ -488,7 +493,7 @@ export default function Chooser() {
             reduce={reduce}
             onFocusSide={() => focusSide("left")}
             onBlurSide={blurSide}
-            onCommit={() => commit("left", "/playful")}
+            onCommit={(e) => commit("left", "/playful", { x: e.clientX, y: e.clientY })}
           />
           <Door
             href="/editorial"
@@ -504,7 +509,7 @@ export default function Chooser() {
             reduce={reduce}
             onFocusSide={() => focusSide("right")}
             onBlurSide={blurSide}
-            onCommit={() => commit("right", "/editorial")}
+            onCommit={(e) => commit("right", "/editorial", { x: e.clientX, y: e.clientY })}
           />
         </motion.div>
 
@@ -597,7 +602,7 @@ export default function Chooser() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  commit("left", "/playful");
+                  commit("left", "/playful", { x: e.clientX, y: e.clientY });
                 }}
                 className={`font-display text-lg tracking-tight transition-colors duration-500 hover:text-[hsl(20_100%_70%)] sm:text-2xl ${role("left")}`}
               >
@@ -624,7 +629,7 @@ export default function Chooser() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  commit("right", "/editorial");
+                  commit("right", "/editorial", { x: e.clientX, y: e.clientY });
                 }}
                 className={`font-serif text-xl italic transition-colors duration-500 hover:text-cream sm:text-3xl ${role("right")}`}
               >

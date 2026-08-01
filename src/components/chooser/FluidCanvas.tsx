@@ -69,11 +69,21 @@ vec2 coverUV(vec2 uv, vec2 texSize, vec2 focus) {
   return (uv - 0.5) * scale + focus;
 }
 
+uniform float u_intro;       // 1 at load → 0: the identity coalesces out of chaos
+
 void main() {
   vec2 uv = v_uv;
   float aspect = u_res.x / u_res.y;
   vec2 p = vec2(uv.x * aspect, uv.y) * 2.6;
   float t = u_time * (1.0 - u_still) * 0.045;
+  float tt = u_time * (1.0 - u_still);
+
+  // perpetual circulation: the liquid shears in a slow oscillating rotation
+  // (bounded, so the field never winds up), differential with radius
+  vec2 cen = vec2(1.3 * aspect, 1.3);
+  vec2 cp = p - cen;
+  float ca = 0.10 * sin(tt * 0.03 + length(cp) * 0.9);
+  p = vec2(cp.x * cos(ca) - cp.y * sin(ca), cp.x * sin(ca) + cp.y * cos(ca)) + cen;
 
   // the cursor stirs the liquid: decaying analytic vortices displace the field
   vec2 stir = vec2(0.0);
@@ -82,34 +92,43 @@ void main() {
     if (imp.w == 0.0) continue;
     vec2 d = vec2((uv.x - imp.x) * aspect, uv.y - imp.y);
     float r2 = dot(d, d);
-    float fall = exp(-r2 * 26.0) * exp(-imp.z * 1.1);
+    float fall = exp(-r2 * 16.0) * exp(-imp.z * 0.75);
     stir += vec2(-d.y, d.x) * imp.w * fall;
   }
-  p += stir * 2.2;
+  p += stir * 3.2;
 
-  // ink in water: two rounds of domain warping, drifting forever
+  // ink in water: two rounds of domain warping, drifting forever; turbulence
+  // breathes on a slow cycle and starts high (the chaos the identity forms from)
+  float turb = 1.0 + 1.8 * u_intro + 0.22 * sin(tt * 0.11 + 3.0);
   vec2 q = vec2(fbm(p + t * vec2(0.9, 0.35)),
                 fbm(p + vec2(5.2, 1.3) - t * vec2(0.45, 0.75)));
-  vec2 r = vec2(fbm(p + 2.4 * q + vec2(1.7, 9.2) + t * 0.35),
-                fbm(p + 2.4 * q + vec2(8.3, 2.8) - t * 0.28));
-  float field = fbm(p + 2.1 * r);
+  vec2 r = vec2(fbm(p + 2.4 * turb * q + vec2(1.7, 9.2) + t * 0.35),
+                fbm(p + 2.4 * turb * q + vec2(8.3, 2.8) - t * 0.28));
+  float field = fbm(p + 2.1 * turb * r);
 
   // where the inks meet: a bias-positioned interface, heavily warped by the
   // field so it forms tendrils, islands and eddies rather than a line
   float axis = mix(uv.y, uv.x, u_horizontal);
   float lead = mix(-0.22, 1.22, u_bias);
-  float m = smoothstep(-0.5, 0.5, (axis - lead) * 3.4 + (field - 0.5) * 2.6);
+  float reach = 2.6 + 1.4 * u_intro;
+  float m = smoothstep(-0.5, 0.5, (axis - lead) * 3.4 + (field - 0.5) * reach);
 
   vec3 colA = texture2D(u_texA, coverUV(uv, u_sizeA, u_focusA)).rgb;
   vec3 colB = texture2D(u_texB, coverUV(uv, u_sizeB, u_focusB)).rgb;
   vec3 col = mix(colA, colB, m);
 
-  // mist blooms where the inks interpenetrate; second warp tints it
+  // ink physics at the interface: mist bloom, a luminous filament core, and a
+  // pigment-dark rim where the inks press against each other
   float meet = m * (1.0 - m) * 4.0;
   vec3 mist = mix(vec3(0.72, 0.78, 0.88), vec3(0.86, 0.82, 0.78), r.x);
-  col += mist * meet * 0.14;
-  // gentle depth: darken slightly where the field folds
-  col *= 1.0 - 0.10 * meet * (0.5 + 0.5 * q.y);
+  col += mist * meet * 0.10;
+  col += mist * pow(meet, 3.0) * 0.22;
+  col *= 1.0 - 0.16 * pow(meet, 2.0) * (0.4 + 0.6 * q.y);
+
+  // cinematic grade: teal shadows, warm highlights, gentle vignette
+  float lum = dot(col, vec3(0.299, 0.587, 0.114));
+  col += vec3(-0.012, 0.004, 0.022) * (1.0 - lum) + vec3(0.020, 0.008, -0.012) * lum * 0.8;
+  col *= 1.0 - 0.24 * smoothstep(0.35, 0.9, length(uv - 0.5) * 1.25);
 
   gl_FragColor = vec4(col, 1.0);
 }`;
@@ -191,7 +210,8 @@ export default function FluidCanvas({
       uSizeB = U("u_sizeB"),
       uFocusA = U("u_focusA"),
       uFocusB = U("u_focusB"),
-      uImp = U("u_imp");
+      uImp = U("u_imp"),
+      uIntro = U("u_intro");
 
     // textures
     const sizes: Record<string, [number, number]> = {};
@@ -242,12 +262,26 @@ export default function FluidCanvas({
         imps[i] = x;
         imps[i + 1] = y;
         imps[i + 2] = 0; // age, advanced per frame
-        imps[i + 3] = Math.max(-1.4, Math.min(1.4, (vx + vy) * 26));
+        imps[i + 3] = Math.max(-1.8, Math.min(1.8, (vx + vy) * 30));
         impHead = (impHead + 1) % 8;
       }
       lastP = { x, y, t: now };
     };
     window.addEventListener("pointermove", onMove, { passive: true });
+
+    // the click stirs a burst into the liquid right where it lands
+    const onStir = (e: Event) => {
+      const d = (e as CustomEvent<{ x: number; y: number; s?: number }>).detail;
+      const rect = canvas.getBoundingClientRect();
+      if (!rect.width || !d) return;
+      const i = impHead * 4;
+      imps[i] = (d.x - rect.left) / rect.width;
+      imps[i + 1] = 1 - (d.y - rect.top) / rect.height;
+      imps[i + 2] = 0;
+      imps[i + 3] = d.s ?? 1.8;
+      impHead = (impHead + 1) % 8;
+    };
+    window.addEventListener("chooser:stir", onStir);
 
     let raf = 0;
     let last = performance.now();
@@ -284,6 +318,11 @@ export default function FluidCanvas({
       gl.uniform2f(uFocusA, focusA.x, 1 - focusA.y);
       gl.uniform2f(uFocusB, focusB.x, 1 - focusB.y);
       gl.uniform4fv(uImp, imps);
+      // the identity coalesces out of chaos over the first ~4s
+      const intro = reduce
+        ? 0
+        : Math.pow(Math.max(0, 1 - (now - start) / 4200), 2);
+      gl.uniform1f(uIntro, intro);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
     raf = requestAnimationFrame(render);
@@ -298,6 +337,7 @@ export default function FluidCanvas({
       cancelAnimationFrame(raf);
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("chooser:stir", onStir);
       // NOTE: do not loseContext() here — under React StrictMode the effect
       // re-runs on the same canvas, which would inherit a dead context.
     };
