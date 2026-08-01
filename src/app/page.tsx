@@ -2,16 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   motion,
-  useAnimationFrame,
   useMotionValue,
   useReducedMotion,
   useSpring,
   useTransform,
-  type MotionValue,
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,6 +16,7 @@ import { MEDIA } from "@/data/media";
 import { config } from "@/data/config";
 import { SECTIONS } from "@/data/sections";
 import projects from "@/data/projects";
+import FluidCanvas from "@/components/chooser/FluidCanvas";
 
 // The hover peek shows the REAL contents of each world, pulled from the same
 // data that renders them — project titles on the builder side, the section
@@ -33,17 +31,14 @@ const EDITORIAL_PEEK = SECTIONS.filter((s) => s.nav)
 
 const GENTLE = [0.33, 1, 0.68, 1] as const; // easeOutCubic — reveals
 const BOUNCE = "cubic-bezier(0.175,0.885,0.32,1.275)"; // builder-side micro-motion
-const COMMIT = [0.87, 0, 0.13, 1] as const; // expo.inOut — frame-to-full-bleed on click
-const COMMIT_MS = 900;
+const COMMIT_MS = 900; // frame-to-full-bleed on click (expo.inOut, inline below)
 const NAV_AT_MS = 650; // route change fires past the fast middle of the commit move
 // The rest state deliberately favors the entrepreneur side: the default persona
-// gets more shoreline (57/43), a brighter identity word, and a louder numeral.
+// gets more of the liquid (57/43), a brighter identity word, a louder numeral.
 const NEUTRAL_SEAM = 57;
 
-// ONE spring, one clock, for everything hover-driven — including the shoreline
-// itself. It responds the instant the cursor moves, settles softly, and
-// retargets mid-flight when the cursor sweeps between sides. The whole
-// takeover moves as one. (Builder bounce lives only in peek/arrow micro-motion.)
+// ONE spring, one clock: the same physics that drove the shoreline now drives
+// how the inks gather — hover performs the click reversibly, click completes it.
 const SPRING_PANEL = { type: "spring" as const, stiffness: 80, damping: 24, mass: 1 };
 
 const introContainer = {
@@ -71,7 +66,6 @@ const peekItem = {
 };
 
 function Door({
-  id,
   href,
   index,
   domain,
@@ -86,13 +80,7 @@ function Door({
   onFocusSide,
   onBlurSide,
   onCommit,
-  imageSrc,
-  imageFocus,
-  imgX,
-  panelRef,
-  className,
 }: {
-  id: SideId;
   href: string;
   index: string;
   domain: string;
@@ -107,36 +95,25 @@ function Door({
   onFocusSide: () => void;
   onBlurSide: () => void;
   onCommit: () => void;
-  imageSrc: string;
-  imageFocus: string;
-  imgX: MotionValue<number>;
-  panelRef?: React.RefObject<HTMLDivElement>;
-  className?: string;
 }) {
   const right = align === "right";
   const builder = flavor === "builder";
   const active = state === "active";
   const receding = state === "receding";
-  const chosen = committing === id;
-  const dismissed = committing !== null && committing !== id;
 
-  // Idle sits at exactly 1:1 for sharpness — the wrapper has -inset overscan
-  // for the parallax drift, so no scale is needed to cover it.
-  const imgScale = reduce ? 1 : chosen ? 1.04 : active ? 1.06 : 1;
-  // Depth is sold by dimming, never blur.
-  const dim = reduce ? 0 : dismissed ? 0.75 : receding ? 0.55 : 0;
-  // The sliver can't hold the text column — fade it fully, fast out, eased back.
+  // The liquid does the showing; the door is a transparent half-frame zone
+  // that carries the words and the intent.
   const textOpacity = committing ? 0 : reduce ? 1 : receding ? 0 : 1;
 
-  const visualTransition = committing
-    ? { duration: COMMIT_MS / 1000, ease: COMMIT }
-    : SPRING_PANEL;
-
   return (
-    // Both doors are full-frame layers; the wave clip on the top layer decides
-    // who owns how much of the frame. Text never moves, never reflows — only
-    // the shoreline travels.
-    <div ref={panelRef} className={cn("absolute inset-0 overflow-hidden", className)}>
+    <div
+      className={cn(
+        "absolute",
+        right
+          ? "max-md:inset-x-0 max-md:bottom-0 max-md:h-1/2 md:inset-y-0 md:right-0 md:w-1/2"
+          : "max-md:inset-x-0 max-md:top-0 max-md:h-1/2 md:inset-y-0 md:left-0 md:w-1/2"
+      )}
+    >
       <Link
         href={href}
         onPointerEnter={(e) => {
@@ -152,38 +129,12 @@ function Door({
           onCommit();
         }}
         aria-label={`Enter the ${domain} side`}
-        className="group absolute inset-0 flex items-end overflow-hidden focus:outline-none active:opacity-95"
+        className="group absolute inset-0 flex items-end focus:outline-none active:opacity-95"
       >
-        {/* keyboard focus frame — inset far enough to survive the scene's 1.02
-            scale + frame clipping; a real element so it paints above the imagery */}
+        {/* keyboard focus frame — a real element so it paints above the liquid */}
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-6 z-40 hidden border-2 border-cream/80 group-focus-visible:block"
-        />
-        <motion.div
-          className="absolute -inset-3"
-          style={{ x: imgX }}
-          animate={{ scale: imgScale, opacity: active || chosen ? 1 : 0.9 }}
-          transition={visualTransition}
-        >
-          <Image
-            src={imageSrc}
-            alt=""
-            fill
-            priority
-            quality={92}
-            sizes="100vw"
-            className="object-cover"
-            style={{ objectPosition: imageFocus }}
-          />
-        </motion.div>
-
-        <div className="scrim-bottom pointer-events-none absolute inset-0 opacity-80" />
-        {/* the world you didn't pick darkens as the wave washes over it */}
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-20 bg-ink"
-          animate={{ opacity: dim }}
-          transition={committing ? { duration: 0.4, ease: GENTLE } : SPRING_PANEL}
         />
 
         <motion.span
@@ -199,7 +150,7 @@ function Door({
             builder
               ? "font-display text-[22vw] text-[hsl(20_100%_70%_/_0.12)] md:text-[10vw]"
               : "font-serif text-[26vw] font-light text-cream/[0.07] md:text-[12vw]"
-          } ${right ? "right-[6%]" : "left-[6%]"}`}
+          } ${right ? "right-[12%]" : "left-[12%]"}`}
         >
           {index}
         </motion.span>
@@ -209,11 +160,10 @@ function Door({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.7, ease: GENTLE }}
           className={`relative z-10 w-full max-w-[85%] p-8 sm:p-10 md:w-[19rem] md:max-w-none lg:w-[21rem] lg:p-12 xl:w-[24rem] xl:p-14 ${
-            right ? "md:ml-auto md:text-right" : "max-md:mb-[47svh]"
+            right ? "md:ml-auto md:text-right" : ""
           }`}
         >
-          {/* fade (not clip) the text as the wave takes this side: out fast
-              (before the shoreline reaches the column), back in after it recedes */}
+          {/* the words fade while their ink recedes; the liquid never clips them */}
           <motion.div
             animate={{ opacity: textOpacity }}
             transition={{
@@ -318,16 +268,18 @@ export default function Chooser() {
 
   const hasHovered = useRef(false);
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // The takeover is a pointer-and-desktop flourish: gate it off below md so
-  // stacked touch layouts never shift (WCAG 1.4.13 double-tap trap).
+  // Whether the open side was triggered from a center identity word: the words
+  // stay interactive only then — otherwise the faded identity must be inert.
+  const openedByWord = useRef(false);
+  const [wordFocused, setWordFocused] = useState(false);
+  const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The gather is a pointer-and-desktop flourish: below md taps commit directly.
   const foldEnabled = useRef(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const update = () => {
       foldEnabled.current = mq.matches;
-      // crossing into the stacked layout with a side open would strand the
-      // seam at 85% — collapse to neutral instead
       if (!mq.matches) setSide(null);
     };
     update();
@@ -349,7 +301,7 @@ export default function Chooser() {
     return () => clearTimeout(t);
   }, []);
 
-  // Esc collapses the takeover (focus/hover parity).
+  // Esc releases the gathered ink (focus/hover parity).
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -380,29 +332,16 @@ export default function Chooser() {
     stiffness: 60,
     damping: 20,
   });
-  // Counter-directional idle drift: the two worlds slide a few px in opposite
-  // directions against the cursor, so they read as two worlds, not one plane.
-  const parallax = useSpring(useTransform(mx, [-0.5, 0.5], [8, -8]), {
-    stiffness: 60,
-    damping: 20,
-  });
-  const parallaxInv = useTransform(parallax, (v) => -v);
 
-  // ——— The shoreline ———
-  // The seam between the two worlds is a living wave: it idles with a slow
-  // drift, swells while it travels (amplitude follows the seam's velocity),
-  // and washes across the frame on hover/commit. Drawn every frame straight
-  // into clip-path — no React renders, no layout, compositor-only.
-  const seamTarget = useMotionValue(50); // % of the frame owned by the left world
-  // Water physics: slightly underdamped so the shoreline sloshes a touch past
-  // its target and settles back — liquid momentum, not a mechanical stop.
-  const seamSpring = useSpring(seamTarget, { stiffness: 64, damping: 15, mass: 1 });
+  // ——— The liquid ———
+  // One value: how much of the frame the builder's ink owns. The same spring
+  // that once moved a seam now gathers and releases the inks.
+  const seamTarget = useMotionValue(50);
+  const seamSpring = useSpring(seamTarget, SPRING_PANEL);
   const frameRef = useRef<HTMLDivElement>(null);
-  const rightPanelRef = useRef<HTMLDivElement>(null);
-  const mistRefs = useRef<(SVGPathElement | null)[]>([]);
 
   useEffect(() => {
-    if (reduce) return; // reduced motion: straight 50/50 seam, crossfade commit
+    if (reduce) return; // reduced motion: still marble, crossfade commit
     seamTarget.set(
       committing === "left"
         ? 100
@@ -416,148 +355,21 @@ export default function Chooser() {
     );
   }, [side, committing, reduce, seamTarget]);
 
-  const lastWave = useRef(0);
-  const lastSize = useRef(0);
-  // Frame-relative cursor for the water dip; active only while idling in neutral.
-  const cursor = useRef({ x: 0, y: 0, active: false });
-  // Low-passed wave state: amplitude and the cursor dip ease toward their
-  // targets a few % per frame, so the water breathes instead of snapping.
-  const ampS = useRef(0);
-  const dipS = useRef(0);
-  const dipYS = useRef(0);
-  // Whether the open side was triggered from a center identity word: the words
-  // stay interactive only then — otherwise the faded identity must be inert, or
-  // its invisible links flip the fold and can navigate to the wrong world.
-  const openedByWord = useRef(false);
-  const [wordFocused, setWordFocused] = useState(false);
-  const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useAnimationFrame((t) => {
-    const frame = frameRef.current;
-    const panel = rightPanelRef.current;
-    if (!frame || !panel) return;
-    const W = frame.clientWidth;
-    const H = frame.clientHeight;
-    const vel = Math.abs(seamSpring.getVelocity()) / 100;
-    // While the seam travels, redraw every frame; at idle the drift is ~1px/s,
-    // so 30fps is indistinguishable and halves the ambient paint cost. Under
-    // reduced motion the seam is static — draw once, again only on resize.
-    const nearSeam =
-      cursor.current.active &&
-      Math.abs(cursor.current.x - (seamSpring.get() / 100) * W) < 320;
-    const horizontal = foldEnabled.current; // md+: vertical shoreline; below: stacked, horizontal
-    const pos = (reduce ? NEUTRAL_SEAM : seamSpring.get()) / 100;
-    const tt = reduce ? 0 : t / 1000;
-    // The wave flattens as the shoreline nears either edge, so the commit
-    // flood exits clean with no crest poking back into the frame.
-    const edgeCalm = Math.max(0, Math.min(1, Math.min(pos, 1 - pos) * 12));
-    // The idle sea itself breathes on a slow cycle — calm spells, then swells.
-    const tide = 8 * Math.sin(tt * 0.09 + 2.1);
-    const ampTarget =
-      (reduce
-        ? 0
-        : horizontal
-          ? Math.min(18 + tide + vel * W * 0.055, 48)
-          : Math.min(10 + tide * 0.5 + vel * H * 0.055, 28)) * edgeCalm;
-    // The water yields around the cursor — pushed gently away from it, fading
-    // with the cursor's distance to the shoreline. A finger resting on water.
-    let dipTarget = 0;
-    if (horizontal && !reduce && cursor.current.active) {
-      const dxc = cursor.current.x - pos * W;
-      dipTarget = -Math.sign(dxc) * 16 * Math.exp(-(dxc * dxc) / (2 * 230 * 230));
-    }
-    const settled =
-      Math.abs(ampTarget - ampS.current) < 0.4 && Math.abs(dipTarget - dipS.current) < 0.3;
-    const sizeKey = W * 100000 + H;
-    if (sizeKey === lastSize.current) {
-      if (reduce && lastWave.current === -1) return;
-      if (!reduce && vel < 0.02 && !nearSeam && settled && t - lastWave.current < 33) return;
-    }
-    lastSize.current = sizeKey;
-    lastWave.current = reduce ? -1 : t;
-    // Everything breathes: amplitude swells and subsides over ~1/4s, the dip
-    // eases in and trails the cursor like displaced water.
-    ampS.current += (ampTarget - ampS.current) * 0.07;
-    dipS.current += (dipTarget - dipS.current) * 0.11;
-    dipYS.current += (cursor.current.y - dipYS.current) * 0.13;
-    const amp = ampS.current;
-    // Water, not metronome — and never the same water twice. Three swell
-    // layers (the middle one travelling against the others) whose WEIGHTS and
-    // WAVELENGTHS drift on independent slow cycles, plus a long meander that
-    // comes and goes: the shoreline keeps re-composing itself — calm and
-    // nearly straight one minute, billowing the next. The swell leans harder
-    // while being dragged.
-    const drag = Math.min(vel * 1.8, 2);
-    const m1 = 0.52 + 0.26 * Math.sin(tt * 0.13 + 1.3);
-    const m2 = 0.26 + 0.15 * Math.sin(tt * 0.089 + 4.1);
-    const m3 = 0.13 + 0.09 * Math.sin(tt * 0.17 + 2.2);
-    const meander = (0.5 + 0.5 * Math.sin(tt * 0.06 + 0.7)) * 0.62;
-    const wl1 = 230 + 75 * Math.sin(tt * 0.067);
-    const wl2 = 96 + 32 * Math.sin(tt * 0.096 + 2.9);
-    const surface = (u: number, span: number) => {
-      const env = 0.68 + 0.32 * Math.sin((u / span) * Math.PI * 1.2 + tt * 0.3);
-      let w =
-        (Math.sin(u / wl1 + tt * 0.7 + drag) * m1 +
-          Math.sin(u / wl2 - tt * 1.05 - drag * 0.6) * m2 +
-          Math.sin(u / 47 + tt * 1.5) * m3 +
-          Math.sin(u / 540 + tt * 0.22 + 5.6) * meander) *
-        amp *
-        env;
-      if (Math.abs(dipS.current) > 0.2) {
-        const dyc = u - dipYS.current;
-        w += Math.exp(-(dyc * dyc) / 52000) * dipS.current;
-      }
-      return w;
-    };
-
-    const N = 36;
-    const pts: string[] = [];
-    let d = "";
-    if (horizontal) {
-      const x0 = pos * W;
-      for (let i = 0; i <= N; i++) {
-        const y = (H * i) / N;
-        const x = x0 + surface(y, H);
-        pts.push(`${x.toFixed(1)}px ${y.toFixed(1)}px`);
-        d += `${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
-      }
-      panel.style.clipPath = `polygon(${pts.join(",")}, 100% 100%, 100% 0%)`;
-    } else {
-      const y0 = pos * H;
-      for (let i = 0; i <= N; i++) {
-        const x = (W * i) / N;
-        const y = y0 + surface(x, W);
-        pts.push(`${x.toFixed(1)}px ${y.toFixed(1)}px`);
-        d += `${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
-      }
-      panel.style.clipPath = `polygon(${pts.join(",")}, 100% 100%, 0% 100%)`;
-    }
-    for (const m of mistRefs.current) m?.setAttribute("d", d);
-  });
-
   const onMove = (e: React.MouseEvent) => {
-    if (reduce || side || committing) {
-      cursor.current.active = false;
-      return; // hold still while a side is expanded
-    }
-    const fr = frameRef.current?.getBoundingClientRect();
-    if (fr) {
-      cursor.current = { x: e.clientX - fr.left, y: e.clientY - fr.top, active: true };
-    }
+    if (reduce || side || committing) return; // hold the tilt while gathered
     const r = e.currentTarget.getBoundingClientRect();
     mx.set((e.clientX - r.left) / r.width - 0.5);
     my.set((e.clientY - r.top) / r.height - 0.5);
   };
 
-  // Enter fast, leave forgiving: opening is instant; collapsing back to neutral
-  // waits a beat so grazing the shoreline doesn't ping-pong the layout. Opening
-  // a side also glides the tilt back to straight-on.
+  // Enter fast, leave forgiving: gathering starts the instant the cursor
+  // arrives; releasing back to the marbled rest waits a beat.
   const focusSide = (s: SideId, viaWord = false) => {
     hasHovered.current = true;
     setShowHint(false);
     if (committing || !foldEnabled.current) return;
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
     openedByWord.current = viaWord;
-    cursor.current.active = false;
     setSide(s);
     mx.set(0);
     my.set(0);
@@ -568,7 +380,7 @@ export default function Chooser() {
     leaveTimer.current = setTimeout(() => setSide(null), 180);
   };
 
-  // Hover performs the click, reversibly; the click completes it: the wave
+  // Hover gathers the ink reversibly; the click completes it: the chosen ink
   // floods the frame, the letterbox dissolves, and the route changes mid-move.
   const commit = (s: SideId, href: string) => {
     if (committing) return;
@@ -618,8 +430,7 @@ export default function Chooser() {
           transitionTimingFunction: "cubic-bezier(0.87,0,0.13,1)",
         }}
       >
-        {/* Scene — gentle settle on load, landing at exactly 1:1 so nothing
-            renders through a permanent fractional upscale (sharpness) */}
+        {/* Scene — gentle settle on load, landing at exactly 1:1 for sharpness */}
         <motion.div
           initial={{ opacity: 0, scale: reduce ? 1 : 1.08 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -631,8 +442,40 @@ export default function Chooser() {
           }}
           className="absolute inset-0"
         >
+          {/* CSS fallback split — visible only if WebGL is unavailable */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${MEDIA.city.src})`,
+              backgroundSize: "cover",
+              backgroundPosition: MEDIA.city.focus,
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-y-0 right-0 w-[43%] max-md:inset-x-0 max-md:bottom-0 max-md:top-auto max-md:h-[43%] max-md:w-full"
+            style={{
+              backgroundImage: `url(${MEDIA.bridge.src})`,
+              backgroundSize: "cover",
+              backgroundPosition: MEDIA.bridge.focus,
+            }}
+          />
+
+          {/* The two worlds as inks in one liquid */}
+          <FluidCanvas
+            imgA={MEDIA.city.src}
+            imgB={MEDIA.bridge.src}
+            focusA={{ x: 0.5, y: 0.55 }}
+            focusB={{ x: 0.5, y: 0.55 }}
+            bias={seamSpring}
+            horizontal={foldEnabled}
+            reduce={reduce}
+          />
+
+          <div className="scrim-bottom pointer-events-none absolute inset-0 opacity-80" />
+
           <Door
-            id="left"
             href="/playful"
             index="01"
             domain="Entrepreneurship"
@@ -646,13 +489,8 @@ export default function Chooser() {
             onFocusSide={() => focusSide("left")}
             onBlurSide={blurSide}
             onCommit={() => commit("left", "/playful")}
-            imageSrc={MEDIA.city.src}
-            imageFocus={MEDIA.city.focus}
-            imgX={parallax}
-            className="z-0"
           />
           <Door
-            id="right"
             href="/editorial"
             index="02"
             domain="Research"
@@ -667,46 +505,7 @@ export default function Chooser() {
             onFocusSide={() => focusSide("right")}
             onBlurSide={blurSide}
             onCommit={() => commit("right", "/editorial")}
-            imageSrc={MEDIA.bridge.src}
-            imageFocus={MEDIA.bridge.focus}
-            imgX={parallaxInv}
-            panelRef={rightPanelRef}
-            className="z-10 [clip-path:inset(57%_0_0_0)] md:[clip-path:inset(0_0_0_57%)]"
           />
-
-          {/* the shoreline is not a line — it's a band of mist where the worlds
-              dissolve into each other: stacked soft strokes riding the wave */}
-          <svg
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-20 h-full w-full"
-          >
-            <g
-              style={{
-                opacity: committing ? 0 : 1,
-                transition: "opacity 0.4s ease-out",
-                // melt the stacked strokes into one smooth veil — no banding
-                filter: "blur(16px)",
-              }}
-            >
-              {[
-                { w: 160, o: 0.05 },
-                { w: 100, o: 0.07 },
-                { w: 48, o: 0.12 },
-                { w: 12, o: 0.22 },
-              ].map((m, i) => (
-                <path
-                  key={m.w}
-                  ref={(el) => {
-                    mistRefs.current[i] = el;
-                  }}
-                  fill="none"
-                  stroke={`rgb(226 232 244 / ${m.o})`}
-                  strokeWidth={m.w}
-                  strokeLinecap="round"
-                />
-              ))}
-            </g>
-          </svg>
         </motion.div>
 
         <div className="grain" aria-hidden="true" />
@@ -736,9 +535,8 @@ export default function Chooser() {
           </p>
         </motion.div>
 
-        {/* Centered identity — fades back while a side is expanded. Kept
-            half-visible when a WORD holds keyboard focus, so the focused link
-            never disappears from under its own focus. */}
+        {/* Centered identity — recedes while an ink is gathered. Kept
+            half-visible when a WORD holds keyboard focus. */}
         <motion.div
           animate={{
             opacity: committing ? 0 : side ? (wordFocused ? 0.55 : 0) : 1,
@@ -833,7 +631,7 @@ export default function Chooser() {
                 Researcher
               </Link>
             </motion.div>
-            {/* Appears only after 4s of hesitation; suppressed forever once a door is touched */}
+            {/* Appears only after 4s of hesitation; suppressed once a door is touched */}
             <motion.p
               animate={{ opacity: showHint ? 1 : 0 }}
               transition={{ duration: 0.5, ease: GENTLE }}
