@@ -173,25 +173,34 @@ function Door({
               delay: committing || receding ? 0 : 0.15,
             }}
           >
-            {/* the name dissolves from the center and RE-FORMS here, in this
-                side's own voice, when its ink gathers */}
-            <motion.p
-              aria-hidden="true"
-              initial={false}
-              animate={
-                active && !committing
-                  ? { opacity: 1, filter: "blur(0px)", letterSpacing: "0.01em" }
-                  : { opacity: 0, filter: reduce ? "blur(0px)" : "blur(10px)", letterSpacing: "0.22em" }
-              }
-              transition={{ duration: 0.8, ease: GENTLE }}
-              className={`mb-4 hidden text-cream/90 md:block ${
+            {/* the name ANIMATES THROUGH: the same element flies here from the
+                center (or from the other side) and lands in this side's voice */}
+            <div
+              className={`relative mb-4 hidden md:block ${
                 builder
                   ? "font-display text-xl tracking-tight lg:text-2xl"
                   : "font-serif text-2xl italic lg:text-3xl"
               }`}
             >
-              {config.author}.
-            </motion.p>
+              <span aria-hidden="true" className="invisible block whitespace-nowrap">
+                {config.author}.
+              </span>
+              {active && !committing && (
+                <motion.p
+                  aria-hidden="true"
+                  layoutId={reduce ? undefined : "author-name"}
+                  initial={{ opacity: reduce ? 1 : 0.5 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    layout: { type: "spring", stiffness: 70, damping: 22 },
+                    opacity: { duration: 0.45, ease: GENTLE },
+                  }}
+                  className="absolute inset-0 whitespace-nowrap text-cream/90"
+                >
+                  {config.author}.
+                </motion.p>
+              )}
+            </div>
             <p
               className={`label flex items-center gap-3 ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70"} ${right ? "md:justify-end" : ""}`}
             >
@@ -293,6 +302,8 @@ export default function Chooser() {
   const openedByWord = useRef(false);
   const [wordFocused, setWordFocused] = useState(false);
   const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // after the entrance, remounting the center name needs no stagger delay
+  const entranceDone = useRef(false);
   // The gather is a pointer-and-desktop flourish: below md taps commit directly.
   const foldEnabled = useRef(false);
 
@@ -315,10 +326,14 @@ export default function Chooser() {
 
   // The hint exists only for visitors who hesitate; never for those who've explored.
   useEffect(() => {
+    const done = setTimeout(() => (entranceDone.current = true), 2000);
     const t = setTimeout(() => {
       if (!hasHovered.current) setShowHint(true);
     }, 4000);
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(done);
+    };
   }, []);
 
   // Esc releases the gathered ink (focus/hover parity).
@@ -608,12 +623,29 @@ export default function Chooser() {
             <motion.p variants={introItem} className="label text-cream/70">
               Hello — I&apos;m
             </motion.p>
-            <motion.h1
-              variants={introItem}
-              className="mt-3 font-serif text-4xl font-light leading-[0.95] tracking-tight text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.55)] sm:text-7xl lg:text-8xl"
-            >
-              {config.author}.
-            </motion.h1>
+            <div className="relative mt-3 font-serif text-4xl font-light leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+              <span aria-hidden="true" className="invisible block whitespace-nowrap">
+                {config.author}.
+              </span>
+              {!side && !committing && (
+                <motion.h1
+                  layoutId={reduce ? undefined : "author-name"}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    layout: { type: "spring", stiffness: 70, damping: 22 },
+                    opacity: {
+                      duration: 0.7,
+                      ease: GENTLE,
+                      delay: entranceDone.current ? 0 : 0.6,
+                    },
+                  }}
+                  className="absolute inset-0 whitespace-nowrap text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.55)]"
+                >
+                  {config.author}.
+                </motion.h1>
+              )}
+            </div>
             {/* Each word is set in its side's own voice — the fork previewed in type */}
             <motion.div
               variants={introItem}
