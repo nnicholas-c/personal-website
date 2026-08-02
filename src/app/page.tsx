@@ -33,7 +33,6 @@ const EDITORIAL_PEEK = SECTIONS.filter((s) => s.nav)
 const GENTLE = [0.33, 1, 0.68, 1] as const; // easeOutCubic — reveals
 const BOUNCE = "cubic-bezier(0.175,0.885,0.32,1.275)"; // builder-side micro-motion
 const COMMIT_MS = 900; // frame-to-full-bleed on click (expo.inOut, inline below)
-const NAV_AT_MS = 650; // route change fires past the fast middle of the commit move
 // The rest state deliberately favors the entrepreneur side: the default persona
 // gets more of the liquid (57/43), a brighter identity word, a louder numeral.
 const NEUTRAL_SEAM = 57;
@@ -266,7 +265,6 @@ export default function Chooser() {
   const [side, setSide] = useState<Side>(null);
   const [committing, setCommitting] = useState<Side>(null);
   const [showHint, setShowHint] = useState(false);
-  const [fadeAll, setFadeAll] = useState(false); // reduced-motion commit = plain crossfade
 
   const hasHovered = useRef(false);
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -393,7 +391,21 @@ export default function Chooser() {
     let snapshot: string | null = null;
     try {
       const canvas = document.querySelector("main canvas") as HTMLCanvasElement | null;
-      snapshot = canvas?.toDataURL("image/jpeg", 0.72) ?? null;
+      if (canvas) {
+        // Encode a DOWNSCALED copy — a full-Retina toDataURL blocks the main
+        // thread ~50ms and freezes the click. The fragments don't need the
+        // resolution; ~640px wide encodes in a few ms.
+        const w = 640;
+        const h = Math.max(1, Math.round((w * canvas.height) / canvas.width));
+        const off = document.createElement("canvas");
+        off.width = w;
+        off.height = h;
+        const ctx = off.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(canvas, 0, 0, w, h);
+          snapshot = off.toDataURL("image/jpeg", 0.6);
+        }
+      }
     } catch {
       snapshot = null; // tainted/unsupported → overlay falls back to ink fragments
     }
@@ -425,11 +437,9 @@ export default function Chooser() {
   };
 
   return (
-    <motion.main
+    <main
       onMouseMove={onMove}
       onPointerOver={onOver}
-      animate={{ opacity: fadeAll ? 0 : 1 }}
-      transition={{ duration: 0.3 }}
       className="relative h-[100svh] w-full overflow-hidden bg-ink font-serif text-cream"
     >
       <div
@@ -731,6 +741,6 @@ export default function Chooser() {
           </Link>
         </motion.div>
       </div>
-    </motion.main>
+    </main>
   );
 }

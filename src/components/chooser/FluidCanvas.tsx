@@ -292,7 +292,17 @@ export default function FluidCanvas({
     let raf = 0;
     let last = performance.now();
     const start = last;
+    // Once the page-transition burst begins, an opaque overlay covers the
+    // canvas — stop rendering the (heavy, Retina) shader so the explosion has
+    // the whole GPU. The chooser unmounts on navigation right after.
+    let paused = false;
+    const onShatter = () => {
+      paused = true;
+      cancelAnimationFrame(raf);
+    };
+    window.addEventListener("shatter:go", onShatter);
     const render = (now: number) => {
+      if (paused) return;
       raf = requestAnimationFrame(render);
       const dt = Math.min((now - last) / 1000, 0.1);
       last = now;
@@ -334,6 +344,7 @@ export default function FluidCanvas({
     raf = requestAnimationFrame(render);
 
     const onVis = () => {
+      if (paused) return;
       cancelAnimationFrame(raf);
       if (!document.hidden) raf = requestAnimationFrame(render);
     };
@@ -342,6 +353,7 @@ export default function FluidCanvas({
     return () => {
       cancelAnimationFrame(raf);
       document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("shatter:go", onShatter);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("chooser:stir", onStir);
       // NOTE: do not loseContext() here — under React StrictMode the effect

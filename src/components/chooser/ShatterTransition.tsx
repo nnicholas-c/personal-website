@@ -12,11 +12,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 
-const COLS = 12;
-const ROWS = 7;
+const COLS = 10;
+const ROWS = 6;
 const EXPLODE_MS = 820;
 const REFORM_MS = 760;
 const NAV_AT_MS = 220; // navigate once the burst has begun to cover the screen
+const FAILSAFE_MS = 5000; // if the route never settles, never stay stuck
+const BURST_EASE = [0.16, 1, 0.3, 1] as const; // ease-OUT: fragments move on frame 1
 
 type Mode = "idle" | "explode" | "reform";
 
@@ -58,7 +60,18 @@ export default function ShatterTransition() {
       if (!detail?.href || pending.current) return;
       pending.current = detail.href;
 
+      // begin() fires exactly once per go, whichever trigger wins the race
+      // (image decode vs the 90ms fallback) — else a late onload could re-run
+      // it after reform and strand the overlay covering the destination.
+      let begun = false;
+      let img: HTMLImageElement | null = null;
       const begin = (snapshot: string | null) => {
+        if (begun) return;
+        begun = true;
+        if (img) {
+          img.onload = null;
+          img.onerror = null;
+        }
         setSnap(snapshot);
         setMode("explode");
         clearTimers();
@@ -67,12 +80,20 @@ export default function ShatterTransition() {
             if (pending.current) router.push(pending.current);
           }, reduce ? 140 : NAV_AT_MS)
         );
+        // if the route never settles (redirect / prefetch miss), don't stay stuck
+        timers.current.push(
+          setTimeout(() => {
+            pending.current = null;
+            setMode("idle");
+            setSnap(null);
+          }, FAILSAFE_MS)
+        );
       };
 
       // Decode the snapshot BEFORE the burst, so the fragments paint real pixels
       // instead of flashing their fallback color while a big data URL decodes.
       if (detail.snapshot && !reduce) {
-        const img = new Image();
+        img = new Image();
         img.onload = () => begin(detail.snapshot ?? null);
         img.onerror = () => begin(null);
         img.src = detail.snapshot;
@@ -194,7 +215,7 @@ export default function ShatterTransition() {
             animate={away}
             transition={{
               duration: (exploding ? EXPLODE_MS : REFORM_MS) / 1000,
-              ease: [0.3, 0, 0.25, 1],
+              ease: BURST_EASE,
               delay: t.delay,
             }}
           />
