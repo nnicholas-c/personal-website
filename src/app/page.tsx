@@ -274,7 +274,6 @@ export default function Chooser() {
   // stay interactive only then — otherwise the faded identity must be inert.
   const openedByWord = useRef(false);
   const [wordFocused, setWordFocused] = useState(false);
-  const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // The gather is a pointer-and-desktop flourish: below md taps commit directly.
   const foldEnabled = useRef(false);
 
@@ -320,7 +319,6 @@ export default function Chooser() {
       if (leaveTimer.current) clearTimeout(leaveTimer.current);
       // if some other navigation unmounted us first, the pending commit push
       // must not fire afterwards and hijack it
-      if (navTimer.current) clearTimeout(navTimer.current);
     };
   }, []);
 
@@ -382,27 +380,26 @@ export default function Chooser() {
     leaveTimer.current = setTimeout(() => setSide(null), 180);
   };
 
-  // Hover gathers the ink reversibly; the click completes it: the chosen ink
-  // floods the frame, the letterbox dissolves, and the route changes mid-move.
-  const commit = (s: SideId, href: string, at?: { x: number; y: number }) => {
+  // Hover gathers the ink reversibly; the click detonates it — the whole
+  // screen bursts into fragments (a snapshot of the live liquid) and the
+  // ShatterTransition overlay carries the navigation, so the click never
+  // freezes waiting on the destination.
+  const commit = (s: SideId, href: string) => {
     if (committing) return;
     hasHovered.current = true;
     setShowHint(false);
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
-    if (at && !reduce) {
-      window.dispatchEvent(
-        new CustomEvent("chooser:stir", { detail: { ...at, s: 1.3 } })
-      );
-    }
-    if (reduce) {
-      setCommitting(s);
-      setFadeAll(true);
-      navTimer.current = setTimeout(() => router.push(href), 320);
-      return;
-    }
-    setSide(s);
     setCommitting(s);
-    navTimer.current = setTimeout(() => router.push(href), NAV_AT_MS);
+    let snapshot: string | null = null;
+    try {
+      const canvas = document.querySelector("main canvas") as HTMLCanvasElement | null;
+      snapshot = canvas?.toDataURL("image/jpeg", 0.72) ?? null;
+    } catch {
+      snapshot = null; // tainted/unsupported → overlay falls back to ink fragments
+    }
+    window.dispatchEvent(
+      new CustomEvent("shatter:go", { detail: { href, snapshot } })
+    );
   };
 
   const stateOf = (mine: SideId): State =>
@@ -507,7 +504,7 @@ export default function Chooser() {
             reduce={reduce}
             onFocusSide={() => focusSide("left")}
             onBlurSide={blurSide}
-            onCommit={(e) => commit("left", "/playful", { x: e.clientX, y: e.clientY })}
+            onCommit={(e) => commit("left", "/playful")}
           />
           <Door
             href="/editorial"
@@ -523,7 +520,7 @@ export default function Chooser() {
             reduce={reduce}
             onFocusSide={() => focusSide("right")}
             onBlurSide={blurSide}
-            onCommit={(e) => commit("right", "/editorial", { x: e.clientX, y: e.clientY })}
+            onCommit={(e) => commit("right", "/editorial")}
           />
         </motion.div>
 
@@ -650,7 +647,7 @@ export default function Chooser() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  commit("left", "/playful", { x: e.clientX, y: e.clientY });
+                  commit("left", "/playful");
                 }}
                 className={`font-display text-lg tracking-tight transition-colors duration-500 hover:text-[hsl(20_100%_70%)] sm:text-2xl ${role("left")}`}
               >
@@ -677,7 +674,7 @@ export default function Chooser() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  commit("right", "/editorial", { x: e.clientX, y: e.clientY });
+                  commit("right", "/editorial");
                 }}
                 className={`font-serif text-xl italic transition-colors duration-500 hover:text-cream sm:text-3xl ${role("right")}`}
               >

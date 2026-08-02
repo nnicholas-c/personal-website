@@ -11,6 +11,7 @@ import { config } from "@/data/config";
 import Script from "next/script";
 import { Providers } from "@/components/providers";
 import SmoothScroll from "@/components/smooth-scroll";
+import ShatterTransition from "@/components/chooser/ShatterTransition";
 
 export const metadata: Metadata = {
   title: config.title,
@@ -91,6 +92,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <SmoothScroll>{children}</SmoothScroll>
+          <ShatterTransition />
         </Providers>
       </body>
     </html>

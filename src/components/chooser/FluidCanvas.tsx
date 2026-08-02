@@ -163,7 +163,13 @@ export default function FluidCanvas({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl =
-      canvas.getContext("webgl", { antialias: false, alpha: false }) ||
+      // preserveDrawingBuffer lets the page transition snapshot the liquid
+      // (canvas.toDataURL) so its fragments are real pieces of this screen.
+      canvas.getContext("webgl", {
+        antialias: false,
+        alpha: false,
+        preserveDrawingBuffer: true,
+      }) ||
       (canvas.getContext("experimental-webgl") as WebGLRenderingContext | null);
     if (!gl) return; // CSS fallback (plain split) stays visible underneath
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
