@@ -153,6 +153,35 @@ export default function ShatterTransition() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  // While the void holds (waiting for the destination to paint), it becomes a
+  // slow, luminous nebula with drifting embers — so the wait reads as
+  // "travelling through space", never a dead black screen, however long the
+  // page takes.
+  const clouds = useMemo(
+    () => [
+      { x: 34, y: 40, size: 70, hue: "120,150,210", peak: 0.5, dx: 10, dy: -6, dur: 9 },
+      { x: 66, y: 58, size: 62, hue: "200,150,120", peak: 0.4, dx: -8, dy: 7, dur: 11 },
+      { x: 52, y: 30, size: 54, hue: "150,160,230", peak: 0.42, dx: 5, dy: 9, dur: 10 },
+    ],
+    []
+  );
+  const embers = useMemo(
+    () =>
+      Array.from({ length: 60 }, (_, i) => ({
+        key: i,
+        x: rnd(i * 3.1) * 100,
+        y: rnd(i * 7.7 + 1) * 100,
+        size: 2.5 + rnd(i * 5.5) * 7,
+        dur: 2.8 + rnd(i * 2.2) * 3.2,
+        delay: rnd(i * 9.1) * 2.4,
+        rise: 40 + rnd(i * 4.4) * 110,
+        drift: (rnd(i * 6.6) - 0.5) * 90,
+        peak: 0.6 + rnd(i * 1.7) * 0.4,
+        coral: rnd(i * 2.9) > 0.66,
+      })),
+    []
+  );
+
   const tiles = useMemo<Tile[]>(() => {
     const out: Tile[] = [];
     const cx = (COLS - 1) / 2;
@@ -196,6 +225,9 @@ export default function ShatterTransition() {
 
   const exploding = mode === "explode";
   const showTiles = mode === "explode" || mode === "reform";
+  // the nebula lives behind the fragments through the burst and the hold, so the
+  // explosion reveals a glowing field — never pure black
+  const showField = mode === "explode" || mode === "cover";
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[9999]">
@@ -211,6 +243,65 @@ export default function ShatterTransition() {
           delay: exploding ? 0.14 : mode === "reform" ? 0.18 : 0,
         }}
       />
+
+      {/* drifting luminous nebula clouds — visible from the first frame of the
+          burst, so the void is never flat black */}
+      {showField &&
+        clouds.map((c, i) => (
+          <motion.div
+            key={`cloud-${i}`}
+            className="absolute -translate-x-1/2 -translate-y-1/2"
+            style={{
+              left: `${c.x}%`,
+              top: `${c.y}%`,
+              width: `${c.size}vmax`,
+              height: `${c.size}vmax`,
+              background: `radial-gradient(closest-side, rgba(${c.hue},${c.peak}) 0%, rgba(${c.hue},${c.peak * 0.4}) 38%, transparent 70%)`,
+              filter: "blur(10px)",
+            }}
+            initial={{ opacity: c.peak, scale: 1, x: 0, y: 0 }}
+            animate={{
+              opacity: [c.peak, 1, 0.75, 1],
+              scale: [1, 1.08, 0.97, 1.08],
+              x: [0, c.dx, 0],
+              y: [0, c.dy, 0],
+            }}
+            transition={{ duration: c.dur, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+
+      {/* glowing sparks drifting through it */}
+      {showField &&
+        embers.map((p) => (
+          <motion.span
+            key={p.key}
+            className="absolute rounded-full"
+            style={{
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: p.size,
+              height: p.size,
+              background: p.coral
+                ? "hsl(20 100% 70%)"
+                : "rgb(232 224 212)",
+              boxShadow: p.coral
+                ? "0 0 6px hsl(20 100% 70% / 0.6)"
+                : "0 0 5px rgba(232,224,212,0.5)",
+            }}
+            initial={{ opacity: 0, y: 0, x: 0 }}
+            animate={{
+              opacity: [0, p.peak, p.peak, 0],
+              y: [0, -p.rise],
+              x: [0, p.drift],
+            }}
+            transition={{
+              duration: p.dur,
+              delay: p.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
 
       {showTiles &&
         tiles.map((t) => {
