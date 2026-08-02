@@ -498,7 +498,7 @@ export default function Chooser() {
             href="/playful"
             index="01"
             domain="Entrepreneurship"
-            title="The builder."
+            title="The builder"
             peekItems={BUILDER_PEEK}
             align="left"
             flavor="builder"
@@ -513,8 +513,8 @@ export default function Chooser() {
             href="/editorial"
             index="02"
             domain="Research"
-            title="The researcher."
-            peekLine="Machine learning & quantitative research."
+            title="The researcher"
+            peekLine="Machine learning & quantitative research"
             peekItems={EDITORIAL_PEEK}
             align="right"
             flavor="editorial"
@@ -557,7 +557,7 @@ export default function Chooser() {
         <div className="pointer-events-none absolute inset-0 z-30 hidden md:block">
           <div className="absolute inset-y-0 left-0 flex w-1/2 items-center justify-center px-10 pb-[20vh]">
             <ShatterName
-              text={`${config.author}.`}
+              text={`${config.author}`}
               show={side === "left" && !committing}
               reduce={reduce}
               seed={11}
@@ -566,7 +566,7 @@ export default function Chooser() {
           </div>
           <div className="absolute inset-y-0 right-0 flex w-1/2 items-center justify-center px-10 pb-[20vh]">
             <ShatterName
-              text={`${config.author}.`}
+              text={`${config.author}`}
               show={side === "right" && !committing}
               reduce={reduce}
               seed={22}
@@ -616,7 +616,7 @@ export default function Chooser() {
                 gathers, and re-form in the center of that side */}
             <div className="mt-3 flex justify-center">
               <ShatterName
-                text={`${config.author}.`}
+                text={`${config.author}`}
                 show={!side && !committing}
                 reduce={reduce}
                 seed={0}
@@ -690,7 +690,7 @@ export default function Chooser() {
               transition={{ duration: 0.5, ease: GENTLE }}
               className="mt-5 hidden font-serif text-base italic text-cream/60 sm:block sm:text-lg"
             >
-              Take a look at either side.
+              Take a look at either side
             </motion.p>
             {/* Mobile escape hatch — the rail lives in the identity block below md */}
             <motion.div
