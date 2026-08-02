@@ -154,104 +154,6 @@ function Door({
           {index}
         </motion.span>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.7, ease: GENTLE }}
-          className={`relative z-10 w-full max-w-[85%] p-8 sm:p-10 md:w-[19rem] md:max-w-none lg:w-[21rem] lg:p-12 xl:w-[24rem] xl:p-14 ${
-            right ? "md:ml-auto md:text-right" : ""
-          }`}
-        >
-          {/* the words fade while their ink recedes; the liquid never clips them */}
-          <motion.div
-            animate={{ opacity: textOpacity }}
-            transition={{
-              duration: committing ? 0.3 : receding ? 0.25 : 0.5,
-              ease: GENTLE,
-              delay: committing || receding ? 0 : 0.15,
-            }}
-          >
-            <p
-              className={`label flex items-center gap-3 ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70"} ${right ? "md:justify-end" : ""}`}
-            >
-              <span
-                className={`hidden h-px w-8 md:inline-block ${builder ? "bg-[hsl(20_100%_70%_/_0.5)]" : "bg-cream/50"} ${right ? "order-2" : ""}`}
-              />
-              {domain}
-            </p>
-            <h2
-              className={`mt-3 text-cream drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)] ${
-                builder
-                  ? "font-display text-3xl leading-[1.02] tracking-tight lg:text-4xl xl:text-5xl"
-                  : "font-serif text-4xl font-light leading-[0.95] lg:text-5xl xl:text-6xl"
-              }`}
-            >
-              {title}
-            </h2>
-
-            {/* the peek — the destination's own texts stagger in, its entrance
-                already beginning inside the door */}
-            <div
-              className="hidden overflow-hidden transition-all md:block"
-              style={{
-                maxHeight: active && !committing ? "14rem" : 0,
-                opacity: active && !committing ? 1 : 0,
-                transitionDuration: "600ms",
-                transitionTimingFunction: builder ? BOUNCE : "cubic-bezier(0.33,1,0.68,1)",
-              }}
-            >
-              <motion.div
-                variants={peekContainer}
-                initial="hidden"
-                animate={active && !committing ? "show" : "hidden"}
-                className={`mt-5 flex flex-col gap-2 ${right ? "items-end" : ""}`}
-              >
-                {peekLine && (
-                  <motion.p
-                    variants={peekItem}
-                    className="mb-1 font-serif text-lg italic text-cream/85"
-                  >
-                    {peekLine}
-                  </motion.p>
-                )}
-                {peekItems.map((item, i) => (
-                  <motion.p
-                    key={item}
-                    variants={{
-                      hidden: peekItem.hidden,
-                      show: {
-                        ...peekItem.show,
-                        transition: {
-                          duration: 0.5,
-                          ease: builder ? [0.175, 0.885, 0.32, 1.275] : GENTLE,
-                        },
-                      },
-                    }}
-                    className={`flex items-baseline gap-2.5 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-cream/85 ${right ? "flex-row-reverse" : ""}`}
-                  >
-                    <span
-                      className={builder ? "text-[hsl(20_100%_70%)]" : "text-cream/45"}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    {item}
-                  </motion.p>
-                ))}
-              </motion.div>
-            </div>
-
-            <span
-              className={`label mt-6 inline-flex items-center gap-2 underline-offset-4 transition-colors group-focus-visible:underline ${builder ? "text-[hsl(20_100%_70%_/_0.9)] group-hover:text-[hsl(20_100%_70%)]" : "text-cream/80 group-hover:text-cream"} ${right ? "md:flex-row-reverse" : ""}`}
-            >
-              Step in
-              <ArrowRight
-                size={13}
-                className={`transition-transform duration-500 ${right ? "group-hover:-translate-x-1 md:rotate-180" : "group-hover:translate-x-1"}`}
-                style={{ transitionTimingFunction: builder ? BOUNCE : undefined }}
-              />
-            </span>
-          </motion.div>
-        </motion.div>
       </Link>
     </div>
   );
@@ -657,9 +559,9 @@ export default function Chooser() {
                   e.preventDefault();
                   commit("left", "/playful");
                 }}
-                className={`font-display text-lg tracking-tight transition-colors duration-500 hover:text-[hsl(20_100%_70%)] sm:text-2xl ${role("left")}`}
+                className={`font-display text-lg lowercase tracking-tight transition-colors duration-500 hover:text-[hsl(20_100%_70%)] sm:text-2xl ${role("left")}`}
               >
-                Entrepreneur
+                builder
               </Link>
               <span className="font-serif text-xl not-italic text-cream/30 sm:text-3xl">
                 /
@@ -684,9 +586,9 @@ export default function Chooser() {
                   e.preventDefault();
                   commit("right", "/editorial");
                 }}
-                className={`font-serif text-xl italic transition-colors duration-500 hover:text-cream sm:text-3xl ${role("right")}`}
+                className={`font-serif text-xl italic lowercase transition-colors duration-500 hover:text-cream sm:text-3xl ${role("right")}`}
               >
-                Researcher
+                researcher
               </Link>
             </motion.div>
             {/* Appears only after 4s of hesitation; suppressed once a door is touched */}
