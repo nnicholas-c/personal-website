@@ -17,6 +17,7 @@ import { config } from "@/data/config";
 import { SECTIONS } from "@/data/sections";
 import projects from "@/data/projects";
 import FluidCanvas from "@/components/chooser/FluidCanvas";
+import ShatterName from "@/components/chooser/ShatterName";
 
 // The hover peek shows the REAL contents of each world, pulled from the same
 // data that renders them — project titles on the builder side, the section
@@ -173,34 +174,6 @@ function Door({
               delay: committing || receding ? 0 : 0.15,
             }}
           >
-            {/* the name ANIMATES THROUGH: the same element flies here from the
-                center (or from the other side) and lands in this side's voice */}
-            <div
-              className={`relative mb-4 hidden md:block ${
-                builder
-                  ? "font-display text-xl tracking-tight lg:text-2xl"
-                  : "font-serif text-2xl italic lg:text-3xl"
-              }`}
-            >
-              <span aria-hidden="true" className="invisible block whitespace-nowrap">
-                {config.author}.
-              </span>
-              {active && !committing && (
-                <motion.p
-                  aria-hidden="true"
-                  layoutId={reduce ? undefined : "author-name"}
-                  initial={{ opacity: reduce ? 1 : 0.5 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    layout: { type: "spring", stiffness: 70, damping: 22 },
-                    opacity: { duration: 0.45, ease: GENTLE },
-                  }}
-                  className="absolute inset-0 whitespace-nowrap text-cream/90"
-                >
-                  {config.author}.
-                </motion.p>
-              )}
-            </div>
             <p
               className={`label flex items-center gap-3 ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70"} ${right ? "md:justify-end" : ""}`}
             >
@@ -302,8 +275,6 @@ export default function Chooser() {
   const openedByWord = useRef(false);
   const [wordFocused, setWordFocused] = useState(false);
   const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // after the entrance, remounting the center name needs no stagger delay
-  const entranceDone = useRef(false);
   // The gather is a pointer-and-desktop flourish: below md taps commit directly.
   const foldEnabled = useRef(false);
 
@@ -326,14 +297,10 @@ export default function Chooser() {
 
   // The hint exists only for visitors who hesitate; never for those who've explored.
   useEffect(() => {
-    const done = setTimeout(() => (entranceDone.current = true), 2000);
     const t = setTimeout(() => {
       if (!hasHovered.current) setShowHint(true);
     }, 4000);
-    return () => {
-      clearTimeout(t);
-      clearTimeout(done);
-    };
+    return () => clearTimeout(t);
   }, []);
 
   // Esc releases the gathered ink (focus/hover parity).
@@ -582,10 +549,31 @@ export default function Chooser() {
           className="pointer-events-none absolute inset-x-0 top-0 z-40 flex items-center justify-between px-7 py-6 sm:px-10"
         >
           <p className="label text-cream/70">{config.author}</p>
-          <p className="label hidden text-cream/50 sm:block">
-            San Francisco · Portfolio
-          </p>
         </motion.div>
+
+        {/* The name re-forms in the CENTER of whichever side gathers (md+): the
+            letters that shattered from the center converge here, in that side's
+            own voice. */}
+        <div className="pointer-events-none absolute inset-0 z-30 hidden md:block">
+          <div className="absolute inset-y-0 left-0 flex w-1/2 items-center justify-center px-10 pb-[20vh]">
+            <ShatterName
+              text={`${config.author}.`}
+              show={side === "left" && !committing}
+              reduce={reduce}
+              seed={11}
+              className="font-display text-5xl tracking-tight text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)] lg:text-6xl xl:text-7xl"
+            />
+          </div>
+          <div className="absolute inset-y-0 right-0 flex w-1/2 items-center justify-center px-10 pb-[20vh]">
+            <ShatterName
+              text={`${config.author}.`}
+              show={side === "right" && !committing}
+              reduce={reduce}
+              seed={22}
+              className="font-serif text-5xl font-light italic text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)] lg:text-6xl xl:text-7xl"
+            />
+          </div>
+        </div>
 
         {/* Centered identity — DISSOLVES while an ink is gathered (the name
             re-forms inside the gathered side). Kept half-visible when a WORD
@@ -623,28 +611,17 @@ export default function Chooser() {
             <motion.p variants={introItem} className="label text-cream/70">
               Hello — I&apos;m
             </motion.p>
-            <div className="relative mt-3 font-serif text-4xl font-light leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
-              <span aria-hidden="true" className="invisible block whitespace-nowrap">
-                {config.author}.
-              </span>
-              {!side && !committing && (
-                <motion.h1
-                  layoutId={reduce ? undefined : "author-name"}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    layout: { type: "spring", stiffness: 70, damping: 22 },
-                    opacity: {
-                      duration: 0.7,
-                      ease: GENTLE,
-                      delay: entranceDone.current ? 0 : 0.6,
-                    },
-                  }}
-                  className="absolute inset-0 whitespace-nowrap text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.55)]"
-                >
-                  {config.author}.
-                </motion.h1>
-              )}
+            <h1 className="sr-only">{config.author}</h1>
+            {/* the name at center — its letters shatter apart when an ink
+                gathers, and re-form in the center of that side */}
+            <div className="mt-3 flex justify-center">
+              <ShatterName
+                text={`${config.author}.`}
+                show={!side && !committing}
+                reduce={reduce}
+                seed={0}
+                className="font-serif text-4xl font-light leading-[0.95] tracking-tight text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.55)] sm:text-7xl lg:text-8xl"
+              />
             </div>
             {/* Each word is set in its side's own voice — the fork previewed in type */}
             <motion.div
