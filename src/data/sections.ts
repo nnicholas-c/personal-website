@@ -10,9 +10,5 @@ export type SiteSection = {
 
 export const SECTIONS: SiteSection[] = [
   { id: "hero", label: "Top" },
-  { id: "now", label: "Currently", nav: true },
-  { id: "experience", label: "Experience", nav: true },
-  { id: "work", label: "Work", nav: true },
-  { id: "writing", label: "Writing", nav: true },
-  { id: "contact", label: "Contact", nav: true },
+  { id: "publications", label: "Publications", nav: true },
 ];

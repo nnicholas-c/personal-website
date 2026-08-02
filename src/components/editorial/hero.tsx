@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, GraduationCap, ArrowUpRight } from "lucide-react";
 import CinematicPanel from "@/components/motion/cinematic-panel";
 import HeroAtmosphere from "@/components/motion/hero-atmosphere";
 import DecodeText from "@/components/motion/decode-text";
 import SocialHandles from "@/components/site/social-handles";
 import { MEDIA } from "@/data/media";
 import { config } from "@/data/config";
+import { RESEARCH_INTRO, RESEARCH_INTERESTS } from "@/data/research";
 
 const container = {
   hidden: {},
@@ -36,7 +37,7 @@ const HeroSection = () => {
       mediaMobile={MEDIA.heroPortrait}
       priority
       ambient={<HeroAtmosphere />}
-      contentClassName="justify-end pb-28 sm:pb-32 md:justify-center md:pb-24"
+      contentClassName="justify-end pb-24 sm:pb-28 md:justify-center md:pb-24"
     >
       <motion.div
         variants={container}
@@ -62,22 +63,36 @@ const HeroSection = () => {
 
         <motion.p
           variants={item}
-          className="mt-5 font-serif text-2xl italic text-cream/80 sm:text-3xl"
+          className="mt-5 max-w-2xl font-serif text-lg leading-relaxed text-cream/75 text-pretty sm:text-xl"
         >
-          Machine learning &amp; quantitative research.
+          {RESEARCH_INTRO}
         </motion.p>
 
-        <motion.p
+        <motion.ul
           variants={item}
-          className="mt-5 max-w-xl font-serif text-lg leading-relaxed text-cream/70 text-pretty sm:text-xl"
+          className="mt-6 flex flex-wrap gap-x-3 gap-y-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-cream/55"
         >
-          I build reinforcement-learning systems, market-data pipelines, and
-          honest backtests — and I care about getting the science right, not
-          just the result.
-        </motion.p>
+          {RESEARCH_INTERESTS.map((interest, i) => (
+            <li key={interest} className="flex items-center gap-3">
+              {i > 0 && <span className="text-cream/25">/</span>}
+              {interest}
+            </li>
+          ))}
+        </motion.ul>
 
-        <motion.div variants={item}>
-          <SocialHandles className="mt-8" />
+        <motion.div
+          variants={item}
+          className="mt-8 flex flex-wrap items-center gap-4"
+        >
+          <a
+            href={config.social.scholar}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="label inline-flex items-center gap-2 rounded-full border border-cream/25 px-4 py-2 text-cream/80 transition-colors hover:border-cream/60 hover:text-cream"
+          >
+            <GraduationCap size={13} /> Google Scholar <ArrowUpRight size={12} />
+          </a>
+          <SocialHandles />
         </motion.div>
       </motion.div>
 
@@ -87,7 +102,7 @@ const HeroSection = () => {
         transition={{ delay: 1.4, duration: 1 }}
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
       >
-        <span className="label text-[0.6rem]">Scroll</span>
+        <span className="label text-[0.6rem]">Publications below</span>
         <ChevronDown size={16} className="animate-scroll-cue text-cream/60" />
       </motion.div>
     </CinematicPanel>

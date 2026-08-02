@@ -14,21 +14,19 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MEDIA } from "@/data/media";
 import { config } from "@/data/config";
-import { SECTIONS } from "@/data/sections";
 import projects from "@/data/projects";
+import { RESEARCH_INTERESTS } from "@/data/research";
 import FluidCanvas from "@/components/chooser/FluidCanvas";
 import ShatterName from "@/components/chooser/ShatterName";
 
 // The hover peek shows the REAL contents of each world, pulled from the same
-// data that renders them — project titles on the builder side, the section
-// rail on the researcher side — so the door previews what the click delivers.
+// data that renders them — project titles on the builder side, research
+// interests on the researcher side — so the door previews what the click brings.
 const BUILDER_PEEK = projects
   .map((p) => p.title)
   .filter((t) => t.length <= 22)
   .slice(0, 4);
-const EDITORIAL_PEEK = SECTIONS.filter((s) => s.nav)
-  .map((s) => s.label)
-  .slice(0, 4);
+const EDITORIAL_PEEK = RESEARCH_INTERESTS.slice(0, 4);
 
 const GENTLE = [0.33, 1, 0.68, 1] as const; // easeOutCubic — reveals
 const BOUNCE = "cubic-bezier(0.175,0.885,0.32,1.275)"; // builder-side micro-motion

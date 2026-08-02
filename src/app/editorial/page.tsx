@@ -1,36 +1,21 @@
 import HeroSection from "@/components/editorial/hero";
-import NowSection from "@/components/editorial/now";
-import ExperienceSection from "@/components/editorial/experience";
-import WorkSection from "@/components/editorial/work";
-import WritingSection, { WritingEntry } from "@/components/editorial/writing";
-import ContactSection from "@/components/editorial/contact";
-import SectionPager from "@/components/motion/section-pager";
-import { getBlogPosts } from "@/lib/mdx";
+import PublicationsSection from "@/components/editorial/publications";
+import PageReady from "@/components/chooser/PageReady";
+
+export const metadata = {
+  title: "Research | Nicholas Chen",
+  description:
+    "Machine-learning research by Nicholas Chen — reinforcement learning, human decision-making, and generative models for protein design. Publications and Google Scholar.",
+};
 
 export default function EditorialHome() {
-  const posts: WritingEntry[] = getBlogPosts()
-    .map((p) => ({
-      slug: p.slug,
-      title: p.metadata.title,
-      publishedAt: p.metadata.publishedAt,
-      summary: p.metadata.summary,
-    }))
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-
   return (
     <>
       <main className="relative">
         <HeroSection />
-        <NowSection />
-        <ExperienceSection />
-        <WorkSection />
-        <WritingSection posts={posts} />
-        <ContactSection />
+        <PublicationsSection />
       </main>
-      <SectionPager />
+      <PageReady />
     </>
   );
 }

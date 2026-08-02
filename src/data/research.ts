@@ -2,7 +2,14 @@
 // published or updated — the /research page renders straight from this file.
 
 export const RESEARCH_INTRO =
-  "I work on machine learning where it meets real decisions — reinforcement learning and behavioral analytics, generative models for scientific design, and empirical methodology I can defend. A running record of papers, appointments, and talks.";
+  "I'm an EECS student at Berkeley doing machine-learning research. Most of it is reinforcement learning and how people make the same decision over and over, with some generative modeling for protein design on the side. What I care about most is whether a result still holds once you push on it.";
+
+export const RESEARCH_INTERESTS = [
+  "Reinforcement learning",
+  "How people make repeated decisions",
+  "Generative models for protein design",
+  "Empirical work that holds up",
+];
 
 export type Publication = {
   title: string;

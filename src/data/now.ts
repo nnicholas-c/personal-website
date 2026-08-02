@@ -16,7 +16,7 @@ export const NOW_ITEMS: NowItem[] = [
   },
   {
     meta: "Coursework",
-    text: "Random Processes (EE 126), Algorithms (CS 170), Machine Learning (CS 189), and Linear Algebra (Math 110). 3.8 GPA, expected May 2028.",
+    text: "Random Processes (EE 126), Algorithms (CS 170), Machine Learning (CS 189), and Linear Algebra (Math 110). Expected May 2028.",
   },
   {
     meta: "Quantitative research",
