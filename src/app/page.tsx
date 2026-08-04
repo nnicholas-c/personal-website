@@ -13,8 +13,19 @@ import {
 import { cn } from "@/lib/utils";
 import { MEDIA } from "@/data/media";
 import { config } from "@/data/config";
+import projects from "@/data/projects";
+import { RESEARCH_INTERESTS } from "@/data/research";
 import FluidCanvas from "@/components/chooser/FluidCanvas";
 import ShatterName from "@/components/chooser/ShatterName";
+
+// A peek of the real content behind each side — so a visitor sees these are two
+// full sites to click into, not decoration. Pulled from the same data the sites
+// render, so it can't go stale.
+const BUILDER_PEEK = projects
+  .map((p) => p.title)
+  .filter((t) => t.length <= 24)
+  .slice(0, 4);
+const RESEARCH_PEEK = RESEARCH_INTERESTS.slice(0, 4);
 
 const GENTLE = [0.33, 1, 0.68, 1] as const; // easeOutCubic — reveals
 const COMMIT_MS = 900; // frame-to-full-bleed on click (expo.inOut, inline below)
@@ -118,6 +129,68 @@ function Door({
 
       </Link>
     </div>
+  );
+}
+
+// The hover peek: when a side gathers, a few real items from that world fade in
+// under the reformed name — so it's clear each side is a full site with content
+// to click into, not just a label.
+function Peek({
+  items,
+  show,
+  builder,
+  kicker,
+}: {
+  items: string[];
+  show: boolean;
+  builder: boolean;
+  kicker: string;
+}) {
+  const accent = builder ? "text-[hsl(20_100%_70%)]" : "text-cream/45";
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={false}
+      animate={{ opacity: show ? 1 : 0 }}
+      transition={{ duration: 0.4, ease: GENTLE, delay: show ? 0.18 : 0 }}
+      className="mt-7 flex flex-col items-center gap-2 [text-shadow:0_1px_12px_rgba(10,10,12,0.7)]"
+    >
+      <p
+        className={`font-mono text-[0.56rem] uppercase tracking-[0.26em] ${builder ? "text-[hsl(20_100%_70%_/_0.8)]" : "text-cream/45"}`}
+      >
+        {kicker}
+      </p>
+      <ul className="mt-1 flex flex-col items-center gap-1.5">
+        {items.map((it, i) => (
+          <motion.li
+            key={it}
+            initial={false}
+            animate={{ opacity: show ? 1 : 0, y: show ? 0 : 6 }}
+            transition={{
+              duration: 0.4,
+              ease: GENTLE,
+              delay: show ? 0.26 + i * 0.06 : 0,
+            }}
+            className="flex items-baseline gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-cream/80"
+          >
+            <span className={accent}>{String(i + 1).padStart(2, "0")}</span>
+            {it}
+          </motion.li>
+        ))}
+      </ul>
+      <motion.p
+        initial={false}
+        animate={{ opacity: show ? 1 : 0 }}
+        transition={{
+          duration: 0.4,
+          ease: GENTLE,
+          delay: show ? 0.3 + items.length * 0.06 : 0,
+        }}
+        className={`mt-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70"}`}
+      >
+        click to open →
+      </motion.p>
+    </motion.div>
   );
 }
 
@@ -414,22 +487,34 @@ export default function Chooser() {
             letters that shattered from the center converge here, in that side's
             own voice. */}
         <div className="pointer-events-none absolute inset-0 z-30 hidden md:block">
-          <div className="absolute inset-y-0 left-0 flex w-1/2 items-center justify-center px-10 pb-[20vh]">
+          <div className="absolute inset-y-0 left-0 flex w-1/2 flex-col items-center justify-center px-10 pb-[8vh]">
             <ShatterName
               text={`${config.author}`}
               show={side === "left" && !committing}
               reduce={reduce}
               seed={11}
-              className="font-display text-5xl tracking-tight text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)] lg:text-6xl xl:text-7xl"
+              className="font-display text-5xl tracking-tight text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)] lg:text-6xl"
+            />
+            <Peek
+              items={BUILDER_PEEK}
+              show={side === "left" && !committing}
+              builder
+              kicker="selected work"
             />
           </div>
-          <div className="absolute inset-y-0 right-0 flex w-1/2 items-center justify-center px-10 pb-[20vh]">
+          <div className="absolute inset-y-0 right-0 flex w-1/2 flex-col items-center justify-center px-10 pb-[8vh]">
             <ShatterName
               text={`${config.author}`}
               show={side === "right" && !committing}
               reduce={reduce}
               seed={22}
-              className="font-serif text-5xl font-light italic text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)] lg:text-6xl xl:text-7xl"
+              className="font-serif text-5xl font-light italic text-cream drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)] lg:text-6xl"
+            />
+            <Peek
+              items={RESEARCH_PEEK}
+              show={side === "right" && !committing}
+              builder={false}
+              kicker="what i research"
             />
           </div>
         </div>
