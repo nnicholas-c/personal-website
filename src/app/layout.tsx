@@ -89,7 +89,7 @@ export default function RootLayout({
         )}
         {/* <Analytics /> */}
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <SmoothScroll>{children}</SmoothScroll>
           <ShatterTransition />

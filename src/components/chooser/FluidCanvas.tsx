@@ -185,8 +185,10 @@ export default function FluidCanvas({
       return s;
     };
     const prog = gl.createProgram()!;
-    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+    const vs = compile(gl.VERTEX_SHADER, VERT);
+    const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
       // eslint-disable-next-line no-console
@@ -221,8 +223,10 @@ export default function FluidCanvas({
 
     // textures
     const sizes: Record<string, [number, number]> = {};
+    const glTextures: WebGLTexture[] = [];
     const loadTex = (unit: number, url: string, key: string) => {
       const tex = gl.createTexture()!;
+      glTextures.push(tex);
       gl.activeTexture(gl.TEXTURE0 + unit);
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(
@@ -275,20 +279,6 @@ export default function FluidCanvas({
     };
     window.addEventListener("pointermove", onMove, { passive: true });
 
-    // the click stirs a burst into the liquid right where it lands
-    const onStir = (e: Event) => {
-      const d = (e as CustomEvent<{ x: number; y: number; s?: number }>).detail;
-      const rect = canvas.getBoundingClientRect();
-      if (!rect.width || !d) return;
-      const i = impHead * 4;
-      imps[i] = (d.x - rect.left) / rect.width;
-      imps[i + 1] = 1 - (d.y - rect.top) / rect.height;
-      imps[i + 2] = 0;
-      imps[i + 3] = d.s ?? 1.3;
-      impHead = (impHead + 1) % 8;
-    };
-    window.addEventListener("chooser:stir", onStir);
-
     let raf = 0;
     let last = performance.now();
     const start = last;
@@ -334,7 +324,7 @@ export default function FluidCanvas({
       gl.uniform2f(uFocusA, focusA.x, 1 - focusA.y);
       gl.uniform2f(uFocusB, focusB.x, 1 - focusB.y);
       gl.uniform4fv(uImp, imps);
-      // the identity coalesces out of chaos over the first ~4s
+      // the identity coalesces out of chaos over the first ~2.8s
       const intro = reduce
         ? 0
         : Math.pow(Math.max(0, 1 - (now - start) / 2800), 2);
@@ -355,9 +345,15 @@ export default function FluidCanvas({
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("shatter:go", onShatter);
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("chooser:stir", onStir);
-      // NOTE: do not loseContext() here — under React StrictMode the effect
-      // re-runs on the same canvas, which would inherit a dead context.
+      // Release GPU resources so repeated navigations (/ → /playful → back → …)
+      // don't accumulate contexts toward the browser's WebGL-context limit.
+      // Delete the objects (safe: the effect recreates them on remount) rather
+      // than loseContext(), which would hand a dead context to a StrictMode re-run.
+      glTextures.forEach((t) => gl.deleteTexture(t));
+      gl.deleteBuffer(quad);
+      gl.deleteProgram(prog);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgA, imgB, reduce]);

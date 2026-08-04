@@ -9,7 +9,6 @@ import { sleep } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
 import { Section, getKeyboardState } from "./animated-background-config";
 import { useSounds } from "./realtime/hooks/use-sounds";
 
@@ -33,7 +32,6 @@ const AnimatedBackground = () => {
   const keycapAnimationsRef = useRef<{ start: () => void; stop: () => void }>();
 
   const [keyboardRevealed, setKeyboardRevealed] = useState(false);
-  const router = useRouter();
 
   // --- Event Handlers ---
 
@@ -418,8 +416,15 @@ const AnimatedBackground = () => {
 
   // Reveal keyboard on load/route change
   useEffect(() => {
+    // Reflect the scrolled section in the URL WITHOUT adding history entries —
+    // router.push here appended one per section crossed, which trapped the Back
+    // button (Back walked #skills/#projects/#contact instead of returning to the
+    // chooser) and stomped any menu-anchor hash the visitor had just clicked.
+    // replaceState swaps the current entry and only writes when the hash differs.
     const hash = activeSection === "hero" ? "" : `#${activeSection}`;
-    router.push("/playful" + hash, { scroll: false });
+    if (typeof window !== "undefined" && window.location.hash !== hash) {
+      window.history.replaceState(null, "", "/playful" + hash);
+    }
 
     if (!splineApp || isLoading || keyboardRevealed) return;
     updateKeyboardTransform();

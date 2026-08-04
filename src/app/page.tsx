@@ -10,26 +10,13 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MEDIA } from "@/data/media";
 import { config } from "@/data/config";
-import projects from "@/data/projects";
-import { RESEARCH_INTERESTS } from "@/data/research";
 import FluidCanvas from "@/components/chooser/FluidCanvas";
 import ShatterName from "@/components/chooser/ShatterName";
 
-// The hover peek shows the REAL contents of each world, pulled from the same
-// data that renders them — project titles on the builder side, research
-// interests on the researcher side — so the door previews what the click brings.
-const BUILDER_PEEK = projects
-  .map((p) => p.title)
-  .filter((t) => t.length <= 22)
-  .slice(0, 4);
-const EDITORIAL_PEEK = RESEARCH_INTERESTS.slice(0, 4);
-
 const GENTLE = [0.33, 1, 0.68, 1] as const; // easeOutCubic — reveals
-const BOUNCE = "cubic-bezier(0.175,0.885,0.32,1.275)"; // builder-side micro-motion
 const COMMIT_MS = 900; // frame-to-full-bleed on click (expo.inOut, inline below)
 // The rest state deliberately favors the entrepreneur side: the default persona
 // gets more of the liquid (57/43), a brighter identity word, a louder numeral.
@@ -50,29 +37,14 @@ const introItem = {
 
 type SideId = "left" | "right";
 type Side = SideId | null;
-type State = "active" | "receding" | "neutral";
 type Flavor = "builder" | "editorial";
-
-// Peek items ride the takeover's beat — a tight cascade, not a second event.
-const peekContainer = {
-  hidden: { transition: { staggerChildren: 0.02, staggerDirection: -1 } },
-  show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
-};
-const peekItem = {
-  hidden: { opacity: 0, y: 14, transition: { duration: 0.25, ease: GENTLE } },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: GENTLE } },
-};
 
 function Door({
   href,
   index,
   domain,
-  title,
-  peekLine,
-  peekItems,
   align,
   flavor,
-  state,
   committing,
   reduce,
   onFocusSide,
@@ -82,12 +54,8 @@ function Door({
   href: string;
   index: string;
   domain: string;
-  title: string;
-  peekLine?: string;
-  peekItems: string[];
   align: "left" | "right";
   flavor: Flavor;
-  state: State;
   committing: Side;
   reduce: boolean;
   onFocusSide: () => void;
@@ -96,12 +64,6 @@ function Door({
 }) {
   const right = align === "right";
   const builder = flavor === "builder";
-  const active = state === "active";
-  const receding = state === "receding";
-
-  // The liquid does the showing; the door is a transparent half-frame zone
-  // that carries the words and the intent.
-  const textOpacity = committing ? 0 : reduce ? 1 : receding ? 0 : 1;
 
   return (
     <div
@@ -314,9 +276,6 @@ export default function Chooser() {
     );
   };
 
-  const stateOf = (mine: SideId): State =>
-    side === null ? "neutral" : side === mine ? "active" : "receding";
-
   // At rest the entrepreneur word leads: near-full cream vs the researcher's 60%.
   const role = (mine: Side) =>
     side === mine
@@ -405,11 +364,8 @@ export default function Chooser() {
             href="/playful"
             index="01"
             domain="Entrepreneurship"
-            title="The builder"
-            peekItems={BUILDER_PEEK}
             align="left"
             flavor="builder"
-            state={stateOf("left")}
             committing={committing}
             reduce={reduce}
             onFocusSide={() => focusSide("left")}
@@ -420,12 +376,8 @@ export default function Chooser() {
             href="/editorial"
             index="02"
             domain="Research"
-            title="The researcher"
-            peekLine="Machine learning & quantitative research"
-            peekItems={EDITORIAL_PEEK}
             align="right"
             flavor="editorial"
-            state={stateOf("right")}
             committing={committing}
             reduce={reduce}
             onFocusSide={() => focusSide("right")}
