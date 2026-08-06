@@ -2,9 +2,10 @@
 
 import { useInView } from "framer-motion";
 import React, { useRef } from "react";
-import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { SiGithub, SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 import { config } from "@/data/config";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const BUTTONS = [
@@ -43,8 +44,9 @@ const SocialMediaButtons = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={button.name}
+            className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "cursor-can-hover")}
           >
-            <Button variant={"ghost"}>{button.icon}</Button>
+            {button.icon}
           </Link>
         ))}
     </div>

@@ -6,7 +6,7 @@ import styles from "./style.module.scss";
 import { opacity, background } from "./anim";
 import Nav from "./nav";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
 
@@ -46,10 +46,14 @@ const Header = ({ loader }: HeaderProps) => {
       >
       </div> */}
       <div className={cn(styles.bar, "flex items-center justify-between")}>
-        <Link href="/" className="flex items-center justify-center">
-          <Button variant={"link"} className="text-md">
-            {config.author}
-          </Button>
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({ variant: "link" }),
+            "cursor-can-hover text-md"
+          )}
+        >
+          {config.author}
         </Link>
 
         {process.env.NEXT_PUBLIC_WS_URL && <OnlineUsers />}

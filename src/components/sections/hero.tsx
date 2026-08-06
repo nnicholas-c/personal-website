@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { Download, Github, Linkedin, Mail } from "lucide-react";
 import ScrollDownIcon from "../scroll-down-icon";
 import { config } from "@/data/config";
@@ -59,12 +59,13 @@ const HeroSection = () => {
                   href={config.resumePath}
                   target="_blank"
                   download
-                  className="w-full sm:w-fit rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className={cn(
+                    buttonVariants(),
+                    "cursor-can-hover w-full gap-2 sm:w-fit"
+                  )}
                 >
-                  <Button className="flex items-center gap-2 w-full sm:w-auto">
-                    <Download size={20} />
-                    <p>Download Résumé</p>
-                  </Button>
+                  <Download size={20} />
+                  <span>Download Résumé</span>
                 </Link>
                 <div className="md:self-start flex flex-wrap gap-3">
                   <Link
@@ -72,33 +73,27 @@ const HeroSection = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub profile"
-                    className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    className={cn(buttonVariants({ variant: "outline" }), "cursor-can-hover gap-2")}
                   >
-                    <Button variant={"outline"} className="gap-2">
-                      <Github size={18} />
-                      GitHub
-                    </Button>
+                    <Github size={18} />
+                    GitHub
                   </Link>
                   <Link
                     href={config.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn profile"
-                    className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    className={cn(buttonVariants({ variant: "outline" }), "cursor-can-hover gap-2")}
                   >
-                    <Button variant={"outline"} className="gap-2">
-                      <Linkedin size={18} />
-                      LinkedIn
-                    </Button>
+                    <Linkedin size={18} />
+                    LinkedIn
                   </Link>
                   <Link
                     href={`mailto:${config.email}`}
-                    className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    className={cn(buttonVariants({ variant: "outline" }), "cursor-can-hover gap-2")}
                   >
-                    <Button variant={"outline"} className="gap-2">
-                      <Mail size={18} />
-                      Contact
-                    </Button>
+                    <Mail size={18} />
+                    Contact
                   </Link>
                 </div>
               </div>

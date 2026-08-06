@@ -72,13 +72,17 @@ const AnimatedBackground = () => {
       );
     };
 
-    splineApp.addEventListener("keyUp", () => {
+    // Named handlers so the effect cleanup can removeEventListener them —
+    // otherwise each /playful mount leaks the whole detached scene subtree (the
+    // Spline listeners retain it) plus a live WebGL context, and repeated
+    // chooser ↔ /playful navigation eventually exhausts the context limit.
+    const onKeyUp = () => {
       if (!splineApp || isInputFocused()) return;
       playReleaseSound();
       splineApp.setVariable("heading", "");
       splineApp.setVariable("desc", "");
-    });
-    splineApp.addEventListener("keyDown", (e) => {
+    };
+    const onKeyDown = (e: SplineEvent) => {
       if (!splineApp || isInputFocused()) return;
       const skill = SKILLS[e.target.name as SkillNames];
       if (skill) {
@@ -88,8 +92,16 @@ const AnimatedBackground = () => {
         splineApp.setVariable("heading", skill.label);
         splineApp.setVariable("desc", skill.shortDescription);
       }
-    });
+    };
+    splineApp.addEventListener("keyUp", onKeyUp);
+    splineApp.addEventListener("keyDown", onKeyDown);
     splineApp.addEventListener("mouseHover", handleMouseHover);
+
+    return () => {
+      splineApp.removeEventListener("keyUp", onKeyUp);
+      splineApp.removeEventListener("keyDown", onKeyDown);
+      splineApp.removeEventListener("mouseHover", handleMouseHover);
+    };
   };
 
   // --- Animation Setup Helpers ---
@@ -277,16 +289,48 @@ const AnimatedBackground = () => {
   // Initialize GSAP and Spline interactions
   useEffect(() => {
     if (!splineApp) return;
-    handleSplineInteractions();
+    const teardownInteractions = handleSplineInteractions();
     setupScrollAnimations();
     bongoAnimationRef.current = getBongoAnimation();
     keycapAnimationsRef.current = getKeycapsAnimation();
     return () => {
+      teardownInteractions?.();
       bongoAnimationRef.current?.stop()
       keycapAnimationsRef.current?.stop()
     }
 
   }, [splineApp, isMobile]);
+
+  // Full teardown on unmount: release the Spline renderer's WebGL context + its
+  // internal rAF loop, and kill every ScrollTrigger this page created. Without
+  // this, each chooser → /playful → back round-trip leaked a live WebGL context
+  // (+~650 detached DOM nodes) that climbed toward the browser's ~16-context
+  // cap and eventually force-lost the scene.
+  useEffect(() => {
+    if (!splineApp) return;
+    // Capture the Spline canvas now, while it's still mounted, so teardown can
+    // force its context loss.
+    const canvas = splineContainer.current?.querySelector("canvas");
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      try {
+        splineApp.dispose();
+      } catch {
+        /* already disposed */
+      }
+      // splineApp.dispose() does NOT release the GL context in
+      // @splinetool/runtime, so the context otherwise leaks (climbing toward the
+      // browser's ~16-context cap). Force it lost explicitly.
+      try {
+        const gl =
+          (canvas?.getContext("webgl2") as WebGLRenderingContext | null) ||
+          (canvas?.getContext("webgl") as WebGLRenderingContext | null);
+        gl?.getExtension("WEBGL_lose_context")?.loseContext();
+      } catch {
+        /* context already gone */
+      }
+    };
+  }, [splineApp]);
 
   // Handle keyboard text visibility based on theme and section
   useEffect(() => {

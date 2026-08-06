@@ -1,9 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { footer } from "./config";
-import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import SocialMediaButtons from "../social/social-media-icons";
 import { config } from "@/data/config";
+import { cn } from "@/lib/utils";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -19,13 +20,13 @@ function Footer() {
 
           return (
             <Link
-              className="text-xs underline-offset-4 hover:underline"
+              className={cn(buttonVariants({ variant: "link" }), "cursor-can-hover text-xs")}
               href={href}
               target={target}
               rel={target === "_blank" ? "noopener noreferrer" : undefined}
               key={`l_${index}`}
             >
-              <Button variant={"link"}>{title}</Button>
+              {title}
             </Link>
           );
         })}
