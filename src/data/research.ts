@@ -44,10 +44,6 @@ export const PUBLICATIONS: Publication[] = [
       "A machine-learning approach to the de novo design of catalytic-site-targeted peptide binders of β-secretase (BACE1) — a key enzyme in amyloid-beta plaque formation in Alzheimer's disease. Applies deep reinforcement learning and diffusion models (AlphaFold3, RoseTTAFold) to generate potent, low-immunogenicity inhibitor candidates.",
     links: [
       {
-        label: "DOI: 10.36838/v7i4.29",
-        href: "https://doi.org/10.36838/v7i4.29",
-      },
-      {
         label: "PDF",
         href: "https://terra-docs.s3.us-east-2.amazonaws.com/IJHSR/Articles/volume7-issue4/IJHSR_2025_74_29.pdf",
       },

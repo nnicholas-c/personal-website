@@ -224,6 +224,10 @@ export default function FluidCanvas({
     // textures
     const sizes: Record<string, [number, number]> = {};
     const glTextures: WebGLTexture[] = [];
+    // Set in cleanup so a still-in-flight img.onload doesn't bind/upload to a
+    // texture the cleanup already deleted (a stale-closure use-after-delete).
+    let disposed = false;
+    const pendingImgs: HTMLImageElement[] = [];
     const loadTex = (unit: number, url: string, key: string) => {
       const tex = gl.createTexture()!;
       glTextures.push(tex);
@@ -238,7 +242,9 @@ export default function FluidCanvas({
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       const img = new Image();
+      pendingImgs.push(img);
       img.onload = () => {
+        if (disposed) return;
         gl.activeTexture(gl.TEXTURE0 + unit);
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
@@ -345,6 +351,13 @@ export default function FluidCanvas({
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("shatter:go", onShatter);
       window.removeEventListener("pointermove", onMove);
+      // Stop any pending image decode from binding/uploading to a texture we're
+      // about to delete (the onload closure checks `disposed` first).
+      disposed = true;
+      pendingImgs.forEach((img) => {
+        img.onload = null;
+        img.src = "";
+      });
       // Release GPU resources so repeated navigations (/ → /playful → back → …)
       // don't accumulate contexts toward the browser's WebGL-context limit.
       // Delete the objects (safe: the effect recreates them on remount) rather

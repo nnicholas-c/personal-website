@@ -153,7 +153,12 @@ function Peek({
       initial={false}
       animate={{ opacity: show ? 1 : 0 }}
       transition={{ duration: 0.4, ease: GENTLE, delay: show ? 0.18 : 0 }}
-      className="mt-7 flex flex-col items-center gap-2 [text-shadow:0_1px_12px_rgba(10,10,12,0.7)]"
+      className={`mt-7 flex flex-col items-center gap-2 ${
+        builder
+          ? "[text-shadow:0_1px_12px_rgba(10,10,12,0.7)]"
+          : // researcher photo has a bright fog band mid-frame — carry the text with a heavier, doubled shadow
+            "[text-shadow:0_1px_2px_rgba(10,10,12,0.9),0_1px_16px_rgba(10,10,12,0.85)]"
+      }`}
     >
       <p
         className={`font-mono text-[0.56rem] uppercase tracking-[0.26em] ${builder ? "text-[hsl(20_100%_70%_/_0.8)]" : "text-cream/45"}`}
