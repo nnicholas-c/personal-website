@@ -18,6 +18,14 @@ import { RESEARCH_INTERESTS } from "@/data/research";
 import FluidCanvas from "@/components/chooser/FluidCanvas";
 import ShatterName from "@/components/chooser/ShatterName";
 
+// Background value that serves AVIF where supported and the JPEG fallback
+// otherwise — same URLs the WebGL texture requests, so it's one download per
+// browser, not two.
+const bgImageSet = (asset: { src: string; fallback?: string }) =>
+  asset.fallback
+    ? `image-set(url("${asset.src}") type("image/avif"), url("${asset.fallback}") type("image/jpeg"))`
+    : `url("${asset.src}")`;
+
 // A peek of the real content behind each side — so a visitor sees these are two
 // full sites to click into, not decoration. Pulled from the same data the sites
 // render, so it can't go stale.
@@ -410,7 +418,7 @@ export default function Chooser() {
             aria-hidden="true"
             className="absolute inset-0"
             style={{
-              backgroundImage: `url(${MEDIA.city.src})`,
+              backgroundImage: bgImageSet(MEDIA.city),
               backgroundSize: "cover",
               backgroundPosition: MEDIA.city.focus,
             }}
@@ -419,7 +427,7 @@ export default function Chooser() {
             aria-hidden="true"
             className="absolute inset-y-0 right-0 w-[43%] max-md:inset-x-0 max-md:bottom-0 max-md:top-auto max-md:h-[43%] max-md:w-full"
             style={{
-              backgroundImage: `url(${MEDIA.bridge.src})`,
+              backgroundImage: bgImageSet(MEDIA.bridge),
               backgroundSize: "cover",
               backgroundPosition: MEDIA.bridge.focus,
             }}
@@ -429,6 +437,8 @@ export default function Chooser() {
           <FluidCanvas
             imgA={MEDIA.city.src}
             imgB={MEDIA.bridge.src}
+            fallbackA={MEDIA.city.fallback}
+            fallbackB={MEDIA.bridge.fallback}
             focusA={{ x: 0.5, y: 0.55 }}
             focusB={{ x: 0.5, y: 0.55 }}
             bias={seamSpring}

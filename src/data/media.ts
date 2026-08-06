@@ -4,6 +4,8 @@
 
 export type MediaAsset = {
   src: string;
+  /** Universally-decodable fallback (JPEG) for browsers without AVIF. */
+  fallback?: string;
   alt: string;
   credit: string;
   creditUrl: string;
@@ -55,10 +57,12 @@ export const MEDIA = {
     focus: "center center",
   },
   city: {
-    // The user's own Golden Gate photo, served from the lossless PNG source
-    // (next/image handles delivery) — the fog-wrapped tower sits left of
-    // center, inside the builder door's rest-visible zone.
-    src: "/assets/img/default-image.776c7c1c.png",
+    // The user's own Golden Gate photo — the fog-wrapped tower sits left of
+    // center, inside the builder door's rest-visible zone. Served as AVIF (~82KB,
+    // 96% smaller than the 2.1MB PNG source) with a JPEG fallback; used both as
+    // the WebGL liquid texture and the no-WebGL CSS background.
+    src: "/assets/img/chooser-city.avif",
+    fallback: "/assets/img/chooser-city.jpg",
     alt: "The Golden Gate Bridge rising through a river of fog at blue hour, San Francisco glowing behind",
     credit: "User-provided",
     creditUrl: "#",
@@ -67,9 +71,10 @@ export const MEDIA = {
   bridge: {
     // Peninsula fog pouring over the San Bruno ridge at night — mirrored so
     // the gold valley sprawl sits right of center, where the researcher door
-    // is visible at rest. (Alternates staged: research-golden-gate-blue.jpg,
-    // research-golden-gate-fog.jpg, research-golden-gate-fog-tower.jpg.)
-    src: "/assets/img/research-valley-fog.jpg",
+    // is visible at rest. AVIF (~129KB, downscaled to 1920w from the 4K source)
+    // with a JPEG fallback.
+    src: "/assets/img/chooser-valley.avif",
+    fallback: "/assets/img/chooser-valley.jpg",
     alt: "Fog rolling over the Peninsula hills at night, the valley's lights glowing beneath",
     credit: "Aaron Lee",
     creditUrl: "https://unsplash.com/photos/1CsReRMMviw",

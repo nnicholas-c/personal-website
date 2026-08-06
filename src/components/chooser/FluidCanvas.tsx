@@ -140,6 +140,8 @@ export type FluidHandles = {
 export default function FluidCanvas({
   imgA,
   imgB,
+  fallbackA,
+  fallbackB,
   focusA,
   focusB,
   bias,
@@ -148,6 +150,9 @@ export default function FluidCanvas({
 }: {
   imgA: string;
   imgB: string;
+  /** JPEG fallback URLs, loaded if the primary (AVIF) fails to decode */
+  fallbackA?: string;
+  fallbackB?: string;
   /** cover focus as fractions, e.g. {x:0.5, y:0.55} */
   focusA: { x: number; y: number };
   focusB: { x: number; y: number };
@@ -228,7 +233,7 @@ export default function FluidCanvas({
     // texture the cleanup already deleted (a stale-closure use-after-delete).
     let disposed = false;
     const pendingImgs: HTMLImageElement[] = [];
-    const loadTex = (unit: number, url: string, key: string) => {
+    const loadTex = (unit: number, url: string, key: string, fallback?: string) => {
       const tex = gl.createTexture()!;
       glTextures.push(tex);
       gl.activeTexture(gl.TEXTURE0 + unit);
@@ -251,10 +256,15 @@ export default function FluidCanvas({
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
         sizes[key] = [img.naturalWidth, img.naturalHeight];
       };
+      // If the AVIF fails to decode (older browser), fall back to the JPEG once.
+      img.onerror = () => {
+        if (disposed || !fallback || img.src.endsWith(fallback)) return;
+        img.src = fallback;
+      };
       img.src = url;
     };
-    loadTex(0, imgA, "A");
-    loadTex(1, imgB, "B");
+    loadTex(0, imgA, "A", fallbackA);
+    loadTex(1, imgB, "B", fallbackB);
     gl.uniform1i(U("u_texA"), 0);
     gl.uniform1i(U("u_texB"), 1);
 
@@ -356,6 +366,7 @@ export default function FluidCanvas({
       disposed = true;
       pendingImgs.forEach((img) => {
         img.onload = null;
+        img.onerror = null;
         img.src = "";
       });
       // Release GPU resources so repeated navigations (/ → /playful → back → …)
@@ -369,7 +380,7 @@ export default function FluidCanvas({
       gl.deleteShader(fs);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imgA, imgB, reduce]);
+  }, [imgA, imgB, fallbackA, fallbackB, reduce]);
 
   return (
     <canvas
