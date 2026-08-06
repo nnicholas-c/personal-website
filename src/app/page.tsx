@@ -154,22 +154,28 @@ function Peek({
   builder: boolean;
   kicker: string;
 }) {
-  const accent = builder ? "text-[hsl(20_100%_70%)]" : "text-cream/45";
+  const accent = builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70";
   return (
     <motion.div
       aria-hidden="true"
       initial={false}
       animate={{ opacity: show ? 1 : 0 }}
       transition={{ duration: 0.4, ease: GENTLE, delay: show ? 0.18 : 0 }}
-      className={`mt-7 flex flex-col items-center gap-2 ${
+      // A soft feathered ink scrim fixes the backdrop luminance behind the peek
+      // (the raw liquid ranges too bright for this microcopy to clear WCAG AA);
+      // radial → transparent so it reads as a natural darkening, not a card.
+      style={{
+        background:
+          "radial-gradient(78% 80% at 50% 50%, rgba(8,8,10,0.62) 0%, rgba(8,8,10,0.34) 56%, rgba(8,8,10,0) 82%)",
+      }}
+      className={`relative mt-4 flex flex-col items-center gap-2 rounded-[28px] px-8 py-5 ${
         builder
-          ? "[text-shadow:0_1px_12px_rgba(10,10,12,0.7)]"
-          : // researcher photo has a bright fog band mid-frame — carry the text with a heavier, doubled shadow
-            "[text-shadow:0_1px_2px_rgba(10,10,12,0.9),0_1px_16px_rgba(10,10,12,0.85)]"
+          ? "[text-shadow:0_1px_10px_rgba(8,8,10,0.85)]"
+          : "[text-shadow:0_1px_2px_rgba(8,8,10,0.95),0_1px_14px_rgba(8,8,10,0.9)]"
       }`}
     >
       <p
-        className={`font-mono text-[0.56rem] uppercase tracking-[0.26em] ${builder ? "text-[hsl(20_100%_70%_/_0.8)]" : "text-cream/45"}`}
+        className={`font-mono text-[0.56rem] uppercase tracking-[0.26em] ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/80"}`}
       >
         {kicker}
       </p>
@@ -199,7 +205,7 @@ function Peek({
           ease: GENTLE,
           delay: show ? 0.3 + items.length * 0.06 : 0,
         }}
-        className={`mt-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/70"}`}
+        className={`mt-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] ${builder ? "text-[hsl(20_100%_70%)]" : "text-cream/90"}`}
       >
         click to open →
       </motion.p>
