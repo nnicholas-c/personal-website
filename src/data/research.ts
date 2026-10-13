@@ -17,7 +17,7 @@ export type Publication = {
   authors: string;
   venue: string;
   year: string;
-  status: "Published" | "Spotlight" | "Submitted" | "Under review";
+  status: "Published" | "Accepted · Spotlight" | "Under review";
   abstract: string;
   links?: { label: string; href: string }[];
   /** true when the title is a working title for unpublished work */
@@ -28,49 +28,40 @@ export const PUBLICATIONS: Publication[] = [
   {
     title:
       "Approval Is Not Discovery: When Can a Model of the Scientist Steer a Discovery Agent?",
-    authors: "Nicholas Chen (sole author)",
-    venue: "NeurIPS 2026 Workshop on Agentic AI for Biological Discovery",
+    authors: "Nicholas Chen",
+    venue: "AgenticLS Workshop, NeurIPS 2026 (non-archival)",
     year: "2026",
-    status: "Spotlight",
+    status: "Accepted · Spotlight",
     abstract:
-      "Sole-authored workshop paper, selected as a spotlight.",
+      "Models a scientist who checks a proposal carefully some fraction of the time and otherwise approves what looks plausible, and shows that granting a discovery agent autonomy once it agrees with the scientist only certifies a copy of that quick check. Proposes an audit that needs no lab assays, built from silent repeat reviews, and tests it in retrospective simulations on four genome-wide CRISPR screens in primary human T cells.",
   },
   {
-    title: "The Withdrawal Test",
-    workingTitle: true,
-    authors: "Nicholas Chen (co-first author), with Prof. Park Sinchaisri",
-    venue: "ACM CHI 2027",
+    title:
+      "Agreeing for the Wrong Reasons: Coordinate Identifiability in Personalized Reward Models",
+    authors: "Nicholas Chen, with Park Sinchaisri and Jiaming Guan",
+    venue: "AISTATS 2027",
     year: "2026",
-    status: "Submitted",
+    status: "Under review",
     abstract:
-      "Does AI decision support improve human judgment, or only performance while the AI is present? The withdrawal test scores a support system on two separate outcomes: assisted performance, and the residual, meaning how well people do on new, held-out problems once the support is removed. The two can diverge: a system can make someone far more accurate in the moment while leaving them no better, or worse, on their own.",
+      "A personalized reward model can predict a person's accept or reject choices accurately without learning what any of its named factors means. The paper analyzes when extra concern labels, meaning which reason drove a rejection, recover that meaning, with experiments on MultiPref and frozen open-weight embeddings.",
   },
   {
-    title: "RuleReveal: Small Benchmarks That Predict How Decision Agents Deploy",
-    workingTitle: true,
+    title: "RuleReveal: Deployment-Aware Diagnostic Benchmarks for Decision Agents",
     authors: "Nicholas Chen (co-first author)",
     venue: "AAAI 2027",
     year: "2026",
     status: "Under review",
     abstract:
-      "Two agents can earn the same benchmark score while following very different policies. RuleReveal picks benchmark problems by the agents' action signatures, choosing the problems that best separate agents whose behavior differs under the target deployment distribution. This turns benchmark design into a weighted coverage problem with a 1−1/e greedy guarantee; eight selected problems are enough to predict held-out agents accurately.",
-  },
-  {
-    title: "AISTATS 2027 submission",
-    authors: "Nicholas Chen (co-first author)",
-    venue: "AISTATS 2027",
-    year: "2026",
-    status: "Submitted",
-    abstract: "Details to follow after the review period.",
+      "Two agents can earn the same benchmark score while following very different policies. RuleReveal picks benchmark problems by the agents' action signatures, choosing the problems that best separate agents whose behavior differs under the target deployment distribution. This turns benchmark design into a weighted coverage problem with a 1−1/e greedy guarantee.",
   },
   {
     title: "ML-Driven Approach to Discovery of Peptide-Based BACE1 Inhibitors",
-    authors: "Nicholas Chen (co-first author) · MIT Pentelute Lab",
+    authors: "Nicholas Chen · Mentor: Dr. Vladimir Akhmetov (MIT)",
     venue: "International Journal of High School Research, 7(4)",
     year: "2025",
     status: "Published",
     abstract:
-      "De novo design of catalytic-site-targeted peptide binders of β-secretase (BACE1), a key enzyme in amyloid-beta plaque formation in Alzheimer's disease. Uses RFdiffusion, ProteinMPNN and AlphaFold2 inside a reinforcement-learning loop to generate potent, low-immunogenicity inhibitor candidates.",
+      "De novo design of catalytic-site-targeted peptide binders of β-secretase (BACE1), a key enzyme in amyloid-beta plaque formation in Alzheimer's disease, using RFdiffusion, ProteinMPNN and AlphaFold3.",
     links: [
       {
         label: "PDF",
@@ -100,14 +91,14 @@ export const APPOINTMENTS: Appointment[] = [
     lab: "UC Berkeley Haas — Operations & Behavioral Analytics Lab (Prof. Park Sinchaisri)",
     period: "Sep 2025 — Present",
     summary:
-      "Personal reward models trained in PyTorch/CUDA from 41,844 human preference labels; a Python framework evaluating 38 optimizers and 19 LLM agents over 95,000 runs with a reproducibility audit; and a code audit that caught and corrected results before submission.",
+      "Ran the reward-model experiments for the AISTATS submission on a local RTX 5090 and led the pre-submission code audit that reversed several reported effects. For RuleReveal, built the agent populations (122 reference agents per domain, 38 optimization algorithms over 95,000 evaluations, 19 language-model agents) and led the independent reproducibility audit. Built the BundleGame experiment platform and its conditional-logit analysis.",
   },
   {
     role: "Machine Learning Researcher",
     lab: "MIT — Pentelute Lab",
     period: "Feb 2023 — Apr 2024",
     summary:
-      "Peptide design with RFdiffusion, ProteinMPNN and AlphaFold2 inside a reinforcement-learning loop over a multi-objective reward (binding affinity, toxicity, aggregation); co-first author of a peer-reviewed paper.",
+      "Peptide binder design for BACE1 with RFdiffusion, ProteinMPNN and AlphaFold3, mentored by Dr. Vladimir Akhmetov; sole-authored the resulting peer-reviewed paper.",
   },
   {
     role: "Computational Research — Ranked 1st of 45",
@@ -138,6 +129,6 @@ export type Highlight = {
 export const HIGHLIGHTS: Highlight[] = [
   { value: 35, suffix: "%", label: "faster pipeline from custom CUDA kernels" },
   { value: 95000, label: "agent and optimizer runs evaluated" },
-  { value: 41844, label: "human preference labels modeled" },
+  { value: 259, label: "numbers re-verified by the NeurIPS reproducibility check" },
   { value: 2700, suffix: "+", label: "tests on the Slurm test cluster" },
 ];

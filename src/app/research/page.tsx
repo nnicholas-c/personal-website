@@ -110,7 +110,7 @@ export default function ResearchPage() {
                 className="group hairline flex flex-col border-t py-8"
               >
                 <p className="label mb-3 text-cream/45">
-                  {pub.status === "Spotlight" && (
+                  {pub.status === "Accepted · Spotlight" && (
                     <span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-cream align-middle" />
                   )}
                   {pub.status} · {pub.venue} · {pub.year}

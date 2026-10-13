@@ -280,10 +280,10 @@ export const EXPERIENCE: Experience[] = [
     title: "Undergraduate Researcher",
     company: "UC Berkeley Haas — Operations & Behavioral Analytics Lab",
     description: [
-      "Trained personal reward models in PyTorch with CUDA from 41,844 human preference labels.",
-      "Built a Python framework that evaluated 38 optimizers and 19 LLM agents over 95,000 runs, with a reproducibility audit.",
-      "Led a code audit of the reward-model experiments that found errors and corrected several results before submission.",
-      "Co-developed the lab's experiment platform (SvelteKit, Firebase, Vercel). Co-first author on AAAI 2027 (under review), AISTATS 2027 and ACM CHI 2027 submissions.",
+      "Ran the personalized reward-model experiments on a local RTX 5090 and led a pre-submission code audit that reversed several reported effects.",
+      "Built the agent populations for a benchmark-design paper: 122 reference agents per domain, 38 optimization algorithms over 95,000 evaluations, and 19 language-model agents; led its independent reproducibility audit.",
+      "Built the BundleGame experiment platform (SvelteKit, Firebase, Vercel) and its conditional-logit analysis.",
+      "Papers under review at AISTATS 2027 and AAAI 2027.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -320,8 +320,8 @@ export const EXPERIENCE: Experience[] = [
     title: "Machine Learning Researcher",
     company: "MIT — Pentelute Lab",
     description: [
-      "Peptide design with RFdiffusion, ProteinMPNN and AlphaFold2 inside a reinforcement-learning loop over a multi-objective reward (affinity, toxicity, aggregation).",
-      "Co-first author of a peer-reviewed paper on AI-driven peptide design (DOI: 10.36838/v7i4.29).",
+      "Peptide binder design for BACE1 with RFdiffusion, ProteinMPNN and AlphaFold3, mentored by Dr. Vladimir Akhmetov.",
+      "Sole-authored a peer-reviewed paper on AI-driven peptide design (DOI: 10.36838/v7i4.29).",
     ],
     skills: [
       SkillNames.PYTHON,
