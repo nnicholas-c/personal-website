@@ -283,7 +283,7 @@ export const EXPERIENCE: Experience[] = [
       "Ran the personalized reward-model experiments on a local RTX 5090 and led a pre-submission code audit that reversed several reported effects.",
       "Built the agent populations for a benchmark-design paper: 122 reference agents per domain, 38 optimization algorithms over 95,000 evaluations, and 19 language-model agents; led its independent reproducibility audit.",
       "Built the BundleGame experiment platform (SvelteKit, Firebase, Vercel) and its conditional-logit analysis.",
-      "Papers under review at AISTATS 2027 and AAAI 2027.",
+      "Papers under review at ACM CHI 2027 (two), AISTATS 2027 and AAAI 2027.",
     ],
     skills: [
       SkillNames.PYTHON,

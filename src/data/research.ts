@@ -28,12 +28,32 @@ export const PUBLICATIONS: Publication[] = [
   {
     title:
       "Approval Is Not Discovery: When Can a Model of the Scientist Steer a Discovery Agent?",
-    authors: "Nicholas Chen",
+    authors: "Nicholas Chen (sole author)",
     venue: "AgenticLS Workshop, NeurIPS 2026 (non-archival)",
     year: "2026",
     status: "Accepted · Spotlight",
     abstract:
       "Models a scientist who checks a proposal carefully some fraction of the time and otherwise approves what looks plausible, and shows that granting a discovery agent autonomy once it agrees with the scientist only certifies a copy of that quick check. Proposes an audit that needs no lab assays, built from silent repeat reviews, and tests it in retrospective simulations on four genome-wide CRISPR screens in primary human T cells.",
+  },
+  {
+    title:
+      "The Withdrawal Test: Unaided Operational Decisions after Answer and Rationale Support",
+    authors: "Nicholas Chen, Jiaming Guan, Wichinpong Park Sinchaisri",
+    venue: "ACM CHI 2027",
+    year: "2026",
+    status: "Under review",
+    abstract:
+      "Algorithmic recommendations can improve current decisions without teaching people to decide on their own. In a two-session delivery-bundling study with 118 MBA students, participants got an optimal recommendation alone, the same recommendation with a rationale matched or mismatched to their baseline diagnosis, or no recommendation. A withdrawal test then measured optimal choice and operational loss on new menus after assistance was removed. Adoption was high, but the primary comparisons did not establish an added benefit from rationales.",
+  },
+  {
+    title:
+      "When Personalization Feels Accurate: Endorsement and Prediction in Professional Judgment",
+    authors: "Nicholas Chen, Jiaming Guan, Wichinpong Park Sinchaisri",
+    venue: "ACM CHI 2027",
+    year: "2026",
+    status: "Under review",
+    abstract:
+      "Personalized assistants ask people to approve descriptions of their preferences, but what does that approval validate? Thirty-two professionals wrote standing instructions, judged work-related drafts, and reviewed accounts derived from their decisions or constructed alternatives. Eighteen learned accounts made a constant prediction across sixteen held-out drafts yet still received mean endorsement of 5.44 out of 7. Favorable evaluations can leave person-specific prediction unestablished.",
   },
   {
     title:
