@@ -1,9 +1,9 @@
 const config = {
   title: "Nicholas Chen | EECS @ UC Berkeley",
   description: {
-    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley focused on AI/ML and quantitative research.",
+    long: "Explore the portfolio of Nicholas Chen, an EECS student at UC Berkeley working on GPU-accelerated simulation and ML, models of human judgment, and reliable AI agents.",
     short:
-      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. AI/ML and quantitative research.",
+      "Portfolio of Nicholas Chen — EECS @ UC Berkeley. GPU-accelerated ML, human judgment, and reliable AI agents.",
   },
   keywords: [
     "Nicholas Chen",
@@ -13,6 +13,8 @@ const config = {
     "machine learning",
     "quantitative",
     "startups",
+    "CUDA",
+    "AI agents",
     "Python",
     "data engineering",
     "deep learning",
@@ -20,7 +22,7 @@ const config = {
     "Next.js",
   ],
   author: "Nicholas Chen",
-  tagline: "AI/ML & Quantitative Research",
+  tagline: "GPU-accelerated ML, human judgment & reliable AI agents",
   email: "nchen06@berkeley.edu",
   phone: "+1 510-529-6747",
   site: "https://www.nicholaschen.dev/",

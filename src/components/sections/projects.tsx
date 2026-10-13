@@ -11,14 +11,17 @@ import { buttonVariants } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { SectionHeader } from "./section-header";
 import SectionWrapper from "../ui/section-wrapper";
+import Reveal from "../motion/reveal";
 
 const ProjectsSection = () => {
   return (
     <SectionWrapper id="projects" className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8">
       <SectionHeader id="projects" title="Projects" className="static mb-12" />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {projects.map((project, i) => (
+          <Reveal key={project.id} index={i % 3} className="h-full">
+            <ProjectCard project={project} />
+          </Reveal>
         ))}
       </div>
     </SectionWrapper>

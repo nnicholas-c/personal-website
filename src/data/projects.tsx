@@ -7,10 +7,20 @@ export type Project = {
   tags: string[];
   github?: string;
   live?: string;
-  status?: "Live" | "Research";
+  status?: "Live" | "Research" | "Building";
 };
 
 const projects: Project[] = [
+  {
+    id: "compute-autopilot",
+    category: "Startup · AI Agent",
+    title: "Research Compute Autopilot",
+    src: "/assets/projects-screenshots/compute-autopilot/landing.svg",
+    description:
+      "AI agent on SkyPilot that measures lost GPU hours on shared clusters, explains Slurm job failures in plain English, and retries failed jobs within user-set limits, starting with Berkeley's Savio. A rule-based gate checks every proposed action against limits and budgets; tested on a simulated Slurm cluster with injected failures (2,700+ tests).",
+    tags: ["Python", "FastAPI", "SQLite", "SkyPilot", "Slurm", "LLM Agents"],
+    status: "Building",
+  },
   {
     id: "bundlegame",
     category: "Research Platform",

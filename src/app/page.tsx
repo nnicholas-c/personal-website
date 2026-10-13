@@ -574,7 +574,7 @@ export default function Chooser() {
               }}
             />
             <motion.p variants={introItem} className="label text-cream/70">
-              Hello — I&apos;m
+              Hello, I&apos;m
             </motion.p>
             <h1 className="sr-only">{config.author}</h1>
             {/* the name at center — its letters shatter apart when an ink
