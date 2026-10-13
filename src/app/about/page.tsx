@@ -288,18 +288,19 @@ function Page() {
           >
             <h1 className="text-3xl mb-10 lg:md-20">About me</h1>
             <p className="mb-10 text-roboto">
-              I&apos;m Nicholas, an EECS student at UC Berkeley focused on AI/ML
-              and quantitative research. I work across reinforcement learning,
-              statistical modeling, market-data pipelines, and research systems
-              that turn messy data into defensible evidence.
+              I&apos;m Nicholas, an EECS student at UC Berkeley. I work on
+              GPU-accelerated simulation and ML, models of human judgment, and
+              reliable AI agents, and I build the research systems that turn
+              messy data into defensible evidence.
             </p>
             <p className="mb-10">
-              University of California, Berkeley — B.S. in Electrical
-              Engineering & Computer Science — GPA 3.8/4.0 — Expected May 2028.
-              Coursework: Optimization Models (EECS 127), Probability & Discrete
-              Math (CS 70), Deep Learning (CS 182); in progress: Probability &
-              Random Processes (EE 126), Linear Algebra (Math 110), Algorithms
-              (CS 170), Machine Learning (CS 189).
+              University of California, Berkeley: B.S. in Electrical
+              Engineering & Computer Sciences, GPA 3.8/4.0, expected May 2029.
+              Coursework: Data Structures (CS 61B), Probability & Random
+              Processes (EE 126), Discrete Math & Probability (CS 70),
+              Algorithms (CS 170), Linear Algebra (Math 110); in progress:
+              Machine Learning (CS 189), Deep Learning (CS 182), Optimization
+              Models (EECS 127).
             </p>
             <h1 className="text-3xl mb-10 lg:md-20">Stuff I use</h1>
             <div className="mb-5">

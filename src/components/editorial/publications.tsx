@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { PUBLICATIONS, APPOINTMENTS } from "@/data/research";
+import Reveal from "@/components/motion/reveal";
 
 export default function PublicationsSection() {
   return (
@@ -7,8 +8,10 @@ export default function PublicationsSection() {
       <div className="mx-auto max-w-3xl px-6 pb-28 pt-24 sm:px-10">
         <p className="label text-cream/45">Publications</p>
         <div className="mt-6 flex flex-col">
-          {PUBLICATIONS.map((pub) => (
-            <article
+          {PUBLICATIONS.map((pub, i) => (
+            <Reveal
+              as="article"
+              index={i}
               key={pub.title}
               className="hairline flex flex-col border-t py-8"
             >
@@ -44,7 +47,7 @@ export default function PublicationsSection() {
                   ))}
                 </div>
               )}
-            </article>
+            </Reveal>
           ))}
           <div className="hairline border-t" />
         </div>
@@ -53,8 +56,10 @@ export default function PublicationsSection() {
           <div className="mt-20">
             <p className="label text-cream/45">Research appointments</p>
             <div className="mt-6 flex flex-col">
-              {APPOINTMENTS.map((a) => (
-                <article
+              {APPOINTMENTS.map((a, i) => (
+                <Reveal
+                  as="article"
+                  index={i}
                   key={a.lab}
                   className="hairline grid gap-3 border-t py-8 md:grid-cols-[170px_minmax(0,1fr)] md:gap-10"
                 >
@@ -70,7 +75,7 @@ export default function PublicationsSection() {
                       {a.summary}
                     </p>
                   </div>
-                </article>
+                </Reveal>
               ))}
               <div className="hairline border-t" />
             </div>

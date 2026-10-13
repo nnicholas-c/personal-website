@@ -5,15 +5,22 @@ import { config } from "@/data/config";
 import { MEDIA } from "@/data/media";
 import {
   APPOINTMENTS,
+  HIGHLIGHTS,
   PUBLICATIONS,
   RESEARCH_INTRO,
   TALKS,
 } from "@/data/research";
+import Reveal from "@/components/motion/reveal";
+import DrawUnderline from "@/components/motion/draw-underline";
+import CountUp from "@/components/motion/count-up";
+import ScrollTimeline, {
+  TimelineNode,
+} from "@/components/motion/scroll-timeline";
 
 export const metadata = {
   title: "Research | Nicholas Chen",
   description:
-    "Publications, research appointments, and talks by Nicholas Chen — reinforcement learning, behavioral analytics, and generative models.",
+    "Publications, research appointments, and talks by Nicholas Chen — GPU-accelerated simulation and ML, models of human judgment, and reliable AI agents.",
 };
 
 export default function ResearchPage() {
@@ -53,7 +60,10 @@ export default function ResearchPage() {
         <div className="min-h-[46vh]">
           <p className="label mt-12">Research</p>
           <h1 className="mt-5 font-serif text-5xl font-light leading-[1.02] text-cream sm:text-7xl">
-            Work <span className="italic text-cream/50">in progress.</span>
+            Work{" "}
+            <span className="italic text-cream/50">
+              in <DrawUnderline>progress.</DrawUnderline>
+            </span>
           </h1>
           <p className="mt-6 max-w-xl font-serif text-xl leading-relaxed text-cream/75 text-pretty">
             {RESEARCH_INTRO}
@@ -64,20 +74,45 @@ export default function ResearchPage() {
             rel="noopener noreferrer"
             className="label mt-7 inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-1.5 text-cream/70 transition-colors hover:border-cream/50 hover:text-cream"
           >
-            <GraduationCap size={13} /> Google Scholar <ArrowUpRight size={12} />
+            <GraduationCap size={13} /> Google Scholar{" "}
+            <ArrowUpRight size={12} />
           </a>
         </div>
+
+        {/* Highlights: count up as they scroll in */}
+        <section
+          aria-label="Highlights"
+          className="mt-4 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4"
+        >
+          {HIGHLIGHTS.map((h, i) => (
+            <Reveal key={h.label} index={i}>
+              <CountUp
+                value={h.value}
+                suffix={h.suffix}
+                className="block font-serif text-3xl font-light tabular-nums text-cream sm:text-4xl"
+              />
+              <p className="mt-2 font-mono text-[0.62rem] uppercase leading-relaxed tracking-wider text-cream/50">
+                {h.label}
+              </p>
+            </Reveal>
+          ))}
+        </section>
 
         {/* Publications */}
         <section className="mt-16">
           <p className="label text-cream/45">Publications</p>
           <div className="mt-6 flex flex-col">
-            {PUBLICATIONS.map((pub) => (
-              <article
+            {PUBLICATIONS.map((pub, i) => (
+              <Reveal
+                as="article"
+                index={i}
                 key={pub.title}
-                className="hairline flex flex-col border-t py-8"
+                className="group hairline flex flex-col border-t py-8"
               >
                 <p className="label mb-3 text-cream/45">
+                  {pub.status === "Spotlight" && (
+                    <span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-cream align-middle" />
+                  )}
                   {pub.status} · {pub.venue} · {pub.year}
                 </p>
                 <h2 className="font-serif text-2xl font-normal leading-snug text-cream sm:text-3xl">
@@ -109,7 +144,7 @@ export default function ResearchPage() {
                     ))}
                   </div>
                 )}
-              </article>
+              </Reveal>
             ))}
             <div className="hairline border-t" />
           </div>
@@ -118,27 +153,31 @@ export default function ResearchPage() {
         {/* Appointments */}
         <section className="mt-20">
           <p className="label text-cream/45">Appointments</p>
-          <div className="mt-6 flex flex-col">
-            {APPOINTMENTS.map((a) => (
-              <article
-                key={a.lab}
-                className="hairline grid gap-3 border-t py-8 md:grid-cols-[170px_minmax(0,1fr)] md:gap-10"
-              >
-                <div className="label pt-1 text-cream/45">{a.period}</div>
-                <div>
-                  <h3 className="font-serif text-xl font-normal leading-snug text-cream sm:text-2xl">
-                    {a.role}
-                  </h3>
-                  <p className="mt-1 font-mono text-xs uppercase tracking-wider text-cream/55">
-                    {a.lab}
-                  </p>
-                  <p className="mt-3 font-serif text-lg leading-relaxed text-cream/70 text-pretty">
-                    {a.summary}
-                  </p>
-                </div>
-              </article>
-            ))}
-            <div className="hairline border-t" />
+          <div className="mt-6">
+            <ScrollTimeline>
+              {APPOINTMENTS.map((a, i) => (
+                <Reveal
+                  as="article"
+                  index={i}
+                  key={a.lab}
+                  className="relative grid gap-3 py-8 md:grid-cols-[170px_minmax(0,1fr)] md:gap-10"
+                >
+                  <TimelineNode />
+                  <div className="label pt-1 text-cream/45">{a.period}</div>
+                  <div>
+                    <h3 className="font-serif text-xl font-normal leading-snug text-cream sm:text-2xl">
+                      {a.role}
+                    </h3>
+                    <p className="mt-1 font-mono text-xs uppercase tracking-wider text-cream/55">
+                      {a.lab}
+                    </p>
+                    <p className="mt-3 font-serif text-lg leading-relaxed text-cream/70 text-pretty">
+                      {a.summary}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </ScrollTimeline>
           </div>
         </section>
 

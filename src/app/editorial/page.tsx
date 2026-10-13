@@ -5,7 +5,7 @@ import PageReady from "@/components/chooser/PageReady";
 export const metadata = {
   title: "Nicholas Chen — Machine learning research",
   description:
-    "Machine-learning research by Nicholas Chen — reinforcement learning, human decision-making, and generative models for protein design. Publications and Google Scholar.",
+    "Machine-learning research by Nicholas Chen — GPU-accelerated simulation and ML, models of human judgment, and reliable AI agents. Publications and Google Scholar.",
 };
 
 export default function EditorialHome() {

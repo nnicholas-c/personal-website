@@ -1,14 +1,15 @@
 // Research page content. Titles/venues are easy to edit here as work is
 // published or updated — the /research page renders straight from this file.
+// Keep this in sync with the current resume: roles, authorship and venues
+// should read the same in both places.
 
 export const RESEARCH_INTRO =
-  "I'm an EECS student at Berkeley doing machine-learning research. Most of it is reinforcement learning and how people make the same decision over and over, with some generative modeling for protein design on the side. What I care about most is whether a result still holds once you push on it.";
+  "I'm an EECS student at Berkeley. I build GPU-accelerated simulation and machine-learning systems, study how people make judgments with and without AI help, and work on making AI agents reliable enough to trust. What I care about most is whether a result still holds once you push on it.";
 
 export const RESEARCH_INTERESTS = [
-  "Reinforcement learning",
-  "How people make repeated decisions",
-  "Generative models for protein design",
-  "Empirical work that holds up",
+  "GPU-accelerated simulation and ML",
+  "Models of human judgment",
+  "Reliable AI agents",
 ];
 
 export type Publication = {
@@ -16,7 +17,7 @@ export type Publication = {
   authors: string;
   venue: string;
   year: string;
-  status: "Published" | "In preparation" | "Under review";
+  status: "Published" | "Spotlight" | "Submitted" | "Under review";
   abstract: string;
   links?: { label: string; href: string }[];
   /** true when the title is a working title for unpublished work */
@@ -25,23 +26,51 @@ export type Publication = {
 
 export const PUBLICATIONS: Publication[] = [
   {
-    title: "Reward Salience and Learning in Repeated Human Decisions",
-    workingTitle: true,
-    authors: "Nicholas Chen (first author), with Prof. Sinchaisri",
-    venue: "Targeting ACM CHI 2027",
+    title:
+      "Approval Is Not Discovery: When Can a Model of the Scientist Steer a Discovery Agent?",
+    authors: "Nicholas Chen (sole author)",
+    venue: "NeurIPS 2026 Workshop on Agentic AI for Biological Discovery",
     year: "2026",
-    status: "In preparation",
+    status: "Spotlight",
     abstract:
-      "A behavioral study of a repeated bundling task across 85 participants and 1,000+ rounds. Fixed-effects causal inference finds that increasing payout salience raised suboptimal choices by 71 percentage points, with no measurable learning over 15 rounds. Behavior separates into five statistically distinct decision policies (8× outcome spread), analyzed with offline policy evaluation over a DQN trained with reward shaping, experience replay, and target networks.",
+      "Sole-authored workshop paper, selected as a spotlight.",
+  },
+  {
+    title: "The Withdrawal Test",
+    workingTitle: true,
+    authors: "Nicholas Chen (co-first author), with Prof. Park Sinchaisri",
+    venue: "ACM CHI 2027",
+    year: "2026",
+    status: "Submitted",
+    abstract:
+      "Does AI decision support improve human judgment, or only performance while the AI is present? The withdrawal test scores a support system on two separate outcomes: assisted performance, and the residual, meaning how well people do on new, held-out problems once the support is removed. The two can diverge: a system can make someone far more accurate in the moment while leaving them no better, or worse, on their own.",
+  },
+  {
+    title: "RuleReveal: Small Benchmarks That Predict How Decision Agents Deploy",
+    workingTitle: true,
+    authors: "Nicholas Chen (co-first author)",
+    venue: "AAAI 2027",
+    year: "2026",
+    status: "Under review",
+    abstract:
+      "Two agents can earn the same benchmark score while following very different policies. RuleReveal picks benchmark problems by the agents' action signatures, choosing the problems that best separate agents whose behavior differs under the target deployment distribution. This turns benchmark design into a weighted coverage problem with a 1−1/e greedy guarantee; eight selected problems are enough to predict held-out agents accurately.",
+  },
+  {
+    title: "AISTATS 2027 submission",
+    authors: "Nicholas Chen (co-first author)",
+    venue: "AISTATS 2027",
+    year: "2026",
+    status: "Submitted",
+    abstract: "Details to follow after the review period.",
   },
   {
     title: "ML-Driven Approach to Discovery of Peptide-Based BACE1 Inhibitors",
-    authors: "Nicholas Chen · Mentor: Vladimir Akhmetov",
+    authors: "Nicholas Chen (co-first author) · MIT Pentelute Lab",
     venue: "International Journal of High School Research, 7(4)",
     year: "2025",
     status: "Published",
     abstract:
-      "A machine-learning approach to the de novo design of catalytic-site-targeted peptide binders of β-secretase (BACE1) — a key enzyme in amyloid-beta plaque formation in Alzheimer's disease. Applies deep reinforcement learning and diffusion models (AlphaFold3, RoseTTAFold) to generate potent, low-immunogenicity inhibitor candidates.",
+      "De novo design of catalytic-site-targeted peptide binders of β-secretase (BACE1), a key enzyme in amyloid-beta plaque formation in Alzheimer's disease. Uses RFdiffusion, ProteinMPNN and AlphaFold2 inside a reinforcement-learning loop to generate potent, low-immunogenicity inhibitor candidates.",
     links: [
       {
         label: "PDF",
@@ -60,25 +89,32 @@ export type Appointment = {
 
 export const APPOINTMENTS: Appointment[] = [
   {
-    role: "AI/ML & Quantitative Research",
-    lab: "UC Berkeley — Operations & Behavioral Analytics Lab",
+    role: "Undergraduate Researcher (URAP)",
+    lab: "Sayeef Lab (Prof. Sayeef Salahuddin), UC Berkeley EECS, with Lawrence Berkeley National Laboratory",
+    period: "Sep 2026 — Present",
+    summary:
+      "Custom CUDA kernels with shared-memory tiling that sped up the simulation and training pipeline by 35%, with batched parallel training and simulation across multiple NVIDIA H200 GPUs. Developing a PyTorch diffusion model that predicts how a material's atomic structure changes during manufacturing, conditioned on the full processing history (temperature, electric field), on top of GPU molecular dynamics with MACE force fields for hafnium oxide.",
+  },
+  {
+    role: "Undergraduate Researcher",
+    lab: "UC Berkeley Haas — Operations & Behavioral Analytics Lab (Prof. Park Sinchaisri)",
     period: "Sep 2025 — Present",
     summary:
-      "Reinforcement learning, offline policy evaluation, and fixed-effects causal inference over a 1,000-round human-decision experiment, with the full experiment and data pipeline in SvelteKit/Firebase.",
+      "Personal reward models trained in PyTorch/CUDA from 41,844 human preference labels; a Python framework evaluating 38 optimizers and 19 LLM agents over 95,000 runs with a reproducibility audit; and a code audit that caught and corrected results before submission.",
   },
   {
     role: "Machine Learning Researcher",
     lab: "MIT — Pentelute Lab",
     period: "Feb 2023 — Apr 2024",
     summary:
-      "Built a deep generative and reinforcement-learning system for molecular design over a multi-objective reward; first-authored a peer-reviewed paper.",
+      "Peptide design with RFdiffusion, ProteinMPNN and AlphaFold2 inside a reinforcement-learning loop over a multi-objective reward (binding affinity, toxicity, aggregation); co-first author of a peer-reviewed paper.",
   },
   {
     role: "Computational Research — Ranked 1st of 45",
     lab: "University of Oxford",
     period: "Dec 2023 — Jan 2024",
     summary:
-      "Monte Carlo, stochastic-process, and time-series models of nonlinear biochemical systems, with PCA, k-means, and random-forest pipelines.",
+      "Monte Carlo simulations of nonlinear dynamical systems in C++, Python and MATLAB with parameter sweeps.",
   },
 ];
 
@@ -88,10 +124,20 @@ export type Talk = {
   year: string;
 };
 
-export const TALKS: Talk[] = [
-  {
-    title: "Reward salience and decision-making in repeated human choice",
-    venue: "Presented at Stanford University and Carnegie Mellon University",
-    year: "2026",
-  },
+// Only list talks given in person. (The Stanford/CMU presentations were
+// removed until it's confirmed who presented.)
+export const TALKS: Talk[] = [];
+
+export type Highlight = {
+  value: number;
+  suffix?: string;
+  label: string;
+};
+
+// Count-up figures shown on the research page.
+export const HIGHLIGHTS: Highlight[] = [
+  { value: 35, suffix: "%", label: "faster pipeline from custom CUDA kernels" },
+  { value: 95000, label: "agent and optimizer runs evaluated" },
+  { value: 41844, label: "human preference labels modeled" },
+  { value: 2700, suffix: "+", label: "tests on the Slurm test cluster" },
 ];

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Research Compute Autopilot thumbnail</title>
+  <desc id="desc">Animated dashboard: a GPU-hour ledger fills in, a failed Slurm job is explained, checked by a rule gate and retried.</desc>
+  <style>
+    .bar { transform-box: fill-box; transform-origin: bottom; animation: grow 6s cubic-bezier(.22,1,.36,1) infinite; }
+    .b2 { animation-delay: .15s } .b3 { animation-delay: .3s } .b4 { animation-delay: .45s } .b5 { animation-delay: .6s } .b6 { animation-delay: .75s }
+    @keyframes grow { 0% { transform: scaleY(0) } 25%, 88% { transform: scaleY(1) } 100% { transform: scaleY(0) } }
+    .fail { animation: fail 6s infinite; }
+    @keyframes fail { 0%, 30% { fill: #3a3a40 } 34%, 58% { fill: #e2583e } 62%, 100% { fill: #6fbf73 } }
+    .tag-fail { opacity: 0; animation: show-fail 6s infinite; }
+    @keyframes show-fail { 0%, 33% { opacity: 0 } 36%, 58% { opacity: 1 } 61%, 100% { opacity: 0 } }
+    .tag-ok { opacity: 0; animation: show-ok 6s infinite; }
+    @keyframes show-ok { 0%, 61% { opacity: 0 } 64%, 92% { opacity: 1 } 100% { opacity: 0 } }
+    .gate { stroke-dasharray: 260; stroke-dashoffset: 260; animation: draw 6s infinite; }
+    @keyframes draw { 0%, 42% { stroke-dashoffset: 260 } 58%, 92% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: 260 } }
+    .pulse { animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: .35 } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important } .tag-ok { opacity: 1 } .gate { stroke-dashoffset: 0 } .fail { fill: #6fbf73 } }
+  </style>
+  <rect width="1200" height="800" fill="#0c0c0f"/>
+  <rect x="80" y="80" width="1040" height="640" rx="28" fill="#141418" stroke="#2a2a31" stroke-width="2"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <circle cx="130" cy="130" r="7" fill="#6fbf73" class="pulse"/>
+    <text x="150" y="138" fill="#e8e0d4" font-size="26" font-weight="700">Research Compute Autopilot</text>
+    <text x="150" y="172" fill="#8a857c" font-size="18">savio · GPU-hour ledger · last 7 days</text>
+
+    <!-- ledger -->
+    <text x="130" y="240" fill="#8a857c" font-size="15" letter-spacing="2">HOURS USED vs LOST</text>
+    <line x1="130" y1="560" x2="620" y2="560" stroke="#2a2a31" stroke-width="2"/>
+    <g>
+      <rect class="bar"    x="150" y="330" width="44" height="230" rx="6" fill="#e8e0d4"/>
+      <rect class="bar b2" x="230" y="290" width="44" height="270" rx="6" fill="#e8e0d4"/>
+      <rect class="bar b3" x="310" y="380" width="44" height="180" rx="6" fill="#e8e0d4"/>
+      <rect class="bar b4" x="390" y="270" width="44" height="290" rx="6" fill="#e8e0d4"/>
+      <rect class="bar b5" x="470" y="310" width="44" height="250" rx="6" fill="#e8e0d4"/>
+      <rect class="bar b6" x="550" y="350" width="44" height="210" rx="6" fill="#e8e0d4"/>
+      <rect class="bar"    x="150" y="290" width="44" height="40" rx="6" fill="#e2583e" opacity=".85"/>
+      <rect class="bar b4" x="390" y="215" width="44" height="55" rx="6" fill="#e2583e" opacity=".85"/>
+      <rect class="bar b6" x="550" y="320" width="44" height="30" rx="6" fill="#e2583e" opacity=".85"/>
+    </g>
+    <text x="130" y="600" fill="#8a857c" font-size="15">lost hours by cause: OOM · preemption · node failure</text>
+
+    <!-- job card -->
+    <rect x="690" y="220" width="370" height="420" rx="20" fill="#1b1b21" stroke="#2a2a31"/>
+    <text x="720" y="262" fill="#8a857c" font-size="15" letter-spacing="2">JOB 4821930 · 4×A100</text>
+    <rect class="fail" x="720" y="285" width="310" height="56" rx="12"/>
+    <text class="tag-fail" x="740" y="320" fill="#fff" font-size="19" font-weight="700">FAILED · CUDA out of memory</text>
+    <text class="tag-ok" x="740" y="320" fill="#0c0c0f" font-size="19" font-weight="700">RETRIED · running</text>
+    <text x="720" y="385" fill="#e8e0d4" font-size="17">Batch size 512 exceeded 80 GB.</text>
+    <text x="720" y="412" fill="#e8e0d4" font-size="17">Proposed: halve batch, grad-accum ×2.</text>
+    <text x="720" y="470" fill="#8a857c" font-size="15" letter-spacing="2">RULE GATE</text>
+    <rect x="720" y="488" width="310" height="120" rx="12" fill="none" stroke="#2a2a31"/>
+    <path class="gate" d="M745 548 l 22 22 l 48 -52" fill="none" stroke="#6fbf73" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="840" y="535" fill="#e8e0d4" font-size="16">within retry limit</text>
+    <text x="840" y="562" fill="#e8e0d4" font-size="16">within GPU budget</text>
+    <text x="840" y="589" fill="#e8e0d4" font-size="16">user approved policy</text>
+  </g>
+</svg>

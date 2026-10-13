@@ -231,14 +231,16 @@ export type Education = {
 export const EDUCATION: Education[] = [
   {
     school: "University of California, Berkeley",
-    degree: "B.S. in Electrical Engineering & Computer Science",
+    degree: "B.S. in Electrical Engineering & Computer Sciences",
     gpa: "3.8/4.0",
-    expected: "Expected May 2028",
+    expected: "Expected May 2029",
     coursework: [
-      "Optimization Models (EECS 127)",
-      "Probability & Discrete Math (CS 70)",
-      "Deep Learning (CS 182)",
-      "In progress: Probability & Random Processes (EE 126), Linear Algebra (Math 110), Algorithms (CS 170), Machine Learning (CS 189)",
+      "Data Structures (CS 61B)",
+      "Probability & Random Processes (EE 126)",
+      "Discrete Math & Probability (CS 70)",
+      "Algorithms (CS 170)",
+      "Linear Algebra (Math 110)",
+      "In progress: Machine Learning (CS 189), Deep Learning (CS 182), Optimization Models (EECS 127)",
     ],
   },
 ];
@@ -246,15 +248,42 @@ export const EDUCATION: Education[] = [
 export const EXPERIENCE: Experience[] = [
   {
     id: 1,
+    startDate: "Oct 2026",
+    endDate: "Present",
+    title: "Founder & Technical Lead",
+    company: "Research Compute Autopilot (startup)",
+    description: [
+      "Building an AI agent on SkyPilot that measures lost GPU hours on shared clusters, explains Slurm job failures in plain English, and retries failed jobs within user-set limits, starting with Berkeley's Savio cluster.",
+      "Built a GPU-hour ledger from Slurm data showing hours allocated, used and lost by cause, per job and user.",
+      "Built a safety layer where the AI only proposes actions and a rule-based gate checks each against user limits and budgets.",
+      "Built a Slurm test cluster in an isolated Linux namespace with simulated GPU nodes and injected failures (2,700+ tests); recruited and lead two student engineers.",
+    ],
+    skills: [SkillNames.PYTHON, SkillNames.DOCKER],
+  },
+  {
+    id: 2,
+    startDate: "Sep 2026",
+    endDate: "Present",
+    title: "Undergraduate Researcher (URAP)",
+    company: "Sayeef Lab, UC Berkeley EECS, with Lawrence Berkeley National Laboratory",
+    description: [
+      "Wrote custom CUDA kernels with shared-memory tiling that sped up the simulation and training pipeline by 35%, and set up batched parallel training and simulation across multiple NVIDIA H200 GPUs.",
+      "Developing a PyTorch diffusion model that predicts how a material's atomic structure changes during manufacturing, conditioned on processing history (temperature, electric field).",
+      "Running GPU molecular dynamics with machine-learned force fields (MACE) to simulate hafnium oxide (HfO2) during annealing.",
+    ],
+    skills: [SkillNames.PYTHON, SkillNames.PYTORCH, SkillNames.CPP],
+  },
+  {
+    id: 3,
     startDate: "Sep 2025",
     endDate: "Present",
-    title: "AI/ML & Quantitative Research Engineer",
-    company: "UC Berkeley — Operations & Behavioral Analytics Lab",
+    title: "Undergraduate Researcher",
+    company: "UC Berkeley Haas — Operations & Behavioral Analytics Lab",
     description: [
-      "Built a reinforcement-learning system (DQN: reward shaping, experience replay, target networks) and the full experiment + data pipeline (SvelteKit/Firebase) over 85 participants and 1,000+ rounds.",
-      "Clustered behavior into 5 statistically separable decision policies (8× outcome spread, F=276) and ran offline policy evaluation.",
-      "Fixed-effects causal inference showed payout salience raised suboptimal choices by 71 percentage points with no measurable learning across 15 rounds.",
-      "First author, in preparation (targeting ACM CHI 2027); presented with Prof. Sinchaisri at Stanford and CMU.",
+      "Trained personal reward models in PyTorch with CUDA from 41,844 human preference labels.",
+      "Built a Python framework that evaluated 38 optimizers and 19 LLM agents over 95,000 runs, with a reproducibility audit.",
+      "Led a code audit of the reward-model experiments that found errors and corrected several results before submission.",
+      "Co-developed the lab's experiment platform (SvelteKit, Firebase, Vercel). Co-first author on AAAI 2027 (under review), AISTATS 2027 and ACM CHI 2027 submissions.",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -265,7 +294,7 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
-    id: 2,
+    id: 4,
     startDate: "Jan 2025",
     endDate: "Feb 2025",
     title: "Data Engineering Intern",
@@ -285,14 +314,14 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
-    id: 3,
+    id: 5,
     startDate: "Feb 2023",
     endDate: "Apr 2024",
     title: "Machine Learning Researcher",
     company: "MIT — Pentelute Lab",
     description: [
-      "Built a deep generative + reinforcement-learning stack in PyTorch with diffusion sampling and policy/value methods over a multi-objective reward.",
-      "First-authored a peer-reviewed paper on AI-driven molecular design (DOI: 10.36838/v7i4.29).",
+      "Peptide design with RFdiffusion, ProteinMPNN and AlphaFold2 inside a reinforcement-learning loop over a multi-objective reward (affinity, toxicity, aggregation).",
+      "Co-first author of a peer-reviewed paper on AI-driven peptide design (DOI: 10.36838/v7i4.29).",
     ],
     skills: [
       SkillNames.PYTHON,
@@ -302,14 +331,13 @@ export const EXPERIENCE: Experience[] = [
     ],
   },
   {
-    id: 4,
+    id: 6,
     startDate: "Dec 2023",
     endDate: "Jan 2024",
     title: "Computational Research — Ranked 1st of 45",
     company: "University of Oxford",
     description: [
-      "Built Monte Carlo, stochastic-process, and time-series models of nonlinear biochemical systems.",
-      "Implemented PCA, k-means, and random-forest pipelines for computational research workflows.",
+      "Wrote Monte Carlo simulations of nonlinear dynamical systems in C++, Python and MATLAB with parameter sweeps.",
     ],
     skills: [
       SkillNames.PYTHON,

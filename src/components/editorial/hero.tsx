@@ -48,7 +48,7 @@ const HeroSection = () => {
         <motion.div variants={item}>
           <DecodeText
             as="p"
-            text={`${config.author} — EECS @ UC Berkeley`.toUpperCase()}
+            text={`${config.author} · EECS @ UC Berkeley`.toUpperCase()}
             className="label"
           />
         </motion.div>
