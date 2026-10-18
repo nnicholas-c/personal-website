@@ -11,6 +11,10 @@ const nextConfig = {
     // produces a new key anyway).
     minimumCacheTTL: 31536000,
   },
+  // /reel is a standalone static page in public/reel; serve its index.html.
+  async rewrites() {
+    return [{ source: "/reel", destination: "/reel/index.html" }];
+  },
   async headers() {
     return [
       {
