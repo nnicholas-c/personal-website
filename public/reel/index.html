@@ -261,7 +261,7 @@ em,i{font-style:normal}
             <a href="#work">Work</a>
             <a href="#stack">Stack</a>
             <a href="#contact">Contact</a>
-            <a href="#">Resume</a>
+            <a href="/assets/Nicholas_Chen_Quant_Resume.pdf">Resume</a>
           </nav>
           <button class="snd" type="button" data-sound aria-pressed="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="w1" d="M16.5 9.5a3.5 3.5 0 0 1 0 5"/><path class="w2" d="M19 7a7 7 0 0 1 0 10"/></svg><span>Sound on</span></button>
         </div>
@@ -274,7 +274,7 @@ em,i{font-style:normal}
   </div>
   <div class="sr">
     <h1>Nicholas Chen</h1>
-    <p>I'm a sophomore in EECS at UC Berkeley. I'm building Clastra, which puts an AI agent on every server, and I research why people keep making the same decision after it stops working for them.</p>
+    <p>I'm a sophomore in EECS at UC Berkeley. I'm building Clastra, which puts an AI agent on every server, and I research why people keep misjudging the same tradeoff at work, and what AI help fixes it.</p>
   </div>
 </section>
 
@@ -303,7 +303,7 @@ em,i{font-style:normal}
         <div class="spread">
           <div class="cols">
             <p>Most of my time at Berkeley goes to two things. The first is <strong>Clastra</strong>, a company I started to give every server its own AI agent. The agent is a small model that runs on the machine and looks after everything on it, and you can reach any of them from one website.</p>
-            <p>The second is research. With an operations lab at Berkeley Haas, I study repeated decisions, the kind people make dozens of times a day at work. In our pilot, workers settled into a strategy early and kept it even when it cost them, and I'm testing what kind of AI help actually changes that.</p>
+            <p>The second is research. With an operations lab at Berkeley Haas, I study repeated decisions, the kind people make dozens of times a day at work. In our pilot, workers packed too many orders into each trip because they priced their own time at about half its value, and I'm testing what kind of AI help actually changes that.</p>
             <p>Before Berkeley I spent a long time on olympiads. I went to the IOI national camp, reached USACO Gold, and worked on machine learning for molecular design with the Pentelute Lab at MIT.</p>
             <p>On the quant side, one of my results came out negative. A stock signal that backtested at +8% a year fell to -0.7% once I rebuilt the data point-in-time. It was survivorship bias, and I wrote it up anyway.</p>
           </div>
@@ -312,19 +312,21 @@ em,i{font-style:normal}
             <figcaption>The Golden Gate above Fort Point, early morning.</figcaption>
           </figure>
         </div>
-        <blockquote class="pull">People settle into a strategy early and keep it, even when it costs them.<cite>From the bundling study, CHI 2027 submission</cite></blockquote>
+        <blockquote class="pull">People take on one order too many, because they price their own time at about half its value.<cite>From the bundling study at Berkeley Haas</cite></blockquote>
       </header>
     </div>
   </article>
 
   <section class="sec wrap" id="research" aria-labelledby="h-research" data-sec="Research">
     <div class="pg">
-      <div class="sec-h"><h2 id="h-research">Selected research</h2><p>Human decisions, reinforcement learning, and machine learning for molecules. Every paper below is co-first authored, except the workshop paper, which is mine alone.</p></div>
+      <div class="sec-h"><h2 id="h-research">Selected research</h2><p>Human decisions, reinforcement learning, and machine learning for molecules. The workshop paper and the molecular design paper are mine alone. The rest are joint work from the operations lab at Berkeley Haas.</p></div>
       <ol class="toc">
-        <li><div class="entry" data-peek="/reel/img/crissy.jpg"><div class="top"><span class="t">Decision policies in gig-work order bundling</span><span class="dots"></span><span class="v">CHI 2027, submitted</span></div><p class="n">Workers fall into distinct strategies, chase visible payouts, and do not improve on their own across rounds.</p></div></li>
-        <li><div class="entry" data-peek="/reel/img/fog.jpg"><div class="top"><span class="t">Right answers for the wrong reasons</span><span class="dots"></span><span class="v">ICLR 2027, submitted</span></div><p class="n">When you model someone's judgment, agreement rate alone cannot tell good reasoning from lucky reasoning.</p></div></li>
-        <li><div class="entry" data-peek="/reel/img/fiber.jpg"><div class="top"><span class="t ph">[AAAI paper title]</span><span class="dots"></span><span class="v">AAAI, under review</span></div><p class="n ph">[One sentence on the finding.]</p></div></li>
-        <li><div class="entry" data-peek="/reel/img/desk.jpg"><div class="top"><span class="t ph">[Workshop paper title]</span><span class="dots"></span><span class="v">NeurIPS 2026 AgenticLS workshop</span></div><p class="n ph">[One sentence on the finding.]</p></div></li>
+        <li><div class="entry" data-peek="/reel/img/crissy.jpg"><div class="top"><span class="t">The Withdrawal Test</span><span class="dots"></span><span class="v">CHI 2027, submitted</span></div><p class="n">With 118 MBA students, adding a rationale to an optimal recommendation did not show a lasting benefit once the help was taken away.</p></div></li>
+        <li><div class="entry" data-peek="/reel/img/desk.jpg"><div class="top"><span class="t">When Personalization Feels Accurate</span><span class="dots"></span><span class="v">CHI 2027, submitted</span></div><p class="n">Professionals rated learned accounts of their own judgment highly, even accounts that predicted the same verdict for every held-out draft.</p></div></li>
+        <li><div class="entry" data-peek="/reel/img/fog.jpg"><div class="top"><span class="t">Personalized Reward Models Can Agree for the Wrong Reasons</span><span class="dots"></span><span class="v">ICLR 2027, submitted</span></div><p class="n">When you model someone's judgment, agreement rate alone cannot tell good reasoning from lucky reasoning.</p></div></li>
+        <li><div class="entry" data-peek="/reel/img/crissy.jpg"><div class="top"><span class="t">Agreeing for the Wrong Reasons: Coordinate Identifiability in Personalized Reward Models</span><span class="dots"></span><span class="v">AISTATS 2027, under review</span></div><p class="n">A reward model can predict a person's accept or reject choices well without learning what its named factors mean, and labels for the reason behind a rejection help recover it.</p></div></li>
+        <li><div class="entry" data-peek="/reel/img/fiber.jpg"><div class="top"><span class="t">RuleReveal</span><span class="dots"></span><span class="v">AAAI 2027, under review</span></div><p class="n">Two agents can tie on a benchmark and still act very differently, so RuleReveal picks the few test problems that best tell them apart.</p></div></li>
+        <li><div class="entry" data-peek="/reel/img/desk.jpg"><div class="top"><span class="t">Approval Is Not Discovery</span><span class="dots"></span><span class="v">NeurIPS 2026 AgenticLS workshop</span></div><p class="n">An AI discovery agent that earns autonomy by agreeing with a scientist may only be copying the scientist's quick check.</p></div></li>
         <li><a class="entry" href="https://doi.org/10.36838/v7i4.29" data-peek="/reel/img/fiber.jpg"><div class="top"><span class="t">AI-driven molecular design</span><span class="dots"></span><span class="v">MIT Pentelute Lab, peer-reviewed</span></div><p class="n">Diffusion models plus reinforcement learning, aimed at molecules that bind well without being toxic.</p></a></li>
       </ol>
     </div>
@@ -401,7 +403,7 @@ em,i{font-style:normal}
             <button type="button" id="copy">Copy email address</button>
             <a href="https://github.com/nnicholas-c">GitHub</a>
             <a href="https://www.linkedin.com/in/nchen06/">LinkedIn</a>
-            <a href="#">Resume</a>
+            <a href="/assets/Nicholas_Chen_Quant_Resume.pdf">Resume</a>
             <a href="https://clastra.tech">Clastra</a>
           </div>
         </div>
@@ -445,14 +447,14 @@ var TH_DESK=[[0.402,0.09],[0.41,0.3],[0.42,0.5],[0.432,0.72],[0.45,0.98]];
 var SC=[
   {id:'fog',src:'/reel/img/fog.jpg',w:2200,h:1375,ink:'light',fd:[[0.3,0,0.3,0.78,0.74],[1,0.48,0.46,0.48,0.62],[0,0,0,0,0]],cap:'The Golden Gate above Fort Point, early morning.',th:TH_FOG,tt:'Berkeley EECS, class of 2028',ts:0.015,tdy:-6,rt:[[0.055,0.627],[0.2,0.6247],[0.3,0.6233],[0.385,0.6225]]},
   {id:'fiber',src:'/reel/img/fiber.jpg',w:2200,h:1464,ink:'light',fd:[[0,0.3,0.48,0.3,0.6],[0,0,0,0.25,0.4],[0,0,0,0,0]],cap:'Fiber running into a patch panel.',th:TH_FIBER,tt:'clastra.tech, one website for every machine you own',ts:0.2,tdy:-8,rt:[[0.665,0.678],[0.72,0.634],[0.78,0.587],[0.84,0.542],[0.88,0.512]]},
-  {id:'crissy',src:'/reel/img/crissy.jpg',w:2200,h:1619,ink:'light',fd:[[0.2,0,0.2,0.72,0.7],[0,0.3,0.6,0.3,0.35],[1,0.1,0.62,0.1,0.35]],cap:'Crissy Field on an overcast morning.',th:TH_SHORE,tt:'85 workers, more than 1,000 decisions, 5 strategies',ts:0.05,tdy:-7,rt:[[0.05,0.742],[0.2,0.746],[0.38,0.732],[0.5,0.736],[0.66,0.738],[0.84,0.744]]},
+  {id:'crissy',src:'/reel/img/crissy.jpg',w:2200,h:1619,ink:'light',fd:[[0.2,0,0.2,0.72,0.7],[0,0.3,0.6,0.3,0.35],[1,0.1,0.62,0.1,0.35]],cap:'Crissy Field on an overcast morning.',th:TH_SHORE,tt:'85 workers, more than 1,000 decisions, 22% optimal',ts:0.05,tdy:-7,rt:[[0.05,0.742],[0.2,0.746],[0.38,0.732],[0.5,0.736],[0.66,0.738],[0.84,0.744]]},
   {id:'desk',src:'/reel/img/desk.jpg',w:2200,h:1467,ink:'light',fd:[[0.5,1,0.5,0.6,0.82],[1,0,0.68,0.22,0.55],[0,0,0,0.2,0.4]],cap:'A desk at night.',th:TH_DESK,tt:'all of it is on GitHub at nnicholas-c',ts:0.1,tdy:-8,rt:[[0.72,0.645],[0.8,0.62],[0.88,0.6]]}
 ];
 var N=SC.length, ROMAN=['One','Two','Three','Four'];
 
-var BIO="Right now I'm a sophomore in EECS at UC Berkeley. I'm building Clastra, which puts an AI agent on every server, and I research why people keep making the same decision long after it stops working for them.";
+var BIO="Right now I'm a sophomore in EECS at UC Berkeley. I'm building Clastra, which puts an AI agent on every server, and I research why people keep misjudging the same tradeoff at work, and what kind of AI help fixes it.";
 var CLASTRA="Clastra runs a small, locally hosted model on each server as its agent, and that agent takes charge of everything on the machine. You can reach any server's agent from one website and ask it to do the work. The long-term goal is something like AGI for servers.";
-var RESEARCH="In a delivery game we built, 85 workers logged more than a thousand decisions. Most settled into one of five strategies early and kept it, even when it cost them. With an operations lab at Berkeley Haas, I'm testing what kind of AI help actually changes that.";
+var RESEARCH="In a delivery game we built, 85 workers logged more than a thousand decisions. Most packed too many orders into each trip, because they priced their time at half its value. With an operations lab at Berkeley Haas, I'm testing what kind of AI help actually changes that.";
 
 var stage=document.getElementById('stage'), reel=document.getElementById('reel'), scenesEl=document.getElementById('scenes');
 var ovc=document.getElementById('ovc'), octx=ovc.getContext('2d'), leak=document.getElementById('leak'), hint=document.getElementById('hint');
@@ -601,15 +603,15 @@ var BUILD={
   },
   crissy:function(B){
     var k=B.k;
-    if(B.simple) return simpleScene(B,{head:'Why do people stop getting better?',italic:true,body:RESEARCH});
+    if(B.simple) return simpleScene(B,{head:'Why do people take on too much?',italic:true,body:RESEARCH});
     var L0=Math.max(B.left,B.X(0.065)), R0=Math.min(B.X(0.62),B.right), y=Math.max(B.top+4*k,B.Y(0.12));
     var hf=function(px){ return B.serif(px,true,300); };
-    var h=B.flow('Why do people stop getting better?',{fontFn:hf,size:62*k,lhr:1.02,top:y,bottom:y+84*k*2.2,left:L0,right:R0,minW:100});
+    var h=B.flow('Why do people take on too much?',{fontFn:hf,size:62*k,lhr:1.02,top:y,bottom:y+84*k*2.2,left:L0,right:R0,minW:100});
     y=h.bottom+20*k;
     B.dropPara(RESEARCH,{fontFn:function(px){return B.serif(px,false,400);},size:17.5*k,lhr:1.55,top:y,bottom:Math.min(B.Y(0.6),B.bottom),left:L0,right:Math.min(R0,L0+560*k),obs:[GULL],pad:16*k,minW:120*k,scrim:true});
     var cx=Math.max(B.X(0.7),Math.min(B.X(0.62),B.right)+40*k), cw=Math.min(300*k,B.right-cx), cy=Math.max(B.top+10*k,B.Y(0.15)), cy0=cy;
     B.line('Papers',cx,cy,B.sans(15.5*k,500),22*k,'smcp'); cy+=34*k;
-    [['Decision policies in gig-work order bundling','CHI 2027, submitted',null],['Right answers for the wrong reasons','ICLR 2027, submitted',null],['AI-driven molecular design','MIT Pentelute Lab, peer-reviewed','https://doi.org/10.36838/v7i4.29']].forEach(function(p){
+    [['The Withdrawal Test','CHI 2027, submitted',null],['When Personalization Feels Accurate','CHI 2027, submitted',null],['Personalized Reward Models Can Agree for the Wrong Reasons','ICLR 2027, submitted',null],['AI-driven molecular design','MIT Pentelute Lab, peer-reviewed','https://doi.org/10.36838/v7i4.29']].forEach(function(p){
       var t=B.flow(p[0],{fontFn:function(px){return B.serif(px,true,400);},size:18*k,lhr:1.2,top:cy,bottom:cy+300,left:cx,right:cx+cw,href:p[2]}); cy=t.bottom+3*k;
       B.line(p[1],cx,cy,B.sans(14.5*k,500),20*k,'smcp'); cy+=38*k;
     });
