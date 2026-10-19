@@ -40,23 +40,21 @@ a{color:inherit}
 .fb img:first-child{opacity:1}
 .stage.gl .fb{display:none}
 .stage.gl{background:#c3c8cb}
-/* typed text: each letter arrives with the scroll, the newest few still settling */
-.c{opacity:0}
+/* typed text: each letter switches on as the scroll reaches it, a crisp 60ms fade, no blur and no caret */
+.c{opacity:0;transition:opacity 60ms linear}
 .c.on{opacity:1}
-.caret{position:absolute;left:0;top:0;width:2px;height:20px;border-radius:1px;background:#ff7a5c;box-shadow:0 0 10px rgba(255,122,92,.55);z-index:3;pointer-events:none;opacity:0;transition:opacity .35s ease;will-change:transform}
-.caret.idle{animation:blink 1.06s steps(1,end) infinite}
-@keyframes blink{50%{background:transparent;box-shadow:none}}
 #gl{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:0;display:block}
 #gl.ready{opacity:1}
 .scenes{position:absolute;inset:0;z-index:2;pointer-events:none}
 .scene{position:absolute;inset:0;visibility:hidden}
-.scene a{pointer-events:auto;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+.scene a{pointer-events:auto;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);transition:text-decoration-color .14s ease}
+.scene a:hover{text-decoration-color:currentColor}
 .ln{position:absolute;white-space:pre;margin:0;font-kerning:normal}
 .w{display:inline-block;white-space:pre;opacity:0;transform:translateY(.32em);filter:blur(7px);
   transition:opacity .9s ease,transform 1.2s cubic-bezier(.16,.8,.2,1),filter 1s ease;transition-delay:var(--d,0ms)}
 .scene.go .w{opacity:1;transform:none;filter:none}
 .ink-dark{color:#15181a;text-shadow:0 0 18px rgba(246,240,234,.55)}
-.ink-light{color:#f6f4f0;text-shadow:0 1px 2px rgba(0,0,0,.28)}
+.ink-light{color:#f6f4f0;text-shadow:0 1px 2px rgba(0,0,0,.28),0 6px 16px rgba(4,7,9,.32)}
 .scrim{position:absolute;border-radius:50%;filter:blur(38px)}
 .ink-dark .scrim{background:rgba(244,237,230,.46)}
 .ink-light .scrim{background:rgba(4,7,9,.55)}
@@ -116,7 +114,7 @@ a{color:inherit}
 .chrome[data-ink="light"]{color:#f6f4f0;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 .brand{font-family:var(--serif);font-style:normal;font-size:21px;letter-spacing:-.005em;text-decoration:none}
 .nav{display:flex;gap:22px;font-family:var(--sans);font-size:13.5px}
-.nav a{text-decoration:none;padding:6px 0;border-bottom:1px solid transparent;transition:border-color .2s ease}
+.nav a{text-decoration:none;padding:6px 0;border-bottom:1px solid transparent;transition:border-color .14s ease}
 .nav a:hover{border-bottom-color:currentColor}
 .capt{font-family:var(--sans);font-size:12.5px;font-style:normal;opacity:.9;max-width:60ch}
 .count{font-family:var(--serif);font-size:15px;font-variant-numeric:oldstyle-nums;white-space:nowrap}
@@ -159,7 +157,7 @@ a{color:inherit}
 .toc li:last-child{border-bottom:1px solid var(--rule)}
 .entry{display:block;padding-block:18px 20px;text-decoration:none;color:inherit}
 .entry .top{display:flex;align-items:baseline;gap:14px}
-.entry .t{font-size:clamp(22px,2.3vw,29px);line-height:1.15;font-weight:400;letter-spacing:-.005em;transition:color .2s ease}
+.entry .t{font-size:clamp(22px,2.3vw,29px);line-height:1.15;font-weight:400;letter-spacing:-.005em;transition:color .14s ease}
 .entry .dots{flex:1 1 40px;min-width:24px;border-bottom:1px dotted #8b908c;transform:translateY(-.32em)}
 .entry .v{font-family:var(--sans);font-size:15.5px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-2);white-space:nowrap}
 .entry .n{margin:6px 0 0;max-width:64ch;font-size:16.5px;line-height:1.5;color:var(--ink-2)}
@@ -197,9 +195,10 @@ a.entry:hover .t{color:var(--io)}
 .letter{font-size:clamp(26px,2.8vw,36px);font-weight:400;line-height:1.28;letter-spacing:-.008em;margin:0 0 26px;max-width:30ch;text-wrap:pretty}
 .letter .addr{font-style:normal;color:var(--io);white-space:nowrap;user-select:all}
 .acts{display:flex;flex-wrap:wrap;gap:6px 26px;font-family:var(--sans);font-size:15px}
-.acts a,.acts button{all:unset;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;border-bottom:1px solid transparent;color:var(--ink)}
+.acts a,.acts button{all:unset;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;border-bottom:1px solid transparent;color:var(--ink);transition:color .14s ease}
 .acts a:hover,.acts button:hover{color:var(--io)}
-.acts a::after{content:"\2197";margin-left:6px;font-size:.9em;color:var(--ink-2)}
+.acts a::after{content:"\2197";display:inline-block;margin-left:6px;font-size:.9em;color:var(--ink-2);transition:transform .14s ease,color .14s ease}
+.acts a:hover::after,.acts a:focus-visible::after{transform:translate(2px,-2px);color:var(--io)}
 .acts button{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
 .acts :focus-visible{outline:2px solid var(--io);outline-offset:3px}
 .sig{margin:0;font-style:normal;font-size:44px;line-height:1;font-weight:400}
@@ -227,6 +226,7 @@ a.entry:hover .t{color:var(--io)}
 @media (hover:none){.peek{display:none}}
 @media (prefers-reduced-motion:reduce){
   .grain,.hint i{animation:none!important}
+  .c,.acts a::after{transition:none!important}
   .w{transition:none!important;opacity:1!important;transform:none!important;filter:none!important}
   .lead{transition:none!important;stroke-dashoffset:0!important}
   .dot{transition:none!important;opacity:1!important}
@@ -464,8 +464,7 @@ var vigEl=document.getElementById('vig'), grainEl=document.getElementById('grain
 var thref=document.getElementById('thref'), trail=document.getElementById('trail'), tht=document.getElementById('tht'), thtp=document.getElementById('thtp'), threadSvg=document.getElementById('thread');
 var fbImgs=[].slice.call(document.querySelectorAll('#fb img'));
 var W=0,H=0,simple=false,L=1,Z0=1.03;
-SC.forEach(function(s){ s.el=document.createElement('div'); s.el.className='scene'; scenesEl.appendChild(s.el); s.R=0; s.pR=0; s.arr=-1; s.lastMove=0; });
-var caret=document.createElement('div'); caret.className='caret'; scenesEl.appendChild(caret);
+SC.forEach(function(s){ s.el=document.createElement('div'); s.el.className='scene'; scenesEl.appendChild(s.el); s.R=0; s.pR=0; s.arr=-1; });
 var SEG=[], introStart=0, intro=1;
 
 /* measure with the DOM so optical sizing matches what is rendered */
@@ -655,7 +654,7 @@ function render(s,B){
       var base=it.order; for(var q=0;q<li;q++) base+=it.lines[q].words.length;
       l.words.forEach(function(w,wi){
         wc[base+wi]=ci;
-        for(var c=0;c<w.length;c++){ var sp=document.createElement('span'); sp.className='c'; sp.textContent=w.charAt(c); sp._a=0; d.appendChild(sp); s.cs[ci++]=sp; }
+        for(var c=0;c<w.length;c++){ var sp=document.createElement('span'); sp.className='c'; sp.textContent=w.charAt(c); d.appendChild(sp); s.cs[ci++]=sp; }
         if(wi<l.words.length-1){ d.appendChild(document.createTextNode(' ')); s.cs[ci++]=null; }
       });
       s.cs[ci++]=null; s.cs[ci++]=null;
@@ -720,7 +719,7 @@ function layout(){
   simple=W<760||W/H<0.95;
   mcache={};
   SC.forEach(function(s){ var B=new Builder(s); BUILD[s.id](B); render(s,B); });
-  var acc=0, PXC=simple?5:6.5, X=H*0.9; SEG=[];
+  var acc=0, PXC=simple?2.5:3, X=H*0.9; SEG=[];
   SC.forEach(function(s){ var T=Math.max(H*0.8,(s.nC-s.autoC)*PXC+H*0.3); SEG.push({a:acc,T:T,X:X}); acc+=T+X; });
   reel.style.height=Math.round(acc+H)+'px'; reel.dataset.seg=JSON.stringify(SEG.map(function(g){ return [Math.round(g.a),Math.round(g.T),Math.round(g.X)]; }));
   IDX=indexLine();
@@ -836,51 +835,22 @@ function scrollToP(y){
   return N;
 }
 
-/* ---------- typing: letters follow the scroll, the newest few still settling, with a caret at the write head ---------- */
-var EDGE=7;
-function resetReveal(s){
-  if(!s.cs) return;
-  for(var j=0;j<s.cs.length;j++){ var sp=s.cs[j]; if(sp&&sp._a!==0){ sp.className='c'; sp.style.opacity=''; sp.style.filter=''; sp._a=0; } }
-  (s.pins||[]).forEach(function(p){ p.on=false; p.ln.classList.remove('on'); p.dot.classList.remove('on'); });
-  s.R=0; s.pR=0; s.V=0;
-}
+/* ---------- typing: letters switch on as the scroll passes them (CSS fades each in); typed text stays typed ---------- */
 function paintReveal(s){
-  var R=s.R, V=Math.max(s.V||0,R), lo=Math.max(0,Math.floor(Math.min(R,s.pR)-EDGE-2)), hi=Math.min(s.nC,Math.ceil(Math.max(R,s.pR))+1);
-  for(var j=lo;j<hi;j++){ var sp=s.cs[j]; if(!sp) continue; var a=j<R?clamp((V-j)/EDGE,0,1):0;
-    if(a>=1){ if(sp._a!==1){ sp.className='c on'; sp.style.opacity=''; sp.style.filter=''; sp._a=1; } }
-    else if(a<=0){ if(sp._a!==0){ sp.className='c'; sp.style.opacity=''; sp.style.filter=''; sp._a=0; } }
-    else { var e=a*a*(3-2*a); sp.className='c'; sp.style.opacity=e.toFixed(3); sp.style.filter='blur('+((1-e)*2.2).toFixed(2)+'px)'; sp._a=a; } }
+  var R=Math.floor(s.R), lo=Math.min(R,s.pR), hi=Math.min(s.nC,Math.max(R,s.pR));
+  for(var j=lo;j<hi;j++){ var sp=s.cs[j]; if(sp) sp.className=j<R?'c on':'c'; }
   s.pR=R;
   (s.pins||[]).forEach(function(p){ if(!p.on&&R>=p.c){ p.on=true; p.ln.classList.add('on'); p.dot.classList.add('on'); } });
 }
 function revealTick(s,i,now,dt,k,f){
-  if(!s.cs) return;
-  if(!(s._o>0)){ if(s.R>0) resetReveal(s); s.arr=-1; return; }
+  if(!s.cs||!(s._o>0)) return;
   if(s.arr<0) s.arr=now;
   var start=(i===0)?Math.max(s.arr,introStart+1350):s.arr;
   var tp=(i===k)?(f>=0.42?1:clamp((f/0.42)/0.9,0,1)):0;
   var auto=Math.min(s.autoC,Math.max(0,(now-start)/1000)*30);
   var D=reduce?s.nC:Math.max(tp*s.nC,auto);
-  if(D>s.R){ var gap=D-s.R; s.R=Math.min(D,s.R+dt*Math.max(36,gap*3.2)); s.lastMove=now; }
-  /* the visual head trails the typed head while letters are arriving, then catches up so the last letters settle */
-  var V0=s.V||0; s.V=Math.max(s.R,V0+(s.R+EDGE-V0)*Math.min(1,dt*2.4));
-  if(s.R!==s.pR||Math.abs(s.V-V0)>0.002) paintReveal(s);
-}
-var cx=0,cy=0,cOn=false;
-function caretTick(s,now,dt){
-  var vis=false;
-  if(s&&s.cs&&s.R>0.5&&!reduce){
-    var j=Math.min(s.nC-1,Math.floor(s.R)-1), sp=null;
-    while(j>=0&&!sp){ sp=s.cs[j]; j--; }
-    if(sp){
-      var r=sp.getBoundingClientRect(), sr=stage.getBoundingClientRect(), tx=r.right-sr.left+2, ty=r.top-sr.top+r.height*0.14, h=r.height*0.74;
-      if(!cOn||Math.abs(ty-cy)>3){ cx=tx; cy=ty; } else { cx+=(tx-cx)*Math.min(1,dt*28); }
-      caret.style.transform='translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)'; caret.style.height=h.toFixed(1)+'px';
-      var done=s.R>=s.nC-0.01; vis=!done||now-s.lastMove<1800;
-      caret.classList.toggle('idle',now-s.lastMove>420);
-    }
-  }
-  cOn=vis; caret.style.opacity=vis?String(s._o):'0';
+  if(D>s.R){ var gap=D-s.R; s.R=Math.min(D,s.R+dt*Math.max(36,gap*3.2)); }
+  if(Math.floor(s.R)!==s.pR) paintReveal(s);
 }
 
 /* ---------- sizing ---------- */
@@ -941,7 +911,6 @@ function frame(now){
   });
 
   SC.forEach(function(s,i){ revealTick(s,i,now,dt,k,f); });
-  caretTick((m>0.5&&!last)?SC[k+1]:SC[k],now,dt);
   if(!introStart&&(SC[0].tex||!glOK)) introStart=now;
   var introOld=intro; intro=(reduce||!introStart)?(reduce?0:1):1-smoother((now-introStart)/2600);
   var redraw=(P!==lastP)||dirty||(glOK&&m>0&&m<1)||ptrChanged||intro>0.001||introOld!==intro;
